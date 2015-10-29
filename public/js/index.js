@@ -94,11 +94,11 @@ function authDataCallback(authData) {
     var currentUserRef = usersRef.child(currentUserId);
     currentUserRef.on("value", function(snapshot) {
       currentUserObj = snapshot.val();
-      $('#profile #firstname').text(currentUserObj.firstname);
-      $('#profile #lastname').text(currentUserObj.lastname);
+      $('#account #firstname').text(currentUserObj.firstname);
+      $('#account #lastname').text(currentUserObj.lastname);
       currentUserRef.child("skills").on("child_added", function(childSnapshot){
         var $skill = $('<h4>').text(childSnapshot.key());
-        $('#profile #skills').append($skill);
+        $('#account #skills').append($skill);
       });
     });
   } else {
@@ -155,10 +155,12 @@ $('#additionalInfoSignUp').on('click', function(){
 
 //// NAVIGATION ------------------------------------------------------
 $('.notifications-icon').on('click', function(){
+  $('.menu').hide();
   $('.notifications').toggle();
 });
 
 $('.menu-icon').on('click', function(){
+  $('.notifications').hide();
   $('.menu').toggle();
 });
 
@@ -166,13 +168,11 @@ $('.menu-icon').on('click', function(){
 $('.page-nav').on('click', function(){
   var page = $(this).attr('data-page');
   var pageId = '#' + page;
-
+  $('.menu').hide();
   $('.page').hide();
   $(pageId).show();
 });
 
-
-//// REQUESTS ------------------------------------------------------
 requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added", function(snapshot){
   var request = snapshot.val();
   var requestId = snapshot.key();
@@ -182,16 +182,6 @@ requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added",
   $('.notifications').show();
   alert('you\'ve got a connection request!');
 });
-
-$('#requests').on('click', 'button', function(){
-  var requestId = $(this).attr('id');
-  var callId = $(this).attr('data-callId');
-  requestsRef.child(requestId).remove();
-  $('.notifications-icon').css('color', 'white');
-  $('.notifications').hide();
-  joinCall(callId);
-});
-
 
 //// PROFILE ------------------------------------------------------
 $('#skillsForm').on('submit', function(){
@@ -300,14 +290,61 @@ var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, t
   $('#searchResults').append($userInfo);
 };
 
+
+
+//// REQUESTS ------------------------------------------------------
+
+//on click of connect button:
 $('#searchResults').on('click', '.connectButton', function(){
-  $('.page #searchResults').hide();
-  var newRecipientId = $(this).siblings('h2').attr('id');
+  // $('.page #search').hide();
+  var recipientId = $(this).siblings('.userName').attr('id');
   var fee = $(this).parent('div').attr('data-fee');
+  // Sender enters information about request
+  $('.createRequest').attr('data-recipientId', recipientId);
+  $('.createRequest').attr('data-fee', fee);
+  $('.createRequest').show();
+});
+
+$('.sendRequest').on('click', function(){
+  var recipientId = $(this).parent('.createRequest').attr('data-recipientId');
+  var fee = $(this).parent('.createRequest').attr('data-fee');
+  var memo = $(this).siblings('#memo').val();
+  // 1. Sender creates a new Call.
   var newCall = callsRef.push({
     active: true,
   });
-  initiateCall(newCall.key(), newRecipientId, fee);
+  // 2. Sender creates a new Request with the newCall Id.
+  createRequest(newCall.key(), recipientId, fee, memo);
+});
+
+var createRequest = function(callId, recipientId, fee, memo){
+  var newRequest = requestsRef.push({
+    callId: callId,
+    recipient: recipientId,
+    fee: fee,
+    memo: memo,
+    //availability
+    //onDemand
+    //confirmed
+  });
+};
+
+// --- if onDemand = false; (aka it's a booking for later)
+//2.a. Recipient updates Request.
+//2.b. Sender receives updated Request.
+//----
+//when it becomes call time:
+
+
+
+
+$('#requests').on('click', 'button', function(){
+  var requestId = $(this).attr('id');
+  var callId = $(this).attr('data-callId');
+  requestsRef.child(requestId).remove();
+  $('.notifications-icon').css('color', 'white');
+  $('.notifications').hide();
+  joinCall(callId);
 });
 
 
@@ -329,11 +366,7 @@ var initiateCall = function(callId, callRecipientId, fee){
     webrtc.joinRoom(callId);
     console.log("joined room" + callId);
 
-    var newRequest = requestsRef.push({
-      recipient: callRecipientId,
-      callId: callId,
-      fee: fee,
-    });
+
   });
 
   webrtc.on('videoAdded', function () {

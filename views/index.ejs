@@ -39,15 +39,15 @@
             </div>
           </div>
           <div class="menu dropdown">
-            <a class="page-nav" data-page="search">find an expert</a><br>
-            <a class="page-nav" data-page="profile">my profile</a><br>
-            <a class="logout">logout</a>
+            <div class="page-nav" data-page="search">find an expert</div>
+            <div class="page-nav" data-page="account">my account</div>
+            <div class="logout">logout</div>
           </div>
         </div>
       </div>
 
-      <div class="page" id="profile" style="display:none;">
-        <h6>my profile</h6>
+      <div class="page" id="account" style="display:none;">
+        <h2>my account</h2>
         <h4>first name: <span id="firstname"></span></h4>
         <h4>last name: <span id="lastname"></span></h4>
         <div id="skills">
@@ -113,6 +113,16 @@
           <span>NAME</span>
         </div>
         <div id="searchResults">
+        </div>
+        <div class="createRequest" style="display:none;">
+          <input type="text" id="memo" placeholder="briefly describe what you'd like to talk about.">
+          <h4>choose up to 3 preferred dates/times when you'll be available to dibbl</h4>
+          <div class="datetimePicker">
+            <input type="date">
+            <input type="time">
+            <input type="time">
+          </div>
+          <button class="sendRequest">send dibbl request</button>
         </div>
       </div>
 
