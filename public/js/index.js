@@ -307,13 +307,24 @@ var initiateCall = function(callId, callRecipientId, fee){
   });
 
   var chargeUser = function(){
-    $.ajax({
-      type: "POST",
-      url: "/charge",
-      data: {
-        minutes: connectionTimeMin,
-        totalfee: totalfee,
-      }
+    console.log("charging user");
+    usersRef.child(currentUser.uid).on("value", function(snapshot){
+      var currentCustomerId = snapshot.val().customerId;
+      var data = {};
+      data.minutes = connectionTimeMin;
+      data.totalfeeCents = totalfee * 100;
+      data.customer = currentCustomerId;
+      console.log(data);
+      $.ajax({
+        type: "POST",
+        url: "/charge",
+        data: data,
+        success: function(data) {
+          console.log('success');
+        }, error: function(err) {
+          console.log('err', err);
+        }
+      });
     });
   };
 };

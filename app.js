@@ -1,12 +1,12 @@
 'use strict';
 
-var express = require("express");
-var bodyParser = require('body-parser');
-var stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI");
-var Firebase = require('firebase');
-var ref = new Firebase('https://dibbl.firebaseio.com/'),
-    usersRef = ref.child("users");
-var app = express();
+var express = require("express"),
+    bodyParser = require('body-parser'),
+    stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI"),
+    Firebase = require('firebase'),
+    ref = new Firebase('https://dibbl.firebaseio.com/'),
+    usersRef = ref.child("users"),
+    app = express();
 
 
 app.use(express.static(__dirname + '/public'));
@@ -38,7 +38,14 @@ app.post("/newCustomer", function (req, res) {
 });
 
 app.post("/charge", function (req, res) {
-  res.render("login.ejs");
+  console.log(req.body);
+  stripe.charges.create({
+    amount: req.body.totalfeeCents, // amount in cents, again
+    currency: "usd",
+    customer: req.body.customer
+  }).then(function(){
+    res.render("index.ejs");
+  });
 });
   // # YOUR CODE: When it's time to charge the customer again, retrieve the customer ID!
   //
