@@ -30,7 +30,7 @@ hr { margin: 10px 0; }
 
 .searchFilter { margin-bottom: 20px; }
 .searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }
-.userInfo { background-color: #fafafa; padding: 20px; text-align: left; }
+.userInfo { background-color: #fafafa; padding: 20px; text-align: left; margin-bottom: 10px; }
 .faveIcon { display: inline-block; color: #66cccc; margin-right: 5px; }
 .userName { text-transform: uppercase; color: #888; display: inline-block; }
 .rating { display: inline-block; color: #ffcc00; margin-left: 5px; }

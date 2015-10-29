@@ -336,8 +336,6 @@ var createRequest = function(callId, recipientId, fee, memo){
 //when it becomes call time:
 
 
-
-
 $('#requests').on('click', 'button', function(){
   var requestId = $(this).attr('id');
   var callId = $(this).attr('data-callId');
