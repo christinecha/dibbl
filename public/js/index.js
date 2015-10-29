@@ -262,25 +262,40 @@ $("#search input[type='number']").keypress(function (evt) {
 });
 
 $('#userSearchForm').on('submit', function(){
+  $('.initial-view').addClass('standard-view').removeClass('initial-view');
+  $('.searchFilter').show();
   $('#searchResults').empty();
   var query = $("#query").val();
+  var time = $("#query-time").val();
   console.log('searching for an expert in ' + query);
 
   usersRef.orderByChild("skills/" + query).equalTo(true).on("child_added", function(snapshot){
     var matchedUser = snapshot.val();
-    displayMatchedUsers(snapshot.key(), matchedUser.firstname, matchedUser.lastname, matchedUser.info, matchedUser.fee);
+    displayMatchedUsers(snapshot.key(), matchedUser.firstname, matchedUser.lastname, matchedUser.skills, matchedUser.info, matchedUser.fee, time);
   })
 
   return false;
 });
 
-var displayMatchedUsers = function(id, firstname, lastname, info, fee){
+var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, time){
   console.log('working?', firstname);
+  var totalfee = fee * time;
+  totalfee = totalfee.toFixed(2);
+  totalfee = '$' + totalfee;
 
-  var $userName = $('<h2>').html(firstname + ' ' + lastname).attr('id', id).addClass('userName');
+  var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
+  var $userName = $('<h5>').html(firstname + ' ' + lastname).attr('id', id).addClass('userName');
+  var $rating = $('<div>').addClass('rating').html('<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i>');
+  var $userFee = $('<h5>').text(totalfee).addClass('userFee');
+  var $userSkills = $('<div>').addClass('userSkills');
+  var skillsArray = Object.keys(skills);
+  for (var i = 0; i < skillsArray.length; i++) {
+    var $userSkill = $('<span>').html(skillsArray[i]);
+    $userSkills = $userSkills.append($userSkill);
+  };
   var $userDetails = $('<p>').text(info);
   var $callButton = $('<button class="connectButton">').text('CONNECT');
-  var $userInfo = $('<div>').append($userName).append($userDetails).append($callButton).attr('data-fee', fee);
+  var $userInfo = $('<div>').addClass('userInfo').append($faveIcon).append($userName).append($rating).append($userFee).append($userSkills).append($userDetails).append($callButton).attr('data-fee', fee);
 
   $('#searchResults').append($userInfo);
 };

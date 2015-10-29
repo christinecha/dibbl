@@ -96,16 +96,22 @@
 
       <div class="page" id="search">
         <form id="userSearchForm">
-          <h2>I'd like to speak to an expert about</h2>
-          <input id="query" placeholder="fill in the blank" width="100%" class="underline-box">
-          <br><br>
-          <h2 style="display:inline-block;">for</h2>
-          <input type="number" step="5" min="5" max="20" placeholder="X" width="30px" class="underline-box">
-          <h2 style="display:inline-block;">minutes</h2>
-          <br><br><br>
-          <input type="submit" value="GO">
+          <div class="initial-view">
+            <h2>I'd like to speak to an industry leader about</h2>
+            <input id="query" placeholder="fill in the blank" width="100%" class="gray-box">
+            <h2 style="display:inline-block;">for</h2>
+            <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box">
+            <h2 style="display:inline-block;">minutes</h2>
+            <input type="submit" value="GO">
+          </div>
         </form>
-
+        <div class="searchFilter" style="display:none;">
+          <hr style="border: 2px solid #eee;">
+          <span>SORT BY:</span>
+          <span>RATING</span>
+          <span>PRICE</span>
+          <span>NAME</span>
+        </div>
         <div id="searchResults">
         </div>
       </div>

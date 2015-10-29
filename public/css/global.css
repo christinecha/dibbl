@@ -1,19 +1,44 @@
 *:-webkit-any-link, *:focus { outline: none; }
 body { font-family: 'Montserrat', sans-serif; }
-h1, h2, h3, h4, h5 { margin: 0 0 0 0; }
+h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
+hr { margin: 10px 0; }
 .page { min-width: 100%; min-height: 100%; }
-
-.userName { text-transform: capitalize; }
 
 #header { background-color: #d9e021; padding: 20px 0; }
 .logo { width: 100px; }
 #header i { font-size: 35px; color: white; cursor: pointer; margin: 0 10px; }
 .dropdown { display: none; z-index: 100; width: 500px; max-width: 100%; position: absolute; right: 10px; top: 50px; background-color: #fafafa; padding: 20px; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
 
-#search { padding-top: 100px; text-align: center; }
+#search { text-align: center; }
+#search .initial-view { padding-top: 100px; }
 #search h2 { color: #888; margin-bottom: 10px; }
 #search input { text-align: center; }
-.underline-box { border: none; font-size: 30px; color: #000; background-color: #fafafa; padding: 5px 10px; }
-#search input[type='number'] { border: none; color: transparent; text-shadow: 0 0 0 black; text-align: center; padding-right: 5px; margin: 0 10px; }
-#search input[type='submit'] { border: none; box-shadow: none; padding: 10px 20px; font-size: 40px; color: white; background-color: #66cccc; border-radius: 10px; cursor: pointer; }
+#search .gray-box { border: none; font-size: 30px; color: #000; background-color: #fafafa; padding: 5px 10px; margin: 0 10px; }
+#query { margin: 0 10px 20px 0 !important; max-width: 100%; }
+#search input[type='number'] { border: none; color: transparent; text-shadow: 0 0 0 black; text-align: center; padding-right: 5px; }
+#search input[type='submit'] { margin-top: 20px; border: none; box-shadow: none; padding: 10px 20px; font-size: 40px; color: white; background-color: #66cccc; border-radius: 10px; cursor: pointer; }
 #search input[type='submit']:hover { background-color: #d9e021; }
+
+#search .standard-view { padding-top: 20px; }
+.standard-view h2 { font-size: 14px !important; }
+.standard-view .gray-box { font-size: 14px !important; }
+.standard-view #query { margin-bottom: 0 !important; max-width: 40%; }
+.standard-view input[type='submit'] { font-size: 16px !important; margin-top: 10px !important; width: 100%; background-color: #d9e021 !important; }
+
+.searchFilter { margin-bottom: 20px; }
+.searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }
+.userInfo { background-color: #fafafa; padding: 20px; text-align: left; }
+.faveIcon { display: inline-block; color: #66cccc; margin-right: 5px; }
+.userName { text-transform: uppercase; color: #888; display: inline-block; }
+.rating { display: inline-block; color: #ffcc00; margin-left: 5px; }
+.userFee { float: right; display: inline-block; }
+.userSkills { margin-top: 10px; }
+.userSkills span { background-color: white; padding: 5px; margin-right: 5px; font-size: 10px; text-transform: uppercase; }
+
+
+
+
+
+
+
+/*//*/
