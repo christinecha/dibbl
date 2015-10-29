@@ -300,20 +300,17 @@ var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, t
 //// REQUESTS ------------------------------------------------------
 
 $('#searchResults').on('click', '.connectButton', function(){
-  // $('.page #search').hide();
-  var recipientId = $(this).siblings('.userName').attr('id');
-  var fee = $(this).parent('div').attr('data-fee');
-  // Sender enters information about request
   $(this).addClass('sendRequest');
   $('.createRequest').detach().insertBefore($(this));
   $('.createRequest').slideDown(500);
 });
 
-$('.sendRequest').on('click', function(){
-  var recipientId = $(this).parent('.createRequest').attr('data-recipientId');
-  var fee = $(this).parent('.createRequest').attr('data-fee');
-  var memo = $(this).siblings('#memo').val();
-  var connectNow = $(this).siblings('#connectNow').checked;
+$('#searchResults').on('click', '.sendRequest', function(){
+  // Sender enters information about request
+  var recipientId = $(this).siblings('.userName').attr('id');
+  var fee = $(this).parent('div').attr('data-fee');
+  var memo = $(this).siblings('.createRequest').children('#memo').val();
+  var connectNow = $(this).siblings('.createRequest').children('#connectNow').checked;
   if (connectNow === false) {
     connectNow = false;
   } else {
@@ -327,6 +324,7 @@ $('.sendRequest').on('click', function(){
   });
   // 2. Sender creates a new Request with the newCall Id.
   createRequest(newCall.key(), recipientId, fee, memo, connectNow);
+  initiateCall(newCall.key(), recipientId, fee);
 });
 
 var createRequest = function(callId, recipientId, fee, memo, connectNow){
@@ -342,12 +340,6 @@ var createRequest = function(callId, recipientId, fee, memo, connectNow){
   });
 };
 
-//2.a. Recipient updates Request.
-//2.b. Sender receives updated Request.
-//----
-//when it becomes call time:
-
-
 $('.notifications').on('click', '.connection-request', function(){
   var requestId = $(this).attr('id');
   var callId = $(this).attr('data-callId');
@@ -357,9 +349,9 @@ $('.notifications').on('click', '.connection-request', function(){
   joinCall(callId);
 });
 
-
 //// USER CALL ------------------------------------------------------------------------
 var initiateCall = function(callId, callRecipientId, fee){
+  $('#search').hide();
   $('#callwindow').show();
   var totalfee;
   var connectionTimeSec = 0;
