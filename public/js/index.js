@@ -246,6 +246,10 @@ jQuery(function($) {
 });
 
 //// USER SEARCH ------------------------------------------------------
+$("#search input[type='number']").keypress(function (evt) {
+    evt.preventDefault();
+});
+
 $('#userSearchForm').on('submit', function(){
   var query = $("#query").val();
   console.log('searching for an expert in ' + query);

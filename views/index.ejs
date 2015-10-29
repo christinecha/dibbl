@@ -33,12 +33,12 @@
         <div class="text-right col-xs-6">
           <i class="fa fa-bell notifications-icon"></i>
           <i class="fa fa-bars menu-icon"></i>
-          <div class="notifications dropdown" style="display:none;">
+          <div class="notifications dropdown">
             <h5>NOTIFICATIONS:</h5>
             <div id="requests">
             </div>
           </div>
-          <div class="menu dropdown" style="display:none;">
+          <div class="menu dropdown">
             <a class="page-nav" data-page="search">find an expert</a><br>
             <a class="page-nav" data-page="profile">my profile</a>
           </div>
@@ -47,7 +47,6 @@
 
       <div class="page" id="profile" style="display:none;">
         <h6>my profile</h6>
-
         <h4>first name: <span id="firstname"></span></h4>
         <h4>last name: <span id="lastname"></span></h4>
         <div id="skills">
@@ -95,11 +94,15 @@
 
 
       <div class="page" id="search">
-        <h6>search</h6>
-
         <form id="userSearchForm">
-          <input id="query" width="100%">
-          <input type="submit">
+          <h2>I'd like to speak to an expert about</h2>
+          <input id="query" placeholder="fill in the blank" width="100%" class="underline-box">
+          <br><br>
+          <h2 style="display:inline-block;">for</h2>
+          <input type="number" step="5" min="5" max="20" placeholder="X" width="30px" class="underline-box">
+          <h2 style="display:inline-block;">minutes</h2>
+          <br><br><br>
+          <input type="submit" value="GO">
         </form>
 
         <div id="searchResults">

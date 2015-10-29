@@ -1,9 +1,19 @@
+*:-webkit-any-link, *:focus { outline: none; }
 body { font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5 { margin: 0 0 0 0; }
+.page { min-width: 100%; min-height: 100%; }
 
 .userName { text-transform: capitalize; }
 
 #header { background-color: #d9e021; padding: 20px 0; }
 .logo { width: 100px; }
 #header i { font-size: 35px; color: white; cursor: pointer; margin: 0 10px; }
-.dropdown { z-index: 100; width: 500px; max-width: 100%; position: absolute; right: 10px; top: 50px; background-color: #fafafa; padding: 20px; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); } }
+.dropdown { display: none; z-index: 100; width: 500px; max-width: 100%; position: absolute; right: 10px; top: 50px; background-color: #fafafa; padding: 20px; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
+
+#search { padding-top: 100px; text-align: center; }
+#search h2 { color: #888; margin-bottom: 10px; }
+#search input { text-align: center; }
+.underline-box { border: none; font-size: 30px; color: #000; background-color: #fafafa; padding: 5px 10px; }
+#search input[type='number'] { border: none; color: transparent; text-shadow: 0 0 0 black; text-align: center; padding-right: 5px; margin: 0 10px; }
+#search input[type='submit'] { border: none; box-shadow: none; padding: 10px 20px; font-size: 40px; color: white; background-color: #66cccc; border-radius: 10px; cursor: pointer; }
+#search input[type='submit']:hover { background-color: #d9e021; }
