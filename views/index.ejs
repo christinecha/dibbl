@@ -7,7 +7,7 @@
     <!-- STYLES -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" type="text/css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/global.css" rel="stylesheet" type="text/css">
+    <link href="css/global.css" rel="stylesheet" type="text/css">
     <!-- JS-->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
@@ -19,7 +19,6 @@
       Stripe.setPublishableKey('pk_test_aggmgLA6W1bMgAD9bVfscNyL');
       // ...
     </script>
-    <script type="text/javascript" src="/js/index.js"></script>
     <title>dibbl</title>
 
   </head>
@@ -50,7 +49,10 @@
       </form> -->
 
       <h4>Payment</h4>
-      <form action="/charge" method="POST" id="payment-form">
+      <div class="saved-cards">
+        saved cards
+      </div>
+      <form action="/newCustomer" method="POST" id="payment-form">
         <span class="payment-errors"></span>
 
         <div class="form-row">
@@ -106,6 +108,7 @@
 
 
 
+    <script type="text/javascript" src="js/index.js"></script>
 
 
     <script>

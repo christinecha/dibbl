@@ -7,151 +7,151 @@ var currentCall;
 
 
 // USER AUTHENTICATION ------------------------------------------
-//
-// $('.alreadyUser').on('click', function(){
-//   $('#userSignUp').hide();
-//   $('#firstname').hide();
-//   $('#lastname').hide()
-//   $('#userLogin').show();
-//   $(this).hide();
-//   $('.notUserYet').show();
-// });
-//
-// $('.notUserYet').on('click', function(){
-//   $('#userSignUp').show();
-//   $('#firstname').show();
-//   $('#lastname').show()
-//   $('#userLogin').hide();
-//   $(this).hide();
-//   $('.alreadyUser').show();
-// });
-//
-// //Sign Up With Email
-// $('#userSignUp').on('click', function(){
-//   var usersRef = ref.child('users');
-//   var firstname = $('#firstname').val();
-//   var lastname = $('#lastname').val();
-//   var email = $('#email').val();
-//   var password = $('#password').val();
-//
-//   ref.createUser({
-//     email    : email,
-//     password : password
-//   }, function(error, userData) {
-//     if (error) {
-//       $('.loginError').show();
-//       $('.loginError').text(error);
-//     } else {
-//       console.log("Successfully created user account with uid:", userData.uid);
-//       ref.child("users").child(userData.uid).update({
-//         firstname: firstname,
-//         lastname: lastname,
-//         email: email,
-//       });
-//       ref.authWithPassword({
-//         "email"    : email,
-//         "password" : password
-//       }, function(error, authData) {
-//         console.log("Authenticated successfully with payload:", authData);
-//         location.href = "index.html";
-//       });
-//     }
-//   });
-//
-// });
-//
-// // Log In
-// $('#userLogin').on('click', function(){
-//   var email = $('#email').val();
-//   var password = $('#password').val();
-//
-//   ref.authWithPassword({
-//     "email"    : email,
-//     "password" : password,
-//   }, function(error, authData) {
-//     if (error) {
-//       $('.loginError').show();
-//       $('.loginError').text(error);
-//     } else {
-//       console.log("Authenticated successfully with payload:", authData);
-//       location.href = "index.html";
-//     }
-//   });
-// });
-//
-// // Log out
-// $('#header').on('click', '.logout', function(){
-//   ref.unauth();
-// });
-//
-// // Create a callback which logs the current auth state
-// function authDataCallback(authData) {
-//   if (authData) {
-//     console.log("User " + authData.uid + " is logged in with " + authData.provider);
-//     currentUser = authData;
-//     currentUserId = authData.uid;
-//     // DISPLAY CURRENT USER'S DETAILS -------------------------------------
-//     var currentUserRef = usersRef.child(currentUserId);
-//     currentUserRef.on("value", function(snapshot) {
-//       currentUserObj = snapshot.val();
-//       $('#profile #firstname').text(currentUserObj.firstname);
-//       $('#profile #lastname').text(currentUserObj.lastname);
-//       currentUserRef.child("skills").on("child_added", function(childSnapshot){
-//         var $skill = $('<h4>').text(childSnapshot.key());
-//         $('#profile #skills').append($skill);
-//       });
-//     });
-//   } else {
-//     console.log("User is logged out");
-//     currentUser = {};
-//     currentUserId = '';
-//     currentUserObj = {};
-//     currentGroup = '';
-//     currentGroupName = '';
-//     if ( window.location.href.indexOf("login.html") > -1 ) {
-//       //do nothing
-//     } else {
-//       location.href = "login.html";
-//     };
-//   }
-// }
-// // Register the callback to be fired every time auth state changes
-// ref.onAuth(authDataCallback);
-//
-// //Store User Data
-// var isNewUser = true;
-// ref.onAuth(function(authData) {
-//   if (authData && isNewUser) {
-//     // save the user's profile into the database so we can list users,
-//     // use them in Security and Firebase Rules, and show profiles
-//     ref.child("users").child(authData.uid).update({
-//       provider: authData.provider,
-//       name: getName(authData)
-//     });
-//   }
-// });
-//
-//
-// // find a suitable name based on the meta info given by each provider
-// function getName(authData) {
-//   switch(authData.provider) {
-//      case 'password':
-//        return authData.password.email.replace(/@.*/, '');
-//   }
-// };
-//
-// $('#additionalInfoSignUp').on('click', function(){
-//   var skype = $('#skype').val();
-//   var venmo = $('#venmo').val();
-//   var phone = $('#phone').val().replace(/.\-/g, '');
-//
-//   ref.child("users").child(currentUserId).update({
-//     skype: skype,
-//     venmo: venmo,
-//     phone: phone
-//   });
-//   location.href = "account.html";
-// });
+
+$('.alreadyUser').on('click', function(){
+  $('#userSignUp').hide();
+  $('#firstname').hide();
+  $('#lastname').hide()
+  $('#userLogin').show();
+  $(this).hide();
+  $('.notUserYet').show();
+});
+
+$('.notUserYet').on('click', function(){
+  $('#userSignUp').show();
+  $('#firstname').show();
+  $('#lastname').show()
+  $('#userLogin').hide();
+  $(this).hide();
+  $('.alreadyUser').show();
+});
+
+//Sign Up With Email
+$('#userSignUp').on('click', function(){
+  var usersRef = ref.child('users');
+  var firstname = $('#firstname').val();
+  var lastname = $('#lastname').val();
+  var email = $('#email').val();
+  var password = $('#password').val();
+
+  ref.createUser({
+    email    : email,
+    password : password
+  }, function(error, userData) {
+    if (error) {
+      $('.loginError').show();
+      $('.loginError').text(error);
+    } else {
+      console.log("Successfully created user account with uid:", userData.uid);
+      ref.child("users").child(userData.uid).update({
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+      });
+      ref.authWithPassword({
+        "email"    : email,
+        "password" : password
+      }, function(error, authData) {
+        console.log("Authenticated successfully with payload:", authData);
+        location.href = "/";
+      });
+    }
+  });
+
+});
+
+// Log In
+$('#userLogin').on('click', function(){
+  var email = $('#email').val();
+  var password = $('#password').val();
+
+  ref.authWithPassword({
+    "email"    : email,
+    "password" : password,
+  }, function(error, authData) {
+    if (error) {
+      $('.loginError').show();
+      $('.loginError').text(error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      location.href = "/";
+    }
+  });
+});
+
+// Log out
+$('#header').on('click', '.logout', function(){
+  ref.unauth();
+});
+
+// Create a callback which logs the current auth state
+function authDataCallback(authData) {
+  if (authData) {
+    console.log("User " + authData.uid + " is logged in with " + authData.provider);
+    currentUser = authData;
+    currentUserId = authData.uid;
+    // DISPLAY CURRENT USER'S DETAILS -------------------------------------
+    var currentUserRef = usersRef.child(currentUserId);
+    currentUserRef.on("value", function(snapshot) {
+      currentUserObj = snapshot.val();
+      $('#profile #firstname').text(currentUserObj.firstname);
+      $('#profile #lastname').text(currentUserObj.lastname);
+      currentUserRef.child("skills").on("child_added", function(childSnapshot){
+        var $skill = $('<h4>').text(childSnapshot.key());
+        $('#profile #skills').append($skill);
+      });
+    });
+  } else {
+    console.log("User is logged out");
+    currentUser = {};
+    currentUserId = '';
+    currentUserObj = {};
+    currentGroup = '';
+    currentGroupName = '';
+    if ( window.location.href.indexOf("login") > -1 ) {
+      //do nothing
+    } else {
+      location.href = "login";
+    };
+  }
+}
+// Register the callback to be fired every time auth state changes
+ref.onAuth(authDataCallback);
+
+//Store User Data
+var isNewUser = true;
+ref.onAuth(function(authData) {
+  if (authData && isNewUser) {
+    // save the user's profile into the database so we can list users,
+    // use them in Security and Firebase Rules, and show profiles
+    ref.child("users").child(authData.uid).update({
+      provider: authData.provider,
+      name: getName(authData)
+    });
+  }
+});
+
+
+// find a suitable name based on the meta info given by each provider
+function getName(authData) {
+  switch(authData.provider) {
+     case 'password':
+       return authData.password.email.replace(/@.*/, '');
+  }
+};
+
+$('#additionalInfoSignUp').on('click', function(){
+  var skype = $('#skype').val();
+  var venmo = $('#venmo').val();
+  var phone = $('#phone').val().replace(/.\-/g, '');
+
+  ref.child("users").child(currentUserId).update({
+    skype: skype,
+    venmo: venmo,
+    phone: phone
+  });
+  location.href = "/";
+});
 
 //// NAVIGATION ------------------------------------------------------
 $('.page-nav').on('click', function(){
@@ -186,6 +186,51 @@ $('#skillsForm').on('submit', function(){
   usersRef.child(currentUser.uid).child("skills").child(skill).set(true);
 });
 
+// PAYMENT ------------------------------------------------------------------------
+
+usersRef.child(currentUser.uid).child("customerId").once("value", function(snapshot){
+  if (snapshot.val() == null) {
+    $("#payment-form").show();
+    $(".saved-cards").hide();
+  } else {
+    $("#payment-form").hide();
+    $(".saved-cards").show();
+  }
+})
+
+function stripeResponseHandler(status, response) {
+  var $form = $('#payment-form');
+
+  if (response.error) {
+    console.log('error in handler');
+    // Show the errors on the form
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('button').prop('disabled', false);
+  } else {
+    console.log(response);
+    // response contains id and card, which contains additional card details
+    var token = response.id;
+    // Insert the token into the form so it gets submitted to the server
+    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+    $form.append($('<input type="hidden" name="userId" />').val(currentUser.uid));
+    // and submit
+    $form.get(0).submit();
+  }
+};
+
+jQuery(function($) {
+  $('#payment-form').submit(function(event) {
+    event.preventDefault();
+
+    var $form = $(this);
+
+    $form.find('button').prop('disabled', true);
+
+    Stripe.card.createToken($form, stripeResponseHandler);
+
+    return false;
+  });
+});
 
 //// USER SEARCH ------------------------------------------------------
 $('#userSearchForm').on('submit', function(){
@@ -194,38 +239,40 @@ $('#userSearchForm').on('submit', function(){
 
   usersRef.orderByChild("skills/" + query).equalTo(true).on("child_added", function(snapshot){
     var matchedUser = snapshot.val();
-    displayMatchedUsers(snapshot.key(), matchedUser.firstname, matchedUser.lastname, matchedUser.info);
+    displayMatchedUsers(snapshot.key(), matchedUser.firstname, matchedUser.lastname, matchedUser.info, matchedUser.fee);
   })
 
   return false;
 });
 
-var displayMatchedUsers = function(id, firstname, lastname, info){
+var displayMatchedUsers = function(id, firstname, lastname, info, fee){
   $('#searchResults').empty();
   console.log('working?', firstname);
 
   var $userName = $('<h2>').html(firstname + ' ' + lastname).attr('id', id).addClass('userName');
   var $userDetails = $('<p>').text(info);
   var $callButton = $('<button class="connectButton">').text('CONNECT');
-  var $userInfo = $('<div>').append($userName).append($userDetails).append($callButton);
+  var $userInfo = $('<div>').append($userName).append($userDetails).append($callButton).attr('data-fee', fee);
 
   $('#searchResults').append($userInfo);
 };
 
 $('#searchResults').on('click', '.connectButton', function(){
   var newRecipientId = $(this).siblings('h2').attr('id');
+  var fee = $(this).parent('div').attr('data-fee');
   var newCall = callsRef.push({
     active: true,
   });
-  initiateCall(newCall.key(), newRecipientId);
+  initiateCall(newCall.key(), newRecipientId, fee);
 });
 
 
 //// USER CALL ------------------------------------------------------------------------
-var initiateCall = function(callId, callRecipientId){
+var initiateCall = function(callId, callRecipientId, fee){
   $('#callwindow').show();
+  var totalfee;
   var connectionTimeSec = 0;
-  var conenctionTimeMin = 0;
+  var connectionTimeMin = 0;
   var trackTime;
 
   var webrtc = new SimpleWebRTC({
@@ -241,6 +288,7 @@ var initiateCall = function(callId, callRecipientId){
     var newRequest = requestsRef.push({
       recipient: callRecipientId,
       callId: callId,
+      fee: fee,
     });
   });
 
@@ -254,9 +302,20 @@ var initiateCall = function(callId, callRecipientId){
   webrtc.on('videoRemoved', function () {
     clearInterval(trackTime);
     connectionTimeMin = Math.ceil(connectionTimeSec / 60);
-    console.log(connectionTimeMin);
+    totalfee = fee * connectionTimeMin;
+    chargeUser();
   });
 
+  var chargeUser = function(){
+    $.ajax({
+      type: "POST",
+      url: "/charge",
+      data: {
+        minutes: connectionTimeMin,
+        totalfee: totalfee,
+      }
+    });
+  };
 };
 
 var joinCall = function(callId){
@@ -275,42 +334,7 @@ var joinCall = function(callId){
 
 
 
-//// USER PAYMENT ------------------------------------------------------------------------
 
-function stripeResponseHandler(status, response) {
-  var $form = $('#payment-form');
-
-  if (response.error) {
-    console.log('error in handler');
-    // Show the errors on the form
-    $form.find('.payment-errors').text(response.error.message);
-    $form.find('button').prop('disabled', false);
-  } else {
-    console.log(response);
-    // response contains id and card, which contains additional card details
-    var token = response.id;
-    // Insert the token into the form so it gets submitted to the server
-    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-    // and submit
-    $form.get(0).submit();
-  }
-};
-
-jQuery(function($) {
-  $('#payment-form').submit(function(event) {
-    event.preventDefault();
-    var $form = $(this);
-    console.log('submitting form');
-
-    // Disable the submit button to prevent repeated clicks
-    $form.find('button').prop('disabled', true);
-
-    Stripe.card.createToken($form, stripeResponseHandler);
-
-    // Prevent the form from submitting with the default action
-    return false;
-  });
-});
 
 
 
