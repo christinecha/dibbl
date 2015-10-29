@@ -113,16 +113,20 @@
         <div id="searchResults">
         </div>
         <div class="createRequest" style="display:none;">
-          <input type="text" id="memo" placeholder="briefly describe what you'd like to talk about.">
-          <h4>choose up to 3 preferred dates/times when you'll be available to dibbl</h4>
+          <p class="small">
+            What would you like to ask or talk about?
+            <br>(140 characters max)</p>
+          <textarea id="memo" rows="2" maxlength="140" class="small"></textarea>
+          <br><br>
+          <p class="small">When are you available to chat?</p>
           <div class="datetimePicker">
-            <input type="date">
-            <input type="time" value="">
-            <input type="time">
+            <p class="small">
+              <input type="date"><br>
+              from: <input type="time" value="">
+              <br>
+              to: <input type="time">
+            </p>
           </div>
-          or
-          <button class="connectNow">send dibbl request</button>
-          <button class="sendRequest">send dibbl request</button>
         </div>
       </div>
 

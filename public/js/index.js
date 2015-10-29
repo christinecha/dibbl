@@ -176,11 +176,16 @@ $('.page-nav').on('click', function(){
 requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added", function(snapshot){
   var request = snapshot.val();
   var requestId = snapshot.key();
-  var $request = $('<div>').text('connection request').addClass('connection-request').attr('id', requestId).attr('data-callId', request.callId);
-  $('.notifications').append($request);
-  $('.notifications-icon').addClass('hasNotifications');
-  $('.notifications-number').html($('#requests').children().length);
-  $('.notifications').show();
+  var sender;
+  usersRef.child(request.sender).once("value", function(senderSnapshot){
+    sender = senderSnapshot.val();
+    console.log('meh', sender.firstname);
+    var $request = $('<div>').html('REQUEST FROM ' + sender.firstname + ' ' + sender.lastname).addClass('connection-request').attr('id', requestId).attr('data-callId', request.callId);
+    $('.notifications').append($request);
+    $('.notifications-icon').addClass('hasNotifications');
+    $('.notifications-number').html($('#requests').children().length);
+    $('.notifications').show();
+  });
 });
 
 //// PROFILE ------------------------------------------------------
@@ -299,9 +304,9 @@ $('#searchResults').on('click', '.connectButton', function(){
   var recipientId = $(this).siblings('.userName').attr('id');
   var fee = $(this).parent('div').attr('data-fee');
   // Sender enters information about request
-  $('.createRequest').attr('data-recipientId', recipientId);
-  $('.createRequest').attr('data-fee', fee);
-  $('.createRequest').show();
+  $(this).addClass('sendRequest');
+  $('.createRequest').detach().insertBefore($(this));
+  $('.createRequest').slideDown(500);
 });
 
 $('.sendRequest').on('click', function(){
@@ -316,6 +321,8 @@ $('.sendRequest').on('click', function(){
   };
   // 1. Sender creates a new Call.
   var newCall = callsRef.push({
+    recipient: recipientId,
+    sender: currentUser.uid,
     active: true,
   });
   // 2. Sender creates a new Request with the newCall Id.
@@ -326,6 +333,7 @@ var createRequest = function(callId, recipientId, fee, memo, connectNow){
   var newRequest = requestsRef.push({
     callId: callId,
     recipient: recipientId,
+    sender: currentUser.uid,
     fee: fee,
     memo: memo,
     connectNow: connectNow,

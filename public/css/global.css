@@ -1,8 +1,10 @@
 *:-webkit-any-link, *:focus { outline: none; }
 body { font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
+.small { font-size: 12px; }
 a, button { cursor: pointer; }
 hr { margin: 10px 0; }
+textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
 
 #header { background-color: #d9e021; padding: 10px 0; }
@@ -10,7 +12,7 @@ hr { margin: 10px 0; }
 #header i { font-size: 30px; color: white; cursor: pointer; margin: 0; padding: 10px; }
 .hasNotifications { background-color: rgba(255,255,255,.3); border-radius: 100%; }
 .notifications-number { z-index: 50; margin-left: -54px; position: absolute; text-align: center; margin-top: 18px; font-size: 11px; width: 50px; color: #aaa; }
-.dropdown { display: none; z-index: 100; width: 100%; max-width: 500px; position: absolute; top: 70px; background-color: #fafafa; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
+.dropdown { display: none; z-index: 100; width: 100%; max-width: 500px; position: absolute; top: 70px; right: 0; background-color: #fafafa; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
 .dropdown div { width: 100%; color: #aaa; padding: 15px 20px; text-transform: uppercase; text-decoration: none; cursor: pointer; }
 .dropdown div:hover { background-color: white; }
 .connection-request { display: block; }
@@ -42,6 +44,8 @@ hr { margin: 10px 0; }
 .userSkills span { background-color: white; padding: 5px; margin-right: 5px; font-size: 10px; text-transform: uppercase; }
 .connectButton { background-color: #66cccc; width: 100%; margin: 5px 0; border: none; box-shadow: none; color: white; padding: 10px 20px; }
 .connectButton:hover { background-color: #fbb03b; }
+
+.createRequest { background-color: white; padding: 20px; }
 
 
 
