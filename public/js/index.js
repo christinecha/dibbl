@@ -246,11 +246,23 @@ jQuery(function($) {
 });
 
 //// USER SEARCH ------------------------------------------------------
+var suggestedtopics = ['photoshop', 'jazz guitar', 'making sushi', 'yoga poses'];
+var b = 0;
+setInterval(function(){
+  $('#query').attr('placeholder', suggestedtopics[b]);
+  if (b < 3) {
+    b+= 1;
+  } else {
+    b = 0;
+  }
+}, 2000);
+
 $("#search input[type='number']").keypress(function (evt) {
     evt.preventDefault();
 });
 
 $('#userSearchForm').on('submit', function(){
+  $('#searchResults').empty();
   var query = $("#query").val();
   console.log('searching for an expert in ' + query);
 
@@ -263,7 +275,6 @@ $('#userSearchForm').on('submit', function(){
 });
 
 var displayMatchedUsers = function(id, firstname, lastname, info, fee){
-  $('#searchResults').empty();
   console.log('working?', firstname);
 
   var $userName = $('<h2>').html(firstname + ' ' + lastname).attr('id', id).addClass('userName');
