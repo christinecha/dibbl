@@ -176,11 +176,11 @@ $('.page-nav').on('click', function(){
 requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added", function(snapshot){
   var request = snapshot.val();
   var requestId = snapshot.key();
-  var $request = $('<button>').text('connection request').attr('id', requestId).attr('data-callId', request.callId);
-  $('#requests').append($request);
-  $('.notifications-icon').css('color', 'red');
+  var $request = $('<div>').text('connection request').addClass('connection-request').attr('id', requestId).attr('data-callId', request.callId);
+  $('.notifications').append($request);
+  $('.notifications-icon').addClass('hasNotifications');
+  $('.notifications-number').html($('#requests').children().length);
   $('.notifications').show();
-  alert('you\'ve got a connection request!');
 });
 
 //// PROFILE ------------------------------------------------------
@@ -294,7 +294,6 @@ var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, t
 
 //// REQUESTS ------------------------------------------------------
 
-//on click of connect button:
 $('#searchResults').on('click', '.connectButton', function(){
   // $('.page #search').hide();
   var recipientId = $(this).siblings('.userName').attr('id');
@@ -309,34 +308,39 @@ $('.sendRequest').on('click', function(){
   var recipientId = $(this).parent('.createRequest').attr('data-recipientId');
   var fee = $(this).parent('.createRequest').attr('data-fee');
   var memo = $(this).siblings('#memo').val();
+  var connectNow = $(this).siblings('#connectNow').checked;
+  if (connectNow === false) {
+    connectNow = false;
+  } else {
+    connectNow = true;
+  };
   // 1. Sender creates a new Call.
   var newCall = callsRef.push({
     active: true,
   });
   // 2. Sender creates a new Request with the newCall Id.
-  createRequest(newCall.key(), recipientId, fee, memo);
+  createRequest(newCall.key(), recipientId, fee, memo, connectNow);
 });
 
-var createRequest = function(callId, recipientId, fee, memo){
+var createRequest = function(callId, recipientId, fee, memo, connectNow){
   var newRequest = requestsRef.push({
     callId: callId,
     recipient: recipientId,
     fee: fee,
     memo: memo,
+    connectNow: connectNow,
     //availability
-    //onDemand
     //confirmed
   });
 };
 
-// --- if onDemand = false; (aka it's a booking for later)
 //2.a. Recipient updates Request.
 //2.b. Sender receives updated Request.
 //----
 //when it becomes call time:
 
 
-$('#requests').on('click', 'button', function(){
+$('.notifications').on('click', '.connection-request', function(){
   var requestId = $(this).attr('id');
   var callId = $(this).attr('data-callId');
   requestsRef.child(requestId).remove();

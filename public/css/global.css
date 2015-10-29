@@ -5,12 +5,15 @@ a, button { cursor: pointer; }
 hr { margin: 10px 0; }
 .page { min-width: 100%; min-height: 100%; }
 
-#header { background-color: #d9e021; padding: 20px 0; }
+#header { background-color: #d9e021; padding: 10px 0; }
 .logo { width: 100px; }
-#header i { font-size: 35px; color: white; cursor: pointer; margin: 0 10px; }
-.dropdown { display: none; z-index: 100; width: 500px; max-width: 100%; position: absolute; right: 10px; top: 50px; background-color: #fafafa; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
+#header i { font-size: 30px; color: white; cursor: pointer; margin: 0; padding: 10px; }
+.hasNotifications { background-color: rgba(255,255,255,.3); border-radius: 100%; }
+.notifications-number { z-index: 50; margin-left: -54px; position: absolute; text-align: center; margin-top: 18px; font-size: 11px; width: 50px; color: #aaa; }
+.dropdown { display: none; z-index: 100; width: 100%; max-width: 500px; position: absolute; top: 70px; background-color: #fafafa; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
 .dropdown div { width: 100%; color: #aaa; padding: 15px 20px; text-transform: uppercase; text-decoration: none; cursor: pointer; }
 .dropdown div:hover { background-color: white; }
+.connection-request { display: block; }
 
 #search { text-align: center; }
 #search .initial-view { padding-top: 100px; }
