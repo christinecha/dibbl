@@ -1,1 +1,9 @@
+body { font-family: 'Montserrat', sans-serif; }
+h1, h2, h3, h4, h5 { margin: 0 0 0 0; }
+
 .userName { text-transform: capitalize; }
+
+#header { background-color: #d9e021; padding: 20px 0; }
+.logo { width: 100px; }
+#header i { font-size: 35px; color: white; cursor: pointer; margin: 0 10px; }
+.dropdown { z-index: 100; width: 500px; max-width: 100%; position: absolute; right: 10px; top: 50px; background-color: #fafafa; padding: 20px; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); } }

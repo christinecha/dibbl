@@ -47,13 +47,6 @@ app.post("/charge", function (req, res) {
     res.render("index.ejs");
   });
 });
-  // # YOUR CODE: When it's time to charge the customer again, retrieve the customer ID!
-  //
-  // stripe.charges.create({
-  //   amount: 1500, // amount in cents, again
-  //   currency: "usd",
-  //   customer: customerId # Previously stored, then retrieved
-  // });
-  // });
+
 
 app.listen(3000);

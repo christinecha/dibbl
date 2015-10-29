@@ -154,6 +154,15 @@ $('#additionalInfoSignUp').on('click', function(){
 });
 
 //// NAVIGATION ------------------------------------------------------
+$('.notifications-icon').on('click', function(){
+  $('.notifications').toggle();
+});
+
+$('.menu-icon').on('click', function(){
+  $('.menu').toggle();
+});
+
+
 $('.page-nav').on('click', function(){
   var page = $(this).attr('data-page');
   var pageId = '#' + page;
@@ -169,6 +178,8 @@ requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added",
   var requestId = snapshot.key();
   var $request = $('<button>').text('connection request').attr('id', requestId).attr('data-callId', request.callId);
   $('#requests').append($request);
+  $('.notifications-icon').css('color', 'red');
+  $('.notifications').show();
   alert('you\'ve got a connection request!');
 });
 
@@ -176,6 +187,8 @@ $('#requests').on('click', 'button', function(){
   var requestId = $(this).attr('id');
   var callId = $(this).attr('data-callId');
   requestsRef.child(requestId).remove();
+  $('.notifications-icon').css('color', 'white');
+  $('.notifications').hide();
   joinCall(callId);
 });
 
@@ -258,6 +271,7 @@ var displayMatchedUsers = function(id, firstname, lastname, info, fee){
 };
 
 $('#searchResults').on('click', '.connectButton', function(){
+  $('.page #searchResults').hide();
   var newRecipientId = $(this).siblings('h2').attr('id');
   var fee = $(this).parent('div').attr('data-fee');
   var newCall = callsRef.push({
