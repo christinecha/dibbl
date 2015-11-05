@@ -1,9 +1,11 @@
+// GLOBAL VARIABLES ---------------------------------------------
 var ref = new Firebase("https://dibbl.firebaseio.com");
 var usersRef = ref.child("users");
 var callsRef = ref.child("calls");
 var requestsRef = ref.child("requests");
 var currentUser;
 var currentCall;
+var serverConnected = false;
 
 
 // USER AUTHENTICATION ------------------------------------------
@@ -229,13 +231,9 @@ function stripeResponseHandler(status, response) {
 jQuery(function($) {
   $('#payment-form').submit(function(event) {
     event.preventDefault();
-
     var $form = $(this);
-
     $form.find('button').prop('disabled', true);
-
     Stripe.card.createToken($form, stripeResponseHandler);
-
     return false;
   });
 });
@@ -297,59 +295,33 @@ var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, t
 
 
 
-//// REQUESTS ------------------------------------------------------
+//// CALL REQUESTS ------------------------------------------------------
 
-$('#searchResults').on('click', '.connectButton', function(){
-  $(this).addClass('sendRequest');
-  $('.createRequest').detach().insertBefore($(this));
-  $('.createRequest').slideDown(500);
-});
-
-$('#searchResults').on('click', '.sendRequest', function(){
-  // Sender enters information about request
-  var recipientId = $(this).siblings('.userName').attr('id');
-  var fee = $(this).parent('div').attr('data-fee');
-  var memo = $(this).siblings('.createRequest').children('#memo').val();
-  var connectNow = $(this).siblings('.createRequest').children('#connectNow').checked;
-  if (connectNow === false) {
-    connectNow = false;
-  } else {
-    connectNow = true;
-  };
-  // 1. Sender creates a new Call.
-  var newCall = callsRef.push({
-    recipient: recipientId,
-    sender: currentUser.uid,
-    active: true,
-  });
-  // 2. Sender creates a new Request with the newCall Id.
-  createRequest(newCall.key(), recipientId, fee, memo, connectNow);
-  initiateCall(newCall.key(), recipientId, fee);
-});
-
-var createRequest = function(callId, recipientId, fee, memo, connectNow){
+var createRequest = function(callId, recipientId, fee){
   var newRequest = requestsRef.push({
     callId: callId,
     recipient: recipientId,
     sender: currentUser.uid,
     fee: fee,
-    memo: memo,
-    connectNow: connectNow,
-    //availability
-    //confirmed
   });
 };
 
-$('.notifications').on('click', '.connection-request', function(){
-  var requestId = $(this).attr('id');
-  var callId = $(this).attr('data-callId');
-  requestsRef.child(requestId).remove();
-  $('.notifications-icon').css('color', 'white');
-  $('.notifications').hide();
-  joinCall(callId);
+// On "CONNECT", User triggers a new Request with that specific Expert.
+$('#searchResults').on('click', '.connectButton', function(){
+  // We collect data about the Expert.
+  var recipientId = $(this).siblings('.userName').attr('id');
+  var fee = $(this).parent('div').attr('data-fee');
+  // User creates a new Call Object.
+  var newCall = callsRef.push({
+    recipient: recipientId,
+    sender: currentUser.uid,
+    initiatedAt: Firebase.ServerValue.TIMESTAMP,
+  });
+  initiateCall(newCall.key(), recipientId, fee);
+  // User creates a new Request Object for that new Call Id.
+  createRequest(newCall.key(), recipientId, fee);
 });
 
-//// USER CALL ------------------------------------------------------------------------
 var initiateCall = function(callId, callRecipientId, fee){
   $('#search').hide();
   $('#callwindow').show();
@@ -357,25 +329,92 @@ var initiateCall = function(callId, callRecipientId, fee){
   var connectionTimeSec = 0;
   var connectionTimeMin = 0;
   var trackTime;
-
   var webrtc = new SimpleWebRTC({
     localVideoEl: 'localVideo',
     remoteVideosEl: 'remotesVideos',
     autoRequestMedia: true
   });
 
+  // Tell us when we're connected to the server (only happens once!)
   webrtc.on('readyToCall', function () {
+    serverConnected = true;
+    joinRoom(callId);
+  });
+
+  var joinRoom = function(callId){
+    // Join that call by Id.
     webrtc.joinRoom(callId);
-    console.log("joined room" + callId);
+    console.log("joined Call at " + callId);
+    var waitSec = 0;
+    var waitTimer;
+    // We wait 30 seconds for the expert to accept the call.
+    waitTimer = setInterval(function(){
+      waitSec+= 1;
+      console.log('waiting... ', waitSec);
+      // If the Expert does not accept in 30 seconds:
+      if (waitSec >= 3) {
+        // stop waiting
+        clearInterval(waitTimer);
+        console.log('could not reach Expert.');
+        // destroy call in database
+        callsRef.child(callId).remove();
+        // leave call in webrtc
+        webrtc.stopLocalVideo();
+        webrtc.leaveRoom();
+        webrtc.disconnect();
+        // return to previous view
+        $('#search').show();
+        $('#callwindow').hide();
+        return false;
+      };
+    }, 1000);
+  };
 
+  if (serverConnected == true) {
+    console.log('joining room');
+    joinRoom(callId);
+  } else {
+    console.log('not connected yet');
+    // it's not connected yet, yo. Wait.
+  };
 
+  $('#hangup').on('click', function(){
+    webrtc.disconnect();
+    console.log('disconnecting');
   });
 
   webrtc.on('videoAdded', function () {
+    clearInterval(waitTimer);
     trackTime = setInterval(function(){
       connectionTimeSec+= 1;
       console.log("# seconds used: ", connectionTimeSec);
     }, 1000);
+    // show the ice connection state
+    if (peer && peer.pc) {
+      var connstate = document.createElement('div');
+      connstate.className = 'connectionstate';
+      container.appendChild(connstate);
+      peer.pc.on('iceConnectionStateChange', function (event) {
+        switch (peer.pc.iceConnectionState) {
+        case 'checking':
+            connstate.innerText = 'Connecting to peer...';
+            break;
+        case 'connected':
+        case 'completed': // on caller side
+            connstate.innerText = 'Connection established.';
+            break;
+        case 'disconnected':
+            connstate.innerText = 'Disconnected.';
+            break;
+        case 'failed':
+            break;
+        case 'closed':
+            connstate.innerText = 'Connection closed.';
+            break;
+        }
+      });
+    }
+
   });
 
   webrtc.on('videoRemoved', function () {
@@ -408,6 +447,15 @@ var initiateCall = function(callId, callRecipientId, fee){
   };
 };
 
+$('.notifications').on('click', '.connection-request', function(){
+  var requestId = $(this).attr('id');
+  var callId = $(this).attr('data-callId');
+  requestsRef.child(requestId).remove();
+  $('.notifications-icon').css('color', 'white');
+  $('.notifications').hide();
+  joinCall(callId);
+});
+
 var joinCall = function(callId){
   $('#callwindow').show();
   var webrtc = new SimpleWebRTC({
@@ -421,7 +469,6 @@ var joinCall = function(callId){
     console.log("joined room" + callId);
   });
 };
-
 
 
 
