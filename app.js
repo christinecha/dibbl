@@ -4,6 +4,7 @@ var express = require("express"),
     bodyParser = require('body-parser'),
     stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI"),
     Firebase = require('firebase'),
+    PeerConnection = require('rtcpeerconnection'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
     app = express();

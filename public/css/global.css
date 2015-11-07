@@ -46,7 +46,8 @@ textarea { width: 100%; }
 .connectButton:hover { background-color: #fbb03b; }
 
 .createRequest { background-color: white; padding: 20px; }
-
+#remotesVideos { display: none; }
+.confirmation { z-index: 500; position: absolute; top: 300px; padding: 30px; background-color: white; display: none; }
 
 
 

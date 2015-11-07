@@ -175,14 +175,18 @@ $('.page-nav').on('click', function(){
   $(pageId).show();
 });
 
+//// DISPLAY REQUESTS ----------------------------------------------------
+
 requestsRef.orderByChild('recipient').equalTo(currentUser.uid).on("child_added", function(snapshot){
   var request = snapshot.val();
   var requestId = snapshot.key();
   var sender;
   usersRef.child(request.sender).once("value", function(senderSnapshot){
     sender = senderSnapshot.val();
-    console.log('meh', sender.firstname);
-    var $request = $('<div>').html('REQUEST FROM ' + sender.firstname + ' ' + sender.lastname).addClass('connection-request').attr('id', requestId).attr('data-callId', request.callId);
+    var $accept = $('<button>').text('accept').attr('id', 'acceptCall');
+    var $memo = $('<input>').attr('type', 'text').attr('id', 'memo');
+    var $decline = $('<button>').text('decline').attr('id', 'declineCall');
+    var $request = $('<div>').html('REQUEST FROM ' + sender.firstname + ' ' + sender.lastname).addClass('connection-request').attr('id', requestId).attr('data-callId', request.callId).append($accept).append($memo).append($decline);
     $('.notifications').append($request);
     $('.notifications-icon').addClass('hasNotifications');
     $('.notifications-number').html($('#requests').children().length);
@@ -295,7 +299,7 @@ var displayMatchedUsers = function(id, firstname, lastname, skills, info, fee, t
 
 
 
-//// CALL REQUESTS ------------------------------------------------------
+//// MAKE A REQUEST ------------------------------------------------------
 
 var createRequest = function(callId, recipientId, fee){
   var newRequest = requestsRef.push({
@@ -317,18 +321,20 @@ $('#searchResults').on('click', '.connectButton', function(){
     sender: currentUser.uid,
     initiatedAt: Firebase.ServerValue.TIMESTAMP,
   });
-  initiateCall(newCall.key(), recipientId, fee);
+  createCall(newCall.key(), recipientId, fee);
   // User creates a new Request Object for that new Call Id.
   createRequest(newCall.key(), recipientId, fee);
 });
 
-var initiateCall = function(callId, callRecipientId, fee){
+var createCall = function(callId, callRecipientId, fee){
   $('#search').hide();
   $('#callwindow').show();
   var totalfee;
   var connectionTimeSec = 0;
   var connectionTimeMin = 0;
   var trackTime;
+  var waitSec = 0;
+  var waitTimer;
   var webrtc = new SimpleWebRTC({
     localVideoEl: 'localVideo',
     remoteVideosEl: 'remotesVideos',
@@ -338,83 +344,77 @@ var initiateCall = function(callId, callRecipientId, fee){
   // Tell us when we're connected to the server (only happens once!)
   webrtc.on('readyToCall', function () {
     serverConnected = true;
-    joinRoom(callId);
+    joinCall(callId);
   });
 
-  var joinRoom = function(callId){
+  var joinCall = function(callId){
+    var status;
     // Join that call by Id.
     webrtc.joinRoom(callId);
-    console.log("joined Call at " + callId);
-    var waitSec = 0;
-    var waitTimer;
+    console.log("Joined Call #" + callId);
     // We wait 30 seconds for the expert to accept the call.
     waitTimer = setInterval(function(){
-      waitSec+= 1;
-      console.log('waiting... ', waitSec);
       // If the Expert does not accept in 30 seconds:
-      if (waitSec >= 3) {
-        // stop waiting
+      if ((waitSec >= 30) || (status === 'declined')){
         clearInterval(waitTimer);
-        console.log('could not reach Expert.');
-        // destroy call in database
-        callsRef.child(callId).remove();
-        // leave call in webrtc
-        webrtc.stopLocalVideo();
-        webrtc.leaveRoom();
-        webrtc.disconnect();
-        // return to previous view
-        $('#search').show();
-        $('#callwindow').hide();
+        leaveRoom(callId);
         return false;
       };
+      // otherwise, keep checking if it's been declined
+      callsRef.child(callId).once("value", function(snapshot){
+        status = snapshot.val().status;
+        console.log(status);
+      });
+      waitSec+= 1;
+      console.log('waiting... ', waitSec);
     }, 1000);
   };
 
+  var leaveRoom = function(callId) {
+    console.log('Left Call #', callId);
+    // destroy call in database
+    callsRef.child(callId).remove();
+    // leave call in webrtc
+    webrtc.stopLocalVideo();
+    webrtc.leaveRoom();
+    webrtc.disconnect();
+    // return to previous view
+    $('#search').show();
+    $('#callwindow').hide();
+  };
+
+  // if we've already connected (AKA not your first rodeo)
   if (serverConnected == true) {
-    console.log('joining room');
-    joinRoom(callId);
+    joinCall(callId);
   } else {
-    console.log('not connected yet');
     // it's not connected yet, yo. Wait.
   };
 
   $('#hangup').on('click', function(){
-    webrtc.disconnect();
-    console.log('disconnecting');
+    clearInterval(waitTimer);
+    leaveRoom(callId);
   });
+
+  var startMeter = function(){
+    callsRef.child(callId).update({
+      status: 'unpaid',
+    });
+    trackTime = setInterval(function(){
+      connectionTimeSec+= 1;
+      callsRef.child(callId).update({
+        length: connectionTimeSec,
+      });
+    }, 1000);
+  };
 
   webrtc.on('videoAdded', function () {
     clearInterval(waitTimer);
-    trackTime = setInterval(function(){
-      connectionTimeSec+= 1;
-      console.log("# seconds used: ", connectionTimeSec);
-    }, 1000);
-    // show the ice connection state
-    if (peer && peer.pc) {
-      var connstate = document.createElement('div');
-      connstate.className = 'connectionstate';
-      container.appendChild(connstate);
-      peer.pc.on('iceConnectionStateChange', function (event) {
-        switch (peer.pc.iceConnectionState) {
-        case 'checking':
-            connstate.innerText = 'Connecting to peer...';
-            break;
-        case 'connected':
-        case 'completed': // on caller side
-            connstate.innerText = 'Connection established.';
-            break;
-        case 'disconnected':
-            connstate.innerText = 'Disconnected.';
-            break;
-        case 'failed':
-            break;
-        case 'closed':
-            connstate.innerText = 'Connection closed.';
-            break;
-        }
-      });
-    }
-
+    $('#callwindow .confirmation').show();
+    $('#callwindow .confirmation .accept').on('click', function(){
+      startMeter();
+      $('#remotesVideos').show();
+      $(this).parent('.confirmation').hide();
+    });
   });
 
   webrtc.on('videoRemoved', function () {
@@ -447,13 +447,29 @@ var initiateCall = function(callId, callRecipientId, fee){
   };
 };
 
-$('.notifications').on('click', '.connection-request', function(){
-  var requestId = $(this).attr('id');
-  var callId = $(this).attr('data-callId');
+
+//// ANSWER A REQUEST ------------------------------------------------------
+
+// Option 1: Accept the call.
+$('.notifications').on('click', '#acceptCall', function(){
+  var requestId = $(this).parent('.connection-request').attr('id');
+  var callId = $(this).parent('.connection-request').attr('data-callId');
   requestsRef.child(requestId).remove();
-  $('.notifications-icon').css('color', 'white');
   $('.notifications').hide();
   joinCall(callId);
+});
+
+// Option 2: Decline
+$('.notifications').on('click', '#declineCall', function(){
+  var requestId = $(this).parent('.connection-request').attr('id');
+  var callId = $(this).parent('.connection-request').attr('data-callId');
+  var memo = $(this).siblings('#memo').val();
+  requestsRef.child(requestId).remove();
+  $(this).parent('.connection-request').remove();
+  callsRef.child(callId).update({
+    memo: memo,
+    status: 'declined',
+  });
 });
 
 var joinCall = function(callId){
@@ -467,6 +483,13 @@ var joinCall = function(callId){
   webrtc.on('readyToCall', function () {
     webrtc.joinRoom(callId);
     console.log("joined room" + callId);
+  });
+
+  $('#hangup').on('click', function(){
+    // leave call in webrtc
+    webrtc.stopLocalVideo();
+    webrtc.leaveRoom();
+    webrtc.disconnect();
   });
 };
 
