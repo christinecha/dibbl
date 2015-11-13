@@ -1,3 +1,4 @@
+
 // GLOBAL VARIABLES ---------------------------------------------
 var ref = new Firebase("https://dibbl.firebaseio.com");
 var usersRef = ref.child("users");
@@ -63,7 +64,8 @@ $('#userSignUp').on('click', function(){
 });
 
 // Log In
-$('#userLogin').on('click', function(){
+$('#login').on('submit', function(e){
+  e.preventDefault();
   var email = $('#email').val();
   var password = $('#password').val();
 
@@ -79,6 +81,8 @@ $('#userLogin').on('click', function(){
       location.href = "/";
     }
   });
+
+  return false;
 });
 
 // Log out

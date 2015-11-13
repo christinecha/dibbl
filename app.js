@@ -21,6 +21,14 @@ app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
+app.get('/:user_id', function (req, res, next) {
+  var user_id = req.params.user_id;
+  usersRef.child(user_id).once("value", function(snapshot){
+    var user = snapshot.val();
+    res.render("profile.ejs", { user: user });
+  });
+});
+
 app.post("/newCustomer", function (req, res) {
   var stripeToken = req.body.stripeToken;
   var userId = req.body.userId;
