@@ -2,36 +2,25 @@
 body { font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
 .small { font-size: 12px; }
+a { color: #66cccc; }
+a:-webkit-any-link { color: #66cccc; }
 a, button { cursor: pointer; }
 hr { margin: 10px 0; }
 textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
 
-#header { background-color: #d9e021; padding: 10px 0; }
-.logo { width: 100px; }
-#header i { font-size: 30px; color: white; cursor: pointer; margin: 0; padding: 10px; }
-.hasNotifications { background-color: rgba(255,255,255,.3); border-radius: 100%; }
-.notifications-number { z-index: 50; margin-left: -54px; position: absolute; text-align: center; margin-top: 18px; font-size: 11px; width: 50px; color: #aaa; }
-.dropdown { display: none; z-index: 100; width: 100%; max-width: 500px; position: absolute; top: 70px; right: 0; background-color: #fafafa; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,.1); }
-.dropdown div { width: 100%; color: #aaa; padding: 15px 20px; text-transform: uppercase; text-decoration: none; cursor: pointer; }
-.dropdown div:hover { background-color: white; }
-.connection-request { display: block; }
+.light-gray { background-color: #fafafa; }
 
-#search { text-align: center; }
-#search .initial-view { padding-top: 100px; }
-#search h2 { color: #888; margin-bottom: 10px; }
-#search input { text-align: center; }
-#search .gray-box { border: none; font-size: 30px; color: #000; background-color: #fafafa; padding: 5px 10px; margin: 0 10px; }
-#query { margin: 0 10px 20px 0 !important; max-width: 100%; }
-#search input[type='number'] { border: none; color: transparent; text-shadow: 0 0 0 black; text-align: center; padding-right: 5px; }
-#search input[type='submit'] { margin-top: 20px; border: none; box-shadow: none; padding: 10px 20px; font-size: 40px; color: white; background-color: #66cccc; border-radius: 10px; cursor: pointer; }
-#search input[type='submit']:hover { background-color: #d9e021; }
-
-#search .standard-view { padding-top: 20px; }
-.standard-view h2 { font-size: 14px !important; }
-.standard-view .gray-box { font-size: 14px !important; }
-.standard-view #query { margin-bottom: 0 !important; max-width: 40%; }
-.standard-view input[type='submit'] { font-size: 16px !important; margin-top: 10px !important; width: 100%; background-color: #d9e021 !important; }
+#nav { padding: 10px 10px; height: 50px; }
+.logo { width: 70px; }
+#nav ul { list-style: none; }
+#nav ul li {
+  text-transform: uppercase;
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 5px;
+  font-size: 12px;
+}
 
 .searchFilter { margin-bottom: 20px; }
 .searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }

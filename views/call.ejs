@@ -10,14 +10,12 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link href="/css/global.scss" rel="stylesheet" type="text/css">
-    <link href="/css/global.scss" rel="stylesheet" type="text/css">
     <!-- JS-->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="//simplewebrtc.com/latest.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="js/global.js"></script>
     <script type="text/javascript">
       Stripe.setPublishableKey('pk_test_aggmgLA6W1bMgAD9bVfscNyL');
     </script>
@@ -25,30 +23,20 @@
   </head>
 
   <body>
-    <div id="nav">
+    <h1>call with <%= call.expertId %></h1>
+    <div id="callwindow" class="page" style="display:none;">
+      <div class="confirmation">
+        <p>Are you sure you want to connect?</p>
+        <button class="accept">ACCEPT</button>
+      </div>
+      <video height="200" id="localVideo"></video>
+      <div id="remotesVideos"></div>
+      <button id="hangup">hang up</button>
     </div>
 
 
-    <h6>login/signup</h6>
-    <img class="splash-logo" src="assets/dibbl-logo-02.png">
-    <h6>transforming one-on-one education</h6>
 
-    <form id="signup" class="container-fluid">
-        <input type="text" id="firstname" placeholder="first name"><br>
-        <input type="text" id="lastname" placeholder="last name"><br>
-        <input type="email" id="email" placeholder="email"><br>
-        <input type="password" id="password" placeholder="password"><br>
-        <p class="loginError"></p>
-        <button id="userLogin" style="display:none;">Login</button>
-        <button id="userSignUp">Sign Up</button>
-        <p class="alreadyUser">Already a user? <a>Log in >></a></p>
-        <p class="notUserYet" style="display:none;">Not a user yet? <a>Sign up >></a></p>
-    </form>
-
-
-    <script type="text/javascript" src="js/nav.js"></script>
-    <script type="text/javascript" src="js/login.js"></script>
-
+    <script type="text/javascript" src="js/index.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

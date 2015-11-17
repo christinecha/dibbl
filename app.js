@@ -7,6 +7,7 @@ var express = require("express"),
     PeerConnection = require('rtcpeerconnection'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
+    callsRef = ref.child("calls"),
     app = express();
 
 var port = process.env.PORT || 8080;
@@ -17,14 +18,30 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", function (req, res) {
-  res.render("index.ejs");
+  res.render("home.ejs");
+});
+
+app.get("/nav", function (req, res) {
+  res.render("_nav.ejs");
 });
 
 app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
-app.get('/:user_id', function (req, res, next) {
+app.get("/search", function (req, res) {
+  res.render("search.ejs");
+});
+
+app.get("/call/:call_id", function (req, res) {
+  var call_id = req.params.call_id;
+  callsRef.child(call_id).once("value", function(snapshot){
+    var call = snapshot.val();
+    res.render("call.ejs", { call: call });
+  })
+});
+
+app.get('user/:user_id', function (req, res, next) {
   var user_id = req.params.user_id;
   usersRef.child(user_id).once("value", function(snapshot){
     var user = snapshot.val();

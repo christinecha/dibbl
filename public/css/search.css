@@ -1,0 +1,14 @@
+#userSearchForm {
+  text-align: center;
+  padding: 10px;
+}
+
+#userSearchForm label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+#userSearchForm input {
+  border: none;
+}
