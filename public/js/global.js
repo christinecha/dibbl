@@ -8,14 +8,14 @@ var serverConnected = false;
 
 // Call Object
 
-var Call = function(callId, callerId, expertId, expertFee){
+var Call = function(callId, callerId, expertId, expertFee) {
   this.callId = callId ? callId : '';
   this.callerId = callerId;
   this.expertId = expertId;
   this.expertFee = expertFee;
 };
 
-Call.prototype.addToFirebase = function(){
+Call.prototype.create = function() {
   var newCall = callsRef.push({
     callerId: this.callerId,
     expertId: this.expertId,
@@ -25,6 +25,47 @@ Call.prototype.addToFirebase = function(){
   this.id = newCall.key();
   console.log('added to firebase: new call id#' + this.id);
   location.href = '/call/' + this.id;
+};
+
+Call.prototype.join = function(callId) {
+  var webrtc = new SimpleWebRTC({
+      localVideoEl: 'localVideo',
+      remoteVideosEl: 'remotesVideos',
+      autoRequestMedia: true
+    });
+
+  webrtc.on('readyToCall', function () {
+    serverConnected = true;
+    webrtc.joinRoom(callId);
+  });
+
+    // var joinCall = function(callId){
+    //   var status;
+    //   // Join that call by Id.
+    //   webrtc.joinRoom(callId);
+    //   console.log("Joined Call #" + callId);
+    //   // We wait 30 seconds for the expert to accept the call.
+    //   waitTimer = setInterval(function(){
+    //     // If the Expert does not accept in 30 seconds:
+    //     if ((waitSec >= 30) || (status === 'declined')){
+    //       clearInterval(waitTimer);
+    //       leaveRoom(callId);
+    //       return false;
+    //     };
+    //     // otherwise, keep checking if it's been declined
+    //     callsRef.child(callId).once("value", function(snapshot){
+    //       status = snapshot.val().status;
+    //       console.log(status);
+    //     });
+    //     waitSec+= 1;
+    //     console.log('waiting... ', waitSec);
+    //   }, 1000);
+    // };
+};
+
+Call.prototype.accept = function(callId) {
+  //update the call in Firebase or whatever
+  this.join(callId);
 };
 
 Call.prototype.displayIncoming = function() {
@@ -133,8 +174,8 @@ var authDataCallback = function(authData){
     });
   } else {
     console.log("User is logged out");
-    currentUser = {};
-    currentUserId = '';
+    currentUser = null;
+    currentUserId = null;
     if ( window.location.pathname.length > 1 ) {
       location.href = "/";
     } else {

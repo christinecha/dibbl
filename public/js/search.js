@@ -41,5 +41,5 @@ $('#searchResults').on('click', '.connectButton', function(){
       expertId = $(this).siblings('.userName').attr('id'),
       expertFee = $(this).parent('div').attr('data-fee');
   var call = new Call(callId, callerId, expertId, expertFee);
-  call.addToFirebase();
+  call.create();
 });
