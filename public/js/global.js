@@ -33,13 +33,14 @@ Call.prototype.displayIncoming = function() {
     var caller = snapshot.val();
     console.log('caller is ', caller);
     var $accept = $('<button>').text('accept').attr('id', 'acceptCall');
-    var $memo = $('<input>').attr('type', 'text').attr('id', 'memo');
+    var $hold = $('<button>').text('hold').attr('id', 'memo');
     var $decline = $('<button>').text('decline').attr('id', 'declineCall');
-    var $request = $('<div>').html('REQUEST FROM ' + caller.firstname + ' ' + caller.lastname).addClass('connection-request').attr('id', this.id).append($accept).append($memo).append($decline);
-    $('.notifications').append($request);
-    $('.notifications-icon').addClass('hasNotifications');
-    $('.notifications-number').html($('#requests').children().length);
-    $('.notifications').show();
+    var $options = $('<div>').append($accept).append($hold).append($decline);
+    var $request = $('<div>').html('from ' + caller.firstname + ' ' + caller.lastname).addClass('connection-request').attr('id', this.id).append($options);
+    $('.live-update.incoming-call').append($request);
+    $('.live-update').slideDown();
+    $('.shortcut.incoming-calls').addClass('urgent');
+    $('.shortcut.incoming-calls .label').text('Incoming Call');
   }.bind(this));
 };
 
@@ -113,14 +114,14 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
 };
 
 User.prototype.loadIncomingCalls = function(userId){
-  callsRef.orderByChild('expertId').equalTo(userId).once("child_added", function(snapshot){
+  callsRef.orderByChild('expertId').equalTo(userId).on("child_added", function(snapshot){
     var call = snapshot.val();
     var incomingCall = new Call(snapshot.key(), call.callerId, call.expertId, call.expertFee);
     incomingCall.displayIncoming();
   });
 };
 
-// Authorization
+// Authorization & Loading Current User Info
 var authDataCallback = function(authData){
   if (authData) {
     console.log("User " + authData.uid + " is logged in with " + authData.provider);

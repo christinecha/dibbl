@@ -37,7 +37,15 @@ textarea { width: 100%; }
   vertical-align: top;
   padding: 7px;
 }
-.shortcut .urgent { background-color: #ff9966; }
+.urgent { background-color: #ff9966; }
+.live-update {
+  display: none;
+  background-color: #ff9966;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
 
 .searchFilter { margin-bottom: 20px; }
 .searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }
