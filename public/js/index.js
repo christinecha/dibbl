@@ -49,22 +49,6 @@ jQuery(function($) {
 
 
 
-// // On "CONNECT", User triggers a new Request with that specific Expert.
-// $('#searchResults').on('click', '.connectButton', function(){
-//   // We collect data about the Expert.
-//   var recipientId = $(this).siblings('.userName').attr('id');
-//   var fee = $(this).parent('div').attr('data-fee');
-//   // User creates a new Call Object.
-//   var newCall = callsRef.push({
-//     recipient: recipientId,
-//     sender: currentUser.uid,
-//     initiatedAt: Firebase.ServerValue.TIMESTAMP,
-//   });
-//   createCall(newCall.key(), recipientId, fee);
-//   // User creates a new Request Object for that new Call Id.
-//   createRequest(newCall.key(), recipientId, fee);
-// });
-//
 // var createCall = function(callId, callRecipientId, fee){
 //   $('#search').hide();
 //   $('#callwindow').show();

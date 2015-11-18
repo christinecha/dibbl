@@ -70,18 +70,18 @@ User.prototype.signupWithEmail = function(firstname, lastname, email, password){
 };
 
 User.prototype.loginWithEmail = function(email, password){
+  console.log('trying to login');
   ref.authWithPassword({
     "email"    : email,
     "password" : password
   }, function(error, authData) {
     console.log("Authenticated successfully with payload:", authData);
-    location.href = "/";
+    location.href = "/search";
   });
 };
 
 User.prototype.addToFirebase = function(userId){
   ref.child("users").child(userId).update({
-    firstName
   });
 };
 
@@ -112,16 +112,23 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   $('#searchResults').append($userInfo);
 };
 
-
+User.prototype.loadIncomingCalls = function(userId){
+  callsRef.orderByChild('expertId').equalTo(userId).once("child_added", function(snapshot){
+    var call = snapshot.val();
+    var incomingCall = new Call(snapshot.key(), call.callerId, call.expertId, call.expertFee);
+    incomingCall.displayIncoming();
+  });
+};
 
 // Authorization
-
 var authDataCallback = function(authData){
   if (authData) {
     console.log("User " + authData.uid + " is logged in with " + authData.provider);
     usersRef.child(authData.uid).on("value", function(snapshot){
       currentUser = snapshot.val();
       currentUserId = snapshot.key();
+      var user = new User();
+      user.loadIncomingCalls(currentUserId);
     });
   } else {
     console.log("User is logged out");
@@ -133,6 +140,6 @@ var authDataCallback = function(authData){
       console.log('already home');
     };
   }
-}
+};
 
 ref.onAuth(authDataCallback);

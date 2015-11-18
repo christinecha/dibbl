@@ -10,6 +10,7 @@
 //   }
 // }, 2000);
 
+
 $("#search input[type='number']").keypress(function (evt) {
     evt.preventDefault();
 });
@@ -32,4 +33,13 @@ $('#userSearchForm').on('submit', function(e){
     };
   });
   return false;
+});
+
+$('#searchResults').on('click', '.connectButton', function(){
+  var callId = '',
+      callerId = currentUserId,
+      expertId = $(this).siblings('.userName').attr('id'),
+      expertFee = $(this).parent('div').attr('data-fee');
+  var call = new Call(callId, callerId, expertId, expertFee);
+  call.addToFirebase();
 });

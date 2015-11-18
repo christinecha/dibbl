@@ -1,34 +1,31 @@
 $('.alreadyUser').on('click', function(){
-  $('#signup').attr('id', 'login');
+  $('#login-signup').attr('data-function', 'login');
   $('.login-only').show();
   $('.signup-only').hide();
 });
 
 $('.notUserYet').on('click', function(){
-  $('#login').attr('id', 'signup');
+  $('#login-signup').attr('data-function', 'signup');
   $('.signup-only').show();
   $('.login-only').hide();
 });
 
 //Sign Up With Email
-$('#signup').on('submit', function(e){
+$('#login-signup').on('submit', function(e){
+  console.log('he');
   e.preventDefault();
   var firstname = $('#firstname').val(),
       lastname = $('#lastname').val(),
       email = $('#email').val(),
       password = $('#password').val();
   var user = new User();
-  user.signupWithEmail(firstname, lastname, email, password);
-  return false;
-});
-
-// Log In
-$('#login').on('submit', function(e){
-  e.preventDefault();
-  var email = $('#email').val(),
-      password = $('#password').val();
-  var user = new User();
-  user.loginWithEmail(email, password);
+  if ($(this).attr('data-function') == 'signup'){
+    console.log("trying to sign you up");
+    user.signupWithEmail(firstname, lastname, email, password);
+  } else {
+    console.log("trying to log you in");
+    user.loginWithEmail(email, password);
+  }
   return false;
 });
 
