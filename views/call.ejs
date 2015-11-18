@@ -16,6 +16,12 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="//simplewebrtc.com/latest.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="//static.opentok.com/webrtc/v2.2/js/TB.min.js"></script>
+    <script type="text/javascript">
+        var apiKey = '<%= apiKey %>';
+        var sessionId = '<%= sessionId %>';
+        var token = '<%= token %>';
+    </script>
     <script type="text/javascript" src="../js/global.js"></script>
     <script type="text/javascript">
       Stripe.setPublishableKey('pk_test_aggmgLA6W1bMgAD9bVfscNyL');
@@ -25,7 +31,10 @@
 
   <body>
     <div id="header"></div>
-    <div id='callId' data-id=<%=call.expertId%>></div>
+
+    <div id="publisher"></div>
+    <div id="subscribers"></div>
+
     <div class="confirmation">
       <p>Are you sure you want to connect?</p>
       <button class="accept">ACCEPT</button>

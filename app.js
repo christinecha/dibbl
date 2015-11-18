@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require("express"),
+    app = express(),
     bodyParser = require('body-parser'),
     stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI"),
     Firebase = require('firebase'),
@@ -8,7 +9,9 @@ var express = require("express"),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
     callsRef = ref.child("calls"),
-    app = express();
+    http = require('http').Server(app),
+    OpenTok = require('opentok'),
+    opentok = new OpenTok('45413282', 'ba884adc457d17deeae52c76e86b404512e51247');
 
 var port = process.env.PORT || 8080;
 
@@ -16,6 +19,14 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Create a session and store it in the express app
+opentok.createSession(function(err, session) {
+  if (err) throw err;
+  app.set('sessionId', session.sessionId);
+  // We will wait on starting the app until this is done
+  init();
+});
 
 app.get("/", function (req, res) {
   res.render("home.ejs");
@@ -34,11 +45,15 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/call/:call_id", function (req, res) {
-  var call_id = req.params.call_id;
-  callsRef.child(call_id).once("value", function(snapshot){
-    var call = snapshot.val();
-    res.render("call.ejs", { call: call });
-  })
+  var sessionId = app.get('sessionId'),
+    // generate a fresh token for this client
+    token = opentok.generateToken(sessionId);
+
+  res.render('call.ejs', {
+    apiKey: '45413282',
+    sessionId: sessionId,
+    token: token
+  });
 });
 
 app.get('user/:user_id', function (req, res, next) {
@@ -77,6 +92,8 @@ app.post("/charge", function (req, res) {
   });
 });
 
-app.listen(port, function() {
-    console.log('Our app is running on http://localhost:' + port);
-});
+function init() {
+    http.listen(port, function() {
+        console.log('Our app is running on http://localhost:' + port);
+    });
+};

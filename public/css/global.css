@@ -8,6 +8,7 @@ a, button { cursor: pointer; }
 textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
 
+.secure { display: none; }
 .light-gray { background-color: #fafafa; }
 
 .nav { padding: 10px 10px; height: 50px; }

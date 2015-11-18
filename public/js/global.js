@@ -22,7 +22,7 @@ Call.prototype.create = function() {
     expertFee: this.expertFee,
     requestedAt: Firebase.ServerValue.TIMESTAMP,
   });
-  this.id = newCall.key();
+  this.callId = newCall.key();
   console.log('added to firebase: new call id#' + this.id);
   location.href = '/call/' + this.id;
 };
@@ -37,13 +37,13 @@ Call.prototype.join = function(callId) {
   webrtc.on('readyToCall', function () {
     serverConnected = true;
     webrtc.joinRoom(callId);
+    console.log("Joined Call #" + callId);
   });
 
     // var joinCall = function(callId){
     //   var status;
     //   // Join that call by Id.
     //   webrtc.joinRoom(callId);
-    //   console.log("Joined Call #" + callId);
     //   // We wait 30 seconds for the expert to accept the call.
     //   waitTimer = setInterval(function(){
     //     // If the Expert does not accept in 30 seconds:
@@ -64,21 +64,48 @@ Call.prototype.join = function(callId) {
 };
 
 Call.prototype.accept = function(callId) {
-  //update the call in Firebase or whatever
-  this.join(callId);
+  callsRef.child(callId).update({
+    status: 'in progress',
+  });
+  location.href = '/call/' + callId;
+};
+
+Call.prototype.hold = function(callId) {
+  var holdTime = $('#holdTime').val();
+  holdTime*=60;
+
+  var holdTimer = setInterval(function(){
+    callsRef.child(callId).update({
+      status: 'on hold',
+      holdTime: holdTime,
+    });
+    holdTime-=1;
+    if (holdTime <= 0) {
+      console.log('hold is over.');
+      clearInterval(holdTimer);
+    };
+  }, 1000);
+};
+
+Call.prototype.decline = function(callId) {
+  callsRef.child(callId).remove();
 };
 
 Call.prototype.displayIncoming = function() {
   console.log('displayIncoming');
   usersRef.child(this.callerId).once("value", function(snapshot){
     var caller = snapshot.val();
-    console.log('caller is ', caller);
-    var $accept = $('<button>').text('accept').attr('id', 'acceptCall');
-    var $hold = $('<button>').text('hold').attr('id', 'memo');
-    var $decline = $('<button>').text('decline').attr('id', 'declineCall');
-    var $options = $('<div>').append($accept).append($hold).append($decline);
-    var $request = $('<div>').html('from ' + caller.firstname + ' ' + caller.lastname).addClass('connection-request').attr('id', this.id).append($options);
-    $('.live-update.incoming-call').append($request);
+
+    var $callerInfo = $('<p>').html('from ' + caller.firstname + ' ' + caller.lastname),
+        $accept = $('<button>').text('accept').attr('id', 'acceptCall'),
+        $hold = $('<button>').text('hold').attr('id', 'holdCall'),
+        $holdTime = $('<input>').attr('type', 'number').attr('id', 'holdTime'),
+        $decline = $('<button>').text('decline').attr('id', 'declineCall');
+
+    var $options = $('<div>').append($accept).append($hold).append($holdTime).append($decline);
+
+    var $request = $('<div>').addClass('incoming-call').attr('id', this.callId).append($callerInfo).append($options);
+    $('.live-update').append($request);
     $('.live-update').slideDown();
     $('.shortcut.incoming-calls').addClass('urgent');
     $('.shortcut.incoming-calls .label').text('Incoming Call');
@@ -87,7 +114,6 @@ Call.prototype.displayIncoming = function() {
 
 
 // User Object
-
 var User = function(){};
 
 User.prototype.signupWithEmail = function(firstname, lastname, email, password){
@@ -161,27 +187,3 @@ User.prototype.loadIncomingCalls = function(userId){
     incomingCall.displayIncoming();
   });
 };
-
-// Authorization & Loading Current User Info
-var authDataCallback = function(authData){
-  if (authData) {
-    console.log("User " + authData.uid + " is logged in with " + authData.provider);
-    usersRef.child(authData.uid).on("value", function(snapshot){
-      currentUser = snapshot.val();
-      currentUserId = snapshot.key();
-      var user = new User();
-      user.loadIncomingCalls(currentUserId);
-    });
-  } else {
-    console.log("User is logged out");
-    currentUser = null;
-    currentUserId = null;
-    if ( window.location.pathname.length > 1 ) {
-      location.href = "/";
-    } else {
-      console.log('already home');
-    };
-  }
-};
-
-ref.onAuth(authDataCallback);
