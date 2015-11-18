@@ -21,8 +21,8 @@ app.get("/", function (req, res) {
   res.render("home.ejs");
 });
 
-app.get("/nav", function (req, res) {
-  res.render("_nav.ejs");
+app.get("/header", function (req, res) {
+  res.render("_header.ejs");
 });
 
 app.get("/login", function (req, res) {

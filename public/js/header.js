@@ -1,4 +1,4 @@
-$('#nav').load('/nav');
+$('#header').load('/header');
 
 $('.notifications-icon').on('click', function(){
   $('.menu').hide();
