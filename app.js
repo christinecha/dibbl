@@ -9,7 +9,7 @@ var express = require("express"),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
     callsRef = ref.child("calls"),
-    sockets = require('signal-master');
+    http = require('http').Server(app);
 
 var port = process.env.PORT || 8080;
 
@@ -80,5 +80,6 @@ app.post("/charge", function (req, res) {
   });
 });
 
-var server = app.listen(port);
-sockets(server, "dev_config.json");
+http.listen(port, function() {
+    console.log('Our app is running on http://localhost:' + port);
+});

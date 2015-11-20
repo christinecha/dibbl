@@ -32,7 +32,7 @@ Call.prototype.join = function(callId) {
       localVideoEl: 'localVideo',
       remoteVideosEl: 'remotesVideos',
       autoRequestMedia: true,
-      url: 'localhost',
+      url: 'https://dibbl.herokuapp.com/',
     });
 
   webrtc.on('readyToCall', function () {

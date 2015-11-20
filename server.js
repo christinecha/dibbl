@@ -113,8 +113,8 @@ if (config.uid) process.setuid(config.uid);
 
 var httpUrl;
 if (config.server.secure) {
-    httpUrl = "https://localhost:" + port;
+    httpUrl = "https://dibbl.herokuapp.com/";
 } else {
-    httpUrl = "http://localhost:" + port;
+    httpUrl = "http://dibbl.herokuapp.com/";
 }
 console.log(yetify.logo() + ' -- signal master is running at: ' + httpUrl);
