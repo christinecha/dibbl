@@ -1,4 +1,9 @@
 *:-webkit-any-link, *:focus { outline: none; }
+button, input {
+  border: none;
+  box-shadow: none;
+  font-family: 'Montserrat', sans-serif;
+}
 body { font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
 .small { font-size: 12px; }
@@ -8,8 +13,20 @@ a, button { cursor: pointer; }
 textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
 
+.inline { display: inline-block; }
 .secure { display: none; }
 .light-gray { background-color: #fafafa; }
+.big-blue {
+  background-color: #66cccc;
+  background-image: url('../assets/button-shadow_blue.png');
+  background-size: 100%;
+  color: white;
+  font-size: 18px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 10px 60px;
+  border-radius: 30px;
+}
 
 .nav { padding: 10px 10px; height: 50px; }
 .logo { width: 70px; }

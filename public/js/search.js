@@ -19,20 +19,20 @@ $('#userSearchForm').on('submit', function(e){
   e.preventDefault();
   var query = $("#query").val();
   var time = $("#query-time").val();
-  console.log('searching for an expert in ' + query);
-  usersRef.on("child_added", function(snapshot){
-    var userObj = snapshot.val();
-    var skills = userObj.skills;
-    if (skills) {
-      if (skills.indexOf(query) < 0) {
-        // do nothing;
-      } else {
-        var user = new User();
-        user.displayAsSearchResult(snapshot.key(), userObj, time);
-      }
-    };
-  });
-  return false;
+  location.href = "/search" + query + time;
+};
+
+usersRef.on("child_added", function(snapshot){
+  var userObj = snapshot.val();
+  var skills = userObj.skills;
+  if (skills) {
+    if (skills.indexOf(query) < 0) {
+      // do nothing;
+    } else {
+      var user = new User();
+      user.displayAsSearchResult(snapshot.key(), userObj, time);
+    }
+  };
 });
 
 $('#searchResults').on('click', '.connectButton', function(){

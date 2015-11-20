@@ -8,10 +8,7 @@ var express = require("express"),
     PeerConnection = require('rtcpeerconnection'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
-    callsRef = ref.child("calls"),
-    sockets = require('signal-master');
-
-var port = process.env.PORT || 8080;
+    callsRef = ref.child("calls");
 
 app.set('view engine', 'ejs');
 
@@ -30,6 +27,10 @@ app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
+app.get("/search", function (req, res) {
+  res.render("search.ejs");
+})
+
 app.get("/search:query:time", function (req, res) {
   var query = req.params.query,
       time = req.params.time;
@@ -41,6 +42,7 @@ app.get("/search:query:time", function (req, res) {
 
 app.get("/call/:call_id", function (req, res) {
   var call_id = req.params.call_id;
+  console.log(httpUrl);
   res.render("call.ejs", { call_id: call_id });
 });
 
@@ -80,5 +82,39 @@ app.post("/charge", function (req, res) {
   });
 });
 
-var server = app.listen(port);
-sockets(server, "dev_config.json");
+
+/*global console*/
+var yetify = require('yetify'),
+    config = require('getconfig'),
+    fs = require('fs'),
+    sockets = require('./sockets'),
+    port = parseInt(process.env.PORT || config.server.port, 10),
+    server_handler = function (req, res) {
+        res.writeHead(404);
+        res.end();
+    },
+    server = null;
+
+// Create an http(s) server instance to that socket.io can listen to
+if (config.server.secure) {
+    server = require('https').Server({
+        key: fs.readFileSync(config.server.key),
+        cert: fs.readFileSync(config.server.cert),
+        passphrase: config.server.password
+    }, server_handler);
+} else {
+    server = require('http').Server(server_handler);
+}
+server = app.listen(port);
+
+sockets(server, config);
+
+if (config.uid) process.setuid(config.uid);
+
+var httpUrl;
+if (config.server.secure) {
+    httpUrl = "https://localhost:" + port;
+} else {
+    httpUrl = "http://localhost:" + port;
+}
+console.log(yetify.logo() + ' -- signal master is running at: ' + httpUrl);

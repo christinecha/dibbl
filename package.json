@@ -2,10 +2,9 @@
   "name": "dibbl",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "global.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -18,15 +17,28 @@
   },
   "homepage": "https://github.com/christinecha/dibbl#readme",
   "dependencies": {
+    "async": "^1.5.0",
     "body-parser": "^1.14.1",
     "cors": "^2.7.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "firebase": "^2.3.1",
+    "getconfig": "^2.2.0",
     "node-sass": "^3.4.2",
+    "node-uuid": "^1.4.7",
     "opentok": "^2.3.0",
+    "precommit-hook": "^3.0.0",
+    "redis": "^2.3.1",
     "rtcpeerconnection": "^3.1.6",
+    "signal-master": "^0.2.2",
     "socket.io": "^1.3.7",
-    "stripe": "^4.0.0"
-  }
+    "stripe": "^4.0.0",
+    "underscore": "^1.8.3",
+    "yetify": "^0.1.0"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
 }

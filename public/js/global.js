@@ -31,7 +31,8 @@ Call.prototype.join = function(callId) {
   var webrtc = new SimpleWebRTC({
       localVideoEl: 'localVideo',
       remoteVideosEl: 'remotesVideos',
-      autoRequestMedia: true
+      autoRequestMedia: true,
+      url: 'localhost',
     });
 
   webrtc.on('readyToCall', function () {

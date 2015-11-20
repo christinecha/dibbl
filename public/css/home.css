@@ -3,3 +3,35 @@
   background-size: cover;
   height: 500px;
 }
+
+.search-container {
+  text-align: center;
+  width: 300px;
+}
+
+#search h4 { color: #999; }
+
+#search h4, input {
+  margin: 5px;
+  text-align: center;
+}
+
+#search input[type="text"] {
+  width: 100%;
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+#search input[type="number"] {
+  width: 50px;
+  padding: 5px 10px;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+#home-section-2 {
+  background-color: #ff9966;
+  color: #fff;
+  height: 500px;
+}
