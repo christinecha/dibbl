@@ -4,7 +4,7 @@
   "description": "",
   "main": "global.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -35,10 +35,5 @@
     "stripe": "^4.0.0",
     "underscore": "^1.8.3",
     "yetify": "^0.1.0"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }

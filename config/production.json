@@ -2,7 +2,7 @@
   "isDev": false,
   "logLevel": 3,
   "server": {
-    "port": "",
+    "port": "8888",
     "/* secure */": "/* whether this connects via https */",
     "secure": true,
     "key": "config/sslcerts/key.pem",

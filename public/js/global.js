@@ -23,23 +23,27 @@ Call.prototype.create = function() {
     requestedAt: Firebase.ServerValue.TIMESTAMP,
   });
   this.callId = newCall.key();
-  console.log('added to firebase: new call id#' + this.id);
-  location.href = '/call/' + this.id;
+  usersRef.child(this.expertId).once("value", function(snapshot){
+    var expert = snapshot.val();
+    console.log(expert);
+    $.post( "/call", expert);
+  });
 };
 
 Call.prototype.join = function(callId) {
-  var webrtc = new SimpleWebRTC({
-      localVideoEl: 'localVideo',
-      remoteVideosEl: 'remotesVideos',
-      autoRequestMedia: true,
-      url: 'https://dibbl.herokuapp.com/',
-    });
 
-  webrtc.on('readyToCall', function () {
-    serverConnected = true;
-    webrtc.joinRoom(callId);
-    console.log("Joined Call #" + callId);
-  });
+  // var webrtc = new SimpleWebRTC({
+  //     localVideoEl: 'localVideo',
+  //     remoteVideosEl: 'remotesVideos',
+  //     autoRequestMedia: true,
+  //     url: '/',
+  //   });
+  //
+  // webrtc.on('readyToCall', function () {
+  //   serverConnected = true;
+  //   webrtc.joinRoom(callId);
+  //   console.log("Joined Call #" + callId);
+  // });
 
     // var joinCall = function(callId){
     //   var status;

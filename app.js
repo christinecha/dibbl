@@ -8,8 +8,7 @@ var express = require("express"),
     PeerConnection = require('rtcpeerconnection'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
-    callsRef = ref.child("calls"),
-    http = require('http').Server(app);
+    callsRef = ref.child("calls");
 
 var port = process.env.PORT || 8080;
 
@@ -30,6 +29,10 @@ app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
+app.get("/search", function (req, res) {
+  res.render("search.ejs");
+});
+
 app.get("/search:query:time", function (req, res) {
   var query = req.params.query,
       time = req.params.time;
@@ -39,12 +42,28 @@ app.get("/search:query:time", function (req, res) {
   });
 });
 
-app.get("/call/:call_id", function (req, res) {
-  var call_id = req.params.call_id;
-  res.render("call.ejs", { call_id: call_id });
+app.post("/call", function (req, res) {
+  console.log(req.body.phone);
+  var expertPhone = req.body.phone;
+
+  var accountSid = 'ACa9661f788bc6132577b3341523890490';
+  var authToken = "31fba9f52896b8b46064faf7884b5d4f";
+  var client = require('twilio')(accountSid, authToken);
+
+  client.calls.create({
+      url: "http://demo.twilio.com/docs/voice.xml",
+      to: expertPhone,
+      from: "+12016135398"
+  }, function(error, message) {
+    if (error) {
+        console.log(error.message);
+    }
+  });
+
+  res.render("call.ejs");
 });
 
-app.get('user/:user_id', function (req, res, next) {
+app.get('user/:user_id', function (req, res) {
   var user_id = req.params.user_id;
   usersRef.child(user_id).once("value", function(snapshot){
     var user = snapshot.val();
@@ -80,6 +99,7 @@ app.post("/charge", function (req, res) {
   });
 });
 
-http.listen(port, function() {
+
+app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port);
 });
