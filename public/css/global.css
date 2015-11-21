@@ -38,31 +38,7 @@ textarea { width: 100%; }
   margin-top: 5px;
   font-size: 12px;
 }
-.shortcuts {
-  background-color: #66cccc;
-  text-align: center;
-  color: #fff;
-}
-.shortcut {
-  display: inline-block;
-  margin: 0 10px;
-  padding: 10px;
-}
-.shortcut i { font-size: 30px; }
-.shortcut .label {
-  display: inline-block;
-  font-size: 14px;
-  vertical-align: top;
-  padding: 7px;
-}
-.urgent { background-color: #ff9966; }
-.live-update {
-  display: none;
-  background-color: #ff9966;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
+.nav ul li i { margin-right: 5px; }
 
 
 .searchFilter { margin-bottom: 20px; }

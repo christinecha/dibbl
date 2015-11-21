@@ -15,14 +15,11 @@ var Call = function(callId, callerId, expertId, expertFee) {
   this.expertFee = expertFee;
 };
 
+Call.prototype.trigger = function() {
+  $('.callBox-layer').show();
+};
+
 Call.prototype.create = function() {
-  var newCall = callsRef.push({
-    callerId: this.callerId,
-    expertId: this.expertId,
-    expertFee: this.expertFee,
-    requestedAt: Firebase.ServerValue.TIMESTAMP,
-  });
-  this.callId = newCall.key();
   usersRef.child(this.expertId).once("value", function(snapshot){
     var expert = snapshot.val();
     console.log(expert);
