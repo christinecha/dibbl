@@ -53,13 +53,19 @@ app.get("/search", function (req, res) {
   });
 });
 
-app.get("/addConnectionToFirebase", function (req, res) {
+app.post("/addCallToFirebase", function (req, res) {
   //require the Twilio module and create a REST client
   var client = require('twilio')(twilioAccountSID, twilioAuthToken);
+  var callSid = req.body.callId;
 
-  client.calls('CA8569bf723f2dce20fa20293620680496').get(function(err, call) {
-  	ref.child("calls").push(call);
+  client.calls.list({
+    ParentCallSid: callSid,
+  }, function(err, data) {
+    data.calls.forEach(function(call) {
+      ref.child("calls").push(call);
+    });
   });
+
 });
 
 app.get('user/:user_id', function (req, res) {

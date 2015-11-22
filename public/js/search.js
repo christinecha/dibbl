@@ -21,11 +21,15 @@ $('#userSearchForm').on('submit', function(e){
   return false;
 });
 
+// $('#test').on('click', function(){
+//     console.log('clicked');
+//     $.post("/addConnectionToFirebase", {callId: 'CA71d775bfc4a4ade0e7fa1f334c714830'});
+// });
 
 Twilio.Device.setup(token);
 
 Twilio.Device.disconnect(function(connection) {
-    $.get("/addConnectionToFirebase");
+  $.post("/addCallToFirebase", {callId: connection.mediaStream.callSid});
 });
 
 $('#hangup').click(function() {
