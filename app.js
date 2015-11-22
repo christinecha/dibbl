@@ -6,6 +6,8 @@ var express = require("express"),
     stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI"),
     Firebase = require('firebase'),
     PeerConnection = require('rtcpeerconnection'),
+    twilioAccountSID = 'ACa9661f788bc6132577b3341523890490',
+    twilioAuthToken = "31fba9f52896b8b46064faf7884b5d4f",
     twilio = require('twilio'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
@@ -19,7 +21,14 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", function (req, res) {
-  res.render("home.ejs");
+  var callData = [];
+
+  twilio.calls.list(function(err, data) {
+    data.calls.forEach(function(call) {
+        callData.push(call);
+    });
+    res.render("home.ejs", {calldata: callData});
+  });
 });
 
 app.get("/header", function (req, res) {
@@ -31,59 +40,27 @@ app.get("/login", function (req, res) {
 });
 
 app.get("/search", function (req, res) {
-  res.render("search.ejs");
-});
-
-app.get("/search:query:time", function (req, res) {
-  var query = req.params.query,
-      time = req.params.time;
-  res.render("search.ejs", {
-    query: query,
-    time: time,
-  });
-});
-
-app.get("/calls", function (req, res) {
-  // Create an object which will generate a capability token
-  // Replace these two arguments with your own account SID
-  // and auth token:
   var capability = new twilio.Capability(
       'ACa9661f788bc6132577b3341523890490',
       "31fba9f52896b8b46064faf7884b5d4f"
   );
 
-  // Give the capability generator permission to accept incoming
-  // calls to the ID "kevin"
-  capability.allowClientIncoming('kevin');
-
-  // Give the capability generator permission to make outbound calls,
-  // Using the following TwiML app to request call handling instructions:
+  capability.allowClientIncoming('browser-bot');
   capability.allowClientOutgoing('AP1f84916b6c4873c17e559d518be948da');
 
-  // Render an HTML page which contains our capability token
-  res.render('calls.ejs', {
+  res.render('search.ejs', {
       token:capability.generate()
   });
 });
-//
-// app.post("/call", function (req, res) {
-//   var expertPhone = req.body.phone;
-//
-//   var accountSid = 'ACa9661f788bc6132577b3341523890490';
-//   var authToken = "31fba9f52896b8b46064faf7884b5d4f";
-//   var client = require('twilio')(accountSid, authToken);
-//
-//   client.calls.create({
-//       url: "http://demo.twilio.com/docs/voice.xml",
-//       to: expertPhone,
-//       from: "+12016135398"
-//   }, function(error, message) {
-//       if (error) {
-//           console.log(error.message);
-//       }
-//   });
-// });
 
+app.get("/addConnectionToFirebase", function (req, res) {
+  //require the Twilio module and create a REST client
+  var client = require('twilio')(twilioAccountSID, twilioAuthToken);
+
+  client.calls('CA8569bf723f2dce20fa20293620680496').get(function(err, call) {
+  	ref.child("calls").push(call);
+  });
+});
 
 app.get('user/:user_id', function (req, res) {
   var user_id = req.params.user_id;

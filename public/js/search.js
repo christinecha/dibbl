@@ -1,16 +1,3 @@
-// //// USER SEARCH ------------------------------------------------------
-// var suggestedtopics = ['photoshop', 'jazz guitar', 'making sushi', 'yoga poses'];
-// var b = 0;
-// setInterval(function(){
-//   $('#query').attr('placeholder', suggestedtopics[b]);
-//   if (b < 3) {
-//     b+= 1;
-//   } else {
-//     b = 0;
-//   }
-// }, 2000);
-
-
 $("#search input[type='number']").keypress(function (evt) {
     evt.preventDefault();
 });
@@ -34,11 +21,46 @@ $('#userSearchForm').on('submit', function(e){
   return false;
 });
 
-$('#searchResults').on('click', '.connectButton', function(){
-  var callId = '',
-      callerId = currentUserId,
-      expertId = $(this).siblings('.userName').attr('id'),
-      expertFee = $(this).parent('div').attr('data-fee');
-  var call = new Call(callId, callerId, expertId, expertFee);
-  call.trigger();
+
+Twilio.Device.setup(token);
+
+Twilio.Device.disconnect(function(connection) {
+    $.get("/addConnectionToFirebase");
 });
+
+$('#hangup').click(function() {
+    Twilio.Device.disconnectAll();
+});
+
+$('#searchResults').on('click', '.connectButton', function(){
+    var callId = '',
+        callerId = currentUserId,
+        expertId = $(this).siblings('.userName').attr('id'),
+        expertFee = $(this).parent('div').attr('data-fee');
+    var call = new Call(callId, callerId, expertId, expertFee);
+    $('.callBox-layer').show();
+    var expert = call.expert();
+    console.log(expert.phone);
+
+    $('#makeCall').on('click', function(){
+      console.log('calling', expert.phone);
+      var connection = Twilio.Device.connect({
+          CallerId:     '+19175887518',
+          PhoneNumber:  expert.phone,
+      });
+      setInterval(function(){
+        console.log(connection.mediaStream.callSid);
+      }, 1000);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+////

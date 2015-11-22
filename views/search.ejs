@@ -17,6 +17,7 @@
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="//simplewebrtc.com/latest.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.2/twilio.min.js"></script>
     <script type="text/javascript" src="js/global.js"></script>
     <script type="text/javascript">
       Stripe.setPublishableKey('pk_test_aggmgLA6W1bMgAD9bVfscNyL');
@@ -58,12 +59,14 @@
           Warning: You will be charged $1 Million per minute. By clicking 'connect', you agree to pay this. Ok?
         </p>
         <button id="makeCall">Call Christine</button>
+        <button id="hangup">Hangup</button>
         </div>
       </div>
     </div>
 
-
-
+    <script>
+      var token = '<%= token %>';
+    </script>
     <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
 

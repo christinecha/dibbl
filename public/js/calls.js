@@ -21,7 +21,7 @@ $('#hangup').click(function() {
     Twilio.Device.disconnectAll();
 });
 
-$('#call').on('click', function() {
+$('#makeCall').on('click', function() {
     Twilio.Device.connect({
         CallerId:   '+19175887518',
         PhoneNumber:'+13477864325'
