@@ -1,13 +1,15 @@
 #home-section-1 {
   background-image: url('../assets/background_desk1.jpeg');
   background-size: cover;
-  height: 500px;
+  height: 100vh;
 }
 
-.search-container {
+.search-container, .mailinglist-container {
+  margin-top: 100px;
   text-align: center;
-  width: 300px;
 }
+
+#search, #mailinglist { max-width: 550px; }
 
 #search h4 { color: #999; }
 
@@ -16,18 +18,23 @@
   text-align: center;
 }
 
-#search input[type="text"] {
+#search input[type="text"], #mailinglist input[type="email"] {
   width: 100%;
-  padding: 5px 10px;
+  padding: 10px;
   background-color: #fff;
   font-size: 18px;
 }
 
 #search input[type="number"] {
-  width: 50px;
-  padding: 5px 10px;
+  width: 90px;
+  padding: 10px;
   background-color: #fff;
   font-size: 18px;
+}
+
+.confirmation-container {
+  height: 30px;
+  color: #ff9966;
 }
 
 #home-section-2 {

@@ -12,6 +12,7 @@ a:-webkit-any-link { color: #66cccc; }
 a, button { cursor: pointer; }
 textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
+.hidden { display: none; }
 
 .inline { display: inline-block; }
 .secure { display: none; }
@@ -19,6 +20,8 @@ textarea { width: 100%; }
 .big-blue {
   background-color: #66cccc;
   background-image: url('../assets/button-shadow_blue.png');
+  background-repeat: no-repeat;
+  background-position-x: 50px;
   background-size: 100%;
   color: white;
   font-size: 18px;
