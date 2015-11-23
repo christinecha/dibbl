@@ -22,8 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", function (req, res) {
   var callData = [];
-
-  twilio.calls.list(function(err, data) {
+  var client = twilio(twilioAccountSID, twilioAuthToken);
+  client.calls.list(function(err, data) {
     data.calls.forEach(function(call) {
         callData.push(call);
     });
@@ -60,6 +60,7 @@ app.post("/addCallToFirebase", function (req, res) {
 
   client.calls.list({
     ParentCallSid: callSid,
+    // To!: null,
   }, function(err, data) {
     data.calls.forEach(function(call) {
       ref.child("calls").push(call);
