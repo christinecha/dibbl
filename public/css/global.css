@@ -43,6 +43,10 @@ textarea { width: 100%; }
 }
 .nav ul li i { margin-right: 5px; }
 
+.title-bar {
+  padding: 25px;
+}
+
 
 .searchFilter { margin-bottom: 20px; }
 .searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }
