@@ -9,7 +9,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" type="text/css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="/css/global.scss" rel="stylesheet" type="text/css">
+    <link href="/css/global.css" rel="stylesheet" type="text/css">
+    <link href="/css/account.css" rel="stylesheet" type="text/css">
     <!-- JS-->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
@@ -24,23 +25,7 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <div id="header" class="row">
-        <div class="text-left col-xs-6">
-          <img src="/assets/dibbl-logo-02.png" class="logo" />
-        </div>
-        <div class="text-right col-xs-6">
-          <i class="fa fa-bell notifications-icon"></i>
-          <span class="notifications-number">0</span>
-          <i class="fa fa-bars menu-icon"></i>
-        </div>
-        <div class="notifications dropdown">
-        </div>
-        <div class="menu dropdown">
-          <div class="page-nav" data-page="search">find an expert</div>
-          <div class="page-nav" data-page="account">my account</div>
-          <div class="logout">logout</div>
-        </div>
+      <div id="header">;
       </div>
 
       <div class="page" id="account" style="display:none;">
@@ -91,63 +76,9 @@
       </div>
 
 
-      <div class="page" id="search">
-        <form id="userSearchForm">
-          <div class="initial-view">
-            <h2>I'd like to speak to an industry leader about</h2>
-            <input id="query" placeholder="fill in the blank" width="100%" class="gray-box">
-            <h2 style="display:inline-block;">for</h2>
-            <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box">
-            <h2 style="display:inline-block;">minutes</h2>
-            <input type="submit" value="GO">
-          </div>
-        </form>
-        <div class="searchFilter" style="display:none;">
-          <hr style="border: 2px solid #eee;">
-          <span>SORT BY:</span>
-          <span>RATING</span>
-          <span>PRICE</span>
-          <span>NAME</span>
-        </div>
-        <div id="searchResults">
-        </div>
-        <div class="createRequest" style="display:none;">
-          <p class="small">
-            What would you like to ask or talk about?
-            <br>(140 characters max)</p>
-          <textarea id="memo" rows="2" maxlength="140" class="small"></textarea>
-          <br><br>
-          <p class="small">When are you available to chat?</p>
-          <div class="datetimePicker">
-            <p class="small">
-              <input type="date"><br>
-              from: <input type="time" value="">
-              <br>
-              to: <input type="time">
-            </p>
-          </div>
-        </div>
-      </div>
 
-
-
-      <div id="callwindow" class="page" style="display:none;">
-        <div class="confirmation">
-          <p>Are you sure you want to connect?</p>
-          <button class="accept">ACCEPT</button>
-        </div>
-        <video height="200" id="localVideo"></video>
-        <div id="remotesVideos"></div>
-        <button id="hangup">hang up</button>
-      </div>
-    </div>
-
-
-
-
-
-    <script type="text/javascript" src="js/index.js"></script>
-
+    <script type="text/javascript" src="js/header.js"></script>
+    <script type="text/javascript" src="js/account.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

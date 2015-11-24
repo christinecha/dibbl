@@ -1,3 +1,8 @@
+var callId = '',
+    callerId = currentUserId,
+    expertId,
+    expertFee;
+
 $("#search input[type='number']").keypress(function (evt) {
     evt.preventDefault();
 });
@@ -29,7 +34,12 @@ $('#userSearchForm').on('submit', function(e){
 Twilio.Device.setup(token);
 
 Twilio.Device.disconnect(function(connection) {
-  $.post("/addCallToFirebase", {callId: connection.mediaStream.callSid});
+  $.post("/addCallToFirebase", {
+    callId: connection.mediaStream.callSid,
+    currentUserId: currentUserId,
+    expertId: expertId,
+    expertFee: expertFee,
+  });
 });
 
 $('#hangup').click(function() {
@@ -37,10 +47,10 @@ $('#hangup').click(function() {
 });
 
 $('#searchResults').on('click', '.connectButton', function(){
-    var callId = '',
-        callerId = currentUserId,
-        expertId = $(this).siblings('.userName').attr('id'),
-        expertFee = $(this).parent('div').attr('data-fee');
+    callId = '';
+    callerId = currentUserId;
+    expertId = $(this).siblings('.userName').attr('id');
+    expertFee = $(this).parent('div').attr('data-fee');
     var call = new Call(callId, callerId, expertId, expertFee);
     $('.callBox-layer').show();
     var expert = call.expert();

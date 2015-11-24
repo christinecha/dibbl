@@ -21,14 +21,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", function (req, res) {
-  var callData = [];
-  var client = twilio(twilioAccountSID, twilioAuthToken);
-  client.calls.list(function(err, data) {
-    data.calls.forEach(function(call) {
-        callData.push(call);
-    });
-    res.render("home.ejs", {calldata: callData});
-  });
+  console.log(req.body);
+  res.render("home.ejs");
 });
 
 app.get("/header", function (req, res) {
@@ -53,17 +47,31 @@ app.get("/search", function (req, res) {
   });
 });
 
+app.get("/account", function (req, res) {
+  res.render('account.ejs');
+});
+
 app.post("/addCallToFirebase", function (req, res) {
   //require the Twilio module and create a REST client
   var client = require('twilio')(twilioAccountSID, twilioAuthToken);
   var callSid = req.body.callId;
+  var currentUserId = req.body.currentUserId;
+  var expertId = req.body.expertId;
+  var expertFee = req.body.expertFee;
 
   client.calls.list({
-    ParentCallSid: callSid,
-    // To!: null,
+    "ParentCallSid": callSid,
+    "To!=": null,
   }, function(err, data) {
     data.calls.forEach(function(call) {
-      ref.child("calls").push(call);
+      var newCall = ref.child("calls").push(call);
+      ref.child('calls').child(newCall.key()).update({
+        callerId: currentUserId,
+        expertId: expertId,
+        expertFee: expertFee,
+        paymentStatus: 'unpaid',
+      })
+      res.render("account.ejs");
     });
   });
 
