@@ -1,0 +1,19 @@
+.account-info {
+  padding: 25px;
+}
+
+.main-category {
+  margin-bottom: 20px;
+}
+
+.subcategory {
+  padding: 20px;
+  background-color: #fafafa;
+  height: 100%;
+}
+
+.subcategory .subcategory {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: white;
+}

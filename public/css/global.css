@@ -7,6 +7,11 @@ button, input {
 body { font-family: 'Montserrat', sans-serif; }
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
 .small { font-size: 12px; }
+.xsmall {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
 a { color: #66cccc; }
 a:-webkit-any-link { color: #66cccc; }
 a, button { cursor: pointer; }
@@ -30,6 +35,20 @@ textarea { width: 100%; }
   padding: 10px 60px;
   border-radius: 30px;
 }
+.small-blue {
+  background-color: #66cccc;
+  background-image: url('../assets/button-shadow_blue.png');
+  background-repeat: no-repeat;
+  background-position-x: 50px;
+  background-size: 100%;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 5px 20px;
+  border-radius: 20px;
+}
+
 
 .nav { padding: 10px 10px; height: 50px; }
 .logo { width: 70px; }
