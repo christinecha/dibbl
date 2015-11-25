@@ -34,7 +34,7 @@ $('#userSearchForm').on('submit', function(e){
 Twilio.Device.setup(token);
 
 Twilio.Device.disconnect(function(connection) {
-  $.post("/addCallToFirebase", {
+  $.post("/processCall", {
     callId: connection.mediaStream.callSid,
     currentUserId: currentUserId,
     expertId: expertId,
@@ -62,9 +62,6 @@ $('#searchResults').on('click', '.connectButton', function(){
           CallerId:     '+19175887518',
           PhoneNumber:  expert.phone,
       });
-      setInterval(function(){
-        console.log(connection.mediaStream.callSid);
-      }, 1000);
     });
 });
 

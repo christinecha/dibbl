@@ -51,7 +51,7 @@ app.get("/account", function (req, res) {
   res.render('account.ejs');
 });
 
-app.post("/addCallToFirebase", function (req, res) {
+app.post("/processCall", function (req, res) {
   //require the Twilio module and create a REST client
   var client = require('twilio')(twilioAccountSID, twilioAuthToken);
   var callSid = req.body.callId;
@@ -70,8 +70,23 @@ app.post("/addCallToFirebase", function (req, res) {
         expertId: expertId,
         expertFee: expertFee,
         paymentStatus: 'unpaid',
-      })
-      res.render("account.ejs");
+      });
+      if ((call.status == 'completed') && (call.duration > 0)){
+        var totalMin = Math.ceil(call.duration / 60);
+        var totalFee = expertFee * totalMin * 100;
+        usersRef.child(currentUserId).once("value", function(snapshot) {
+          var customerId = snapshot.val().customerId;
+          stripe.charges.create({
+            amount: totalFee, // amount in cents, again
+            currency: "usd",
+            customer: customerId,
+          }).then(function(){
+            res.render("account.ejs");
+          });
+        });
+      } else {
+        res.render("account.ejs");
+      }
     });
   });
 
@@ -98,18 +113,7 @@ app.post("/newPaymentMethod", function (req, res) {
   }).then(function(customer) {
     usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
   }).then(function(){
-  res.location('/account');
-  });
-});
-
-app.post("/charge", function (req, res) {
-  console.log(req.body);
-  stripe.charges.create({
-    amount: req.body.totalfeeCents, // amount in cents, again
-    currency: "usd",
-    customer: req.body.customer
-  }).then(function(){
-    res.render("index.ejs");
+    res.location('/account');
   });
 });
 
