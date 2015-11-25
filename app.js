@@ -85,7 +85,7 @@ app.get('user/:user_id', function (req, res) {
   });
 });
 
-app.post("/newCustomer", function (req, res) {
+app.post("/newPaymentMethod", function (req, res) {
   var stripeToken = req.body.stripeToken;
   var userId = req.body.userId;
 
@@ -98,7 +98,7 @@ app.post("/newCustomer", function (req, res) {
   }).then(function(customer) {
     usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
   }).then(function(){
-    res.render("index.ejs");
+  res.location('/account');
   });
 });
 
