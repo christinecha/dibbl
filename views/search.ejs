@@ -29,41 +29,47 @@
     <div id="header">
     </div>
 
-    <div class="light-gray container-fluid">
-      <form id="userSearchForm">
-        <label>TOPIC</label>
-        <input id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
-        <label>EST. DURATION (MIN)</label>
-        <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box">
-        <input type="submit" value="GO">
-      </form>
-      <div class="searchFilter">
-        <span>SORT BY:</span>
-        <span>RATING</span>
-        <span>PRICE</span>
-        <span>NAME</span>
+    <div class="light-blue title-bar">
+      <h4>FIND AN EXPERT</h4>
+    </div>
+
+    <div class="col-md-8">
+      <div class="light-gray padded-20">
+        <form id="userSearchForm">
+          <label>TOPIC</label>
+          <input id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
+          <label>EST. DURATION (MIN)</label>
+          <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box">
+          <input type="submit" value="GO">
+        </form>
+        <div class="searchFilter">
+          <span>SORT BY:</span>
+          <span>RATING</span>
+          <span>PRICE</span>
+          <span>NAME</span>
+        </div>
+      </div>
+      <div id="searchResults">
       </div>
     </div>
 
-    <div id="searchResults">
-    </div>
-
-    <div class="callBox-layer" style="display:none;">
-      <div class="callBox">
-        <p class="small">
-          What would you like to ask or talk about?
-          <br>(140 characters max)</p>
-        <textarea id="memo" rows="2" maxlength="140" class="small"></textarea>
-        <br><br>
-        <p class="small">
-          Warning: You will be charged $1 Million per minute. By clicking 'connect', you agree to pay this. Ok?
-        </p>
-        <button id="makeCall">Call Christine</button>
-        <button id="hangup">Hangup</button>
-        <button id="test">test</button>
+    <div class="col-md-4">
+      <div class="light-gray padded-20">
+        <div class="newsFeed">
+          NEWS FEED
+          <div class="newsItem">
+            Amy Tse favorited expert Mark Thompson.
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="call-container">
+    </div>
+
+
+
+
 
     <script>
       var token = '<%= token %>';

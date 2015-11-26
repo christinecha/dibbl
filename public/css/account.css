@@ -18,7 +18,8 @@
   background-color: white;
 }
 
-.account-info input {
+.account-info input, textarea {
   padding: 10px;
   font-size: 14px;
+  max-width: 500px;
 }

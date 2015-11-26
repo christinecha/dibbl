@@ -27,7 +27,7 @@
       <div id="header">;
       </div>
 
-      <div class="light-gray title-bar">
+      <div class="light-blue title-bar">
         <h4>MY ACCOUNT</h4>
       </div>
 
@@ -80,19 +80,30 @@
           </div>
         </div>
 
-        <div class="expert-only">
-          <div class="skills subcategory">
-            <h5>I'm an expert in:</h5>
+        <div class="expert main-category row">
+          <h5>Expert Profile</h5>
+          <div class="bio subcategory">
+            <form id="updateBio">
+              <span class="xsmall">YOUR BIO (200 CHAR. MAX)</span><br>
+              <textarea id="account--bio"></textarea>
+            </form>
           </div>
-          <form id="skillsForm">
-            <input type="text" id="skill" placeholder="area of expertise">
-            <input type="submit" value="add">
-          </form>
+          <div class="topics subcategory">
+            <div class="saved-topics subcategory">
+              <span class="xsmall">TOPICS OF EXPERTISE</span><br>
+              No topics have been added yet.
+            </div>
+            <form id="addNewTopic">
+              <span class="xsmall">ADD NEW TOPIC</span><br>
+              <input type="text" size="20" data-stripe="number"/><br>
+              <br>
+              <button type="submit" class="small-blue">SUBMIT</button>
+            </form>
+          </div>
         </div>
 
 
     </div>
-
 
 
 

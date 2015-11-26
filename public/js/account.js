@@ -4,7 +4,6 @@ usersRef.child(currentUserId).once("value", function (snapshot) {
 
   $('#account--firstname').val(user.firstname);
   $('#account--lastname').val(user.lastname);
-
 });
 
 

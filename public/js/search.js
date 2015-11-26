@@ -52,7 +52,7 @@ $('#searchResults').on('click', '.connectButton', function(){
     expertId = $(this).siblings('.userName').attr('id');
     expertFee = $(this).parent('div').attr('data-fee');
     var call = new Call(callId, callerId, expertId, expertFee);
-    $('.callBox-layer').show();
+    $('#call-container').load('/call');
     var expert = call.expert();
     console.log(expert.phone);
 
@@ -65,6 +65,10 @@ $('#searchResults').on('click', '.connectButton', function(){
     });
 });
 
+
+$('#call-container').on('click', '.closeCallBox', function(){
+  $('#call-container').hide();
+});
 
 
 

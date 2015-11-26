@@ -13,8 +13,19 @@
   border: none;
 }
 
+.closeCallBox {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  border-radius: 100%;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.closeCallBox:hover {
+  color: #66cccc;
+}
+
 .callBox {
-  margin-top: 200px;
   width: 350px;
   background-color: white;
   box-shadow: 0 0 15px rgba(0,0,0,.3);

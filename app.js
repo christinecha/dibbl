@@ -47,6 +47,10 @@ app.get("/search", function (req, res) {
   });
 });
 
+app.get("/call", function (req, res) {
+  res.render('call.ejs');
+});
+
 app.get("/account", function (req, res) {
   res.render('account.ejs');
 });

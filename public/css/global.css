@@ -1,5 +1,5 @@
 *:-webkit-any-link, *:focus { outline: none; }
-button, input {
+button, input, textarea {
   border: none;
   box-shadow: none;
   font-family: 'Montserrat', sans-serif;
@@ -18,10 +18,12 @@ a, button { cursor: pointer; }
 textarea { width: 100%; }
 .page { min-width: 100%; min-height: 100%; }
 .hidden { display: none; }
+.padded-20 { padding: 20px; }
 
 .inline { display: inline-block; }
 .secure { display: none; }
 .light-gray { background-color: #fafafa; }
+.light-blue { background-color: #66cccc; color: white; }
 .big-blue {
   background-color: #66cccc;
   background-image: url('../assets/button-shadow_blue.png');
@@ -54,7 +56,6 @@ textarea { width: 100%; }
   color: #fafafa;
 }
 
-
 .nav { padding: 10px 10px; height: 50px; }
 .logo { width: 70px; }
 .nav ul { list-style: none; }
@@ -70,6 +71,7 @@ textarea { width: 100%; }
 .title-bar {
   padding: 25px;
   text-align: center;
+  margin-bottom: 10px;
 }
 
 
