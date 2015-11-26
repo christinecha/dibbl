@@ -1,8 +1,20 @@
 //// PROFILE ------------------------------------------------------
+usersRef.child(currentUserId).once("value", function (snapshot) {
+  var user = snapshot.val();
+
+  $('#account--firstname').val(user.firstname);
+  $('#account--lastname').val(user.lastname);
+
+});
+
+
 $('#addSkills').on('submit', function(){
   var skill = $('#skill').val();
   usersRef.child(currentUserId).child("skills").child(skill).set(true);
 });
+
+
+
 
 // PAYMENT ------------------------------------------------------------------------
 

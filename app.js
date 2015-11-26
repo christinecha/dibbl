@@ -80,16 +80,12 @@ app.post("/processCall", function (req, res) {
             amount: totalFee, // amount in cents, again
             currency: "usd",
             customer: customerId,
-          }).then(function(){
-            res.render("account.ejs");
-          });
+          })
         });
-      } else {
-        res.render("account.ejs");
-      }
+      };
     });
   });
-
+  res.render("account.ejs");
 });
 
 app.get('user/:user_id', function (req, res) {

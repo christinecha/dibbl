@@ -35,8 +35,18 @@
         <div class="general main-category row">
           <div class="personal-info col-sm-4">
             <div class="subcategory">
-              <h6>FIRST NAME <span id="firstname"></span></h6>
-              <h6>LAST NAME <span id="lastname"></span></h6>
+              <form id="updatePersonalInfo">
+                <span class="xsmall">FIRST NAME</span><br>
+                <input type="text" id="account--firstname"/><br>
+                <span class="xsmall">LAST NAME</span><br>
+                <input type="text" id="account--lastname"/><br>
+                <span class="xsmall">EMAIL</span><br>
+                <input type="text" id="account--email"/><br>
+                <span class="xsmall">PASSWORD</span><br>
+                <input type="text" id="account--password" value="•••••••••••••"/>
+                <br><br>
+                <button type="submit" class="small-blue inactive">Save Changes</button>
+              </form>
             </div>
           </div>
           <div class="call-history col-sm-4">
