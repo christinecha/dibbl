@@ -36,16 +36,28 @@
           <div class="personal-info col-sm-4">
             <div class="subcategory">
               <form id="updatePersonalInfo">
-                <span class="xsmall">FIRST NAME</span><br>
-                <input type="text" id="account--firstname"/><br>
-                <span class="xsmall">LAST NAME</span><br>
-                <input type="text" id="account--lastname"/><br>
-                <span class="xsmall">EMAIL</span><br>
-                <input type="text" id="account--email"/><br>
-                <span class="xsmall">PASSWORD</span><br>
-                <input type="text" id="account--password" value="•••••••••••••"/>
-                <br><br>
-                <button type="submit" class="small-blue inactive">Save Changes</button>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <span class="xsmall">FIRST NAME</span><br>
+                    <input type="text" id="account--firstname"/><br>
+                    <span class="xsmall">LAST NAME</span><br>
+                    <input type="text" id="account--lastname"/><br>
+                    <span class="xsmall">EMAIL</span><br>
+                    <input type="text" id="account--email"/><br>
+                    <span class="xsmall">PASSWORD</span><br>
+                    <input type="text" id="account--password" value="•••••••••••••"/>
+                  </div>
+                  <div class="col-lg-6">
+                    <br><br>
+                    <div class="account--profilephoto">
+                      <span class="small">CHANGE</span>
+                    </div>
+                    <span class="xsmall">PROFILE PICTURE</span><br>
+                    <input type="file" id="profilePhotoUpload" style="display:none;"/>
+                  </div>
+                </div>
+                <br>
+                <button type="submit" class="small-blue">Save Changes</button>
               </form>
             </div>
           </div>

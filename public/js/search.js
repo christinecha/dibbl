@@ -54,9 +54,8 @@ $('#searchResults').on('click', '.connectButton', function(){
     var call = new Call(callId, callerId, expertId, expertFee);
     $('#call-container').load('/call');
     var expert = call.expert();
-    console.log(expert.phone);
 
-    $('#makeCall').on('click', function(){
+    $('#call-container').on('click', '#makeCall', function(){
       console.log('calling', expert.phone);
       var connection = Twilio.Device.connect({
           CallerId:     '+19175887518',

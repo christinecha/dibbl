@@ -92,7 +92,8 @@ User.prototype.addToFirebase = function(userId){
 };
 
 User.prototype.displayAsSearchResult = function(userId, user, time){
-  var firstname = user.firstname,
+  var photo = user.photo,
+      firstname = user.firstname,
       lastname = user.lastname,
       bio = user.bio,
       fee = user.fee,
@@ -101,6 +102,12 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   var totalfee = fee * time;
   totalfee = totalfee.toFixed(2);
   totalfee = '$' + totalfee;
+
+
+  var $photo = $('<div>').addClass('userPhoto');
+  if (photo) {
+    $photo = $photo.css('background-image', 'url("' + photo + '")');
+  };
 
   var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
   var $userName = $('<h5>').html(firstname + ' ' + lastname).attr('id', userId).addClass('userName');
@@ -112,8 +119,11 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
     $userSkills = $userSkills.append($userSkill);
   };
   var $userDetails = $('<p>').text(bio);
-  var $callButton = $('<button class="connectButton">').text('CONNECT');
-  var $userInfo = $('<div>').addClass('userInfo').append($faveIcon).append($userName).append($rating).append($userFee).append($userSkills).append($userDetails).append($callButton).attr('data-fee', fee);
+  var $callButton = $('<button class="connectButton small-blue">').text('CONNECT');
+
+  var $section1 = $('<div>').addClass('col-md-4').append($photo);
+  var $section2 = $('<div>').addClass('col-md-8').append($faveIcon).append($userName).append($rating).append($userFee).append($userSkills).append($userDetails).append($callButton).attr('data-fee', fee);
+  var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2);
 
   $('#searchResults').append($userInfo);
 };
