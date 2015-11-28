@@ -11,7 +11,7 @@ $('#search').on('submit', function(e){
 
 $('#mailinglist').on('submit', function(e){
   e.preventDefault();
-  var email = $('#email').val();
+  var email = $('#mailinglist-email').val();
   ref.child('mailinglist').push({
     email:  email,
     addedAt: Firebase.ServerValue.TIMESTAMP,
@@ -37,27 +37,26 @@ $('#header').on('keyup', function(){
 });
 
 
-
 $('.alreadyUser').on('click', function(){
-  $('#login-signup').attr('data-function', 'login');
+  $('#login').attr('data-function', 'login');
   $('.login-only').show();
   $('.signup-only').hide();
 });
 
 $('.notUserYet').on('click', function(){
-  $('#login-signup').attr('data-function', 'signup');
+  $('#login').attr('data-function', 'signup');
   $('.signup-only').show();
   $('.login-only').hide();
 });
 
 //Sign Up With Email
-$('#login-signup').on('submit', function(e){
-  console.log('he');
+$('#login').on('submit', function(e){
   e.preventDefault();
   var firstname = $('#firstname').val(),
       lastname = $('#lastname').val(),
       email = $('#email').val(),
       password = $('#password').val();
+      console.log('1', email);
   var user = new User();
   if ($(this).attr('data-function') == 'signup'){
     console.log("trying to sign you up");

@@ -81,8 +81,12 @@ User.prototype.loginWithEmail = function(email, password){
     "email"    : email,
     "password" : password
   }, function(error, authData) {
-    console.log("Authenticated successfully with payload:", authData);
-    location.href = "/search";
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Authenticated successfully with payload:", authData);
+      location.href = "/search";
+    }
   });
 };
 

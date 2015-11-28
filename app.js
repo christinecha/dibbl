@@ -29,10 +29,6 @@ app.get("/header", function (req, res) {
   res.render("_header.ejs");
 });
 
-app.get("/login", function (req, res) {
-  res.render("login.ejs");
-});
-
 app.get("/search", function (req, res) {
   var capability = new twilio.Capability(
       'ACa9661f788bc6132577b3341523890490',

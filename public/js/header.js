@@ -18,7 +18,7 @@ $('#header').load('/header', function(){
       $('.secure').hide();
       var path = window.location.pathname;
       console.log(path);
-      if (( path.length > 1 ) && ( path !== '/login' )) {
+      if ( path.length > 1 ) {
         location.href = "/";
       } else {
         console.log('already home');
