@@ -63,10 +63,15 @@ textarea { width: 100%; }
   text-transform: uppercase;
   display: inline-block;
   margin-left: 20px;
-  margin-top: 5px;
   font-size: 12px;
 }
 .nav ul li i { margin-right: 5px; }
+.nav input {
+  padding: 5px 10px;
+  background-color: #fafafa;
+  font-size: 12px;
+  text-align: left;
+}
 
 .title-bar {
   padding: 25px;

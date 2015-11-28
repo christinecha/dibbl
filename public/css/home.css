@@ -4,33 +4,26 @@
   height: 100vh;
 }
 
-.search-container, .mailinglist-container {
+.search-container, .mailinglist-container, .login-container {
   margin-top: 100px;
   text-align: center;
 }
 
-#search, #mailinglist { max-width: 550px; }
-
+#search, #mailinglist, #login { max-width: 550px; }
 #search h4 { color: #999; }
-
 #search h4, input {
   margin: 5px;
   text-align: center;
 }
 
-#search input[type="text"], #mailinglist input[type="email"] {
-  width: 100%;
+input {
   padding: 10px;
   background-color: #fff;
   font-size: 18px;
+  width: 100%;
 }
 
-#search input[type="number"] {
-  width: 90px;
-  padding: 10px;
-  background-color: #fff;
-  font-size: 18px;
-}
+#search input[type="number"] { padding: 10px; width: 80px; }
 
 .confirmation-container {
   height: 30px;

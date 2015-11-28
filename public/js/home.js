@@ -1,12 +1,9 @@
 $('.mailinglist-container').hide();
+$('.login-container').hide();
+$('.signup-only').hide();
 
 $('#search').on('submit', function(e){
   e.preventDefault();
-  // var query = $("#query").val();
-  // var time = $("#query-time").val();
-  // location.href = "/search" + query + time;
-
-  // temporarily redirects to mailing list sign up
   $('.search-container').hide();
   $('.mailinglist-container').show();
   return false;
@@ -24,3 +21,61 @@ $('#mailinglist').on('submit', function(e){
   $('#email').val('');
   return false;
 });
+
+$('#header').on('keyup', function(){
+  var password = $(this).find('#beta-password').val();
+  console.log(password);
+  if (password == 'vip only') {
+    console.log('got it!');
+    $('.search-container').hide();
+    $('.mailinglist-container').hide();
+    $('.login-container').show();
+  } else {
+    $('.login-container').hide();
+    $('.search-container').show();
+  }
+});
+
+
+
+$('.alreadyUser').on('click', function(){
+  $('#login-signup').attr('data-function', 'login');
+  $('.login-only').show();
+  $('.signup-only').hide();
+});
+
+$('.notUserYet').on('click', function(){
+  $('#login-signup').attr('data-function', 'signup');
+  $('.signup-only').show();
+  $('.login-only').hide();
+});
+
+//Sign Up With Email
+$('#login-signup').on('submit', function(e){
+  console.log('he');
+  e.preventDefault();
+  var firstname = $('#firstname').val(),
+      lastname = $('#lastname').val(),
+      email = $('#email').val(),
+      password = $('#password').val();
+  var user = new User();
+  if ($(this).attr('data-function') == 'signup'){
+    console.log("trying to sign you up");
+    user.signupWithEmail(firstname, lastname, email, password);
+  } else {
+    console.log("trying to log you in");
+    user.loginWithEmail(email, password);
+  }
+  return false;
+});
+
+// Log out
+$('#header').on('click', '.logout', function(){
+  ref.unauth();
+});
+
+
+
+
+
+/////////
