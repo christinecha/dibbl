@@ -36,23 +36,24 @@ Twilio.Device.disconnect(function(connection) {
     callId: connection.mediaStream.callSid,
     currentUserId: currentUserId,
     expertId: expertId,
+    expertFee: expertFee,
   });
 });
 
-$('#hangup').click(function() {
+$('#call-container').on('click', '#hangup', function() {
     Twilio.Device.disconnectAll();
 });
 
 $('#searchResults').on('click', '.connectButton', function(){
-    var callerId = currentUserId;
-    var expertId = $(this).siblings('.userName').attr('id');
+    callerId = currentUserId;
+    expertId = $(this).siblings('.userName').attr('id');
     var call = new Call(callerId, expertId);
     var expert = call.expert();
+    expertFee = expert.fee;
 
     $('#call-container').load('partials/call', function(){
       $('#expert--firstname').text(expert.firstname);
-      var fee = (expert.fee).toFixed(2);
-      $('#expert--fee').text(fee);
+      $('#expert--fee').text(expertFee.toFixed(2));
     });
 
     $('#call-container').on('click', '.closeCallBox', function(){
