@@ -1,10 +1,19 @@
+/* ALL */
 *:-webkit-any-link, *:focus { outline: none; }
+.row { margin-left: 0; margin-right: 0; }
 button, input, textarea {
   border: none;
   box-shadow: none;
   font-family: 'Montserrat', sans-serif;
 }
 body { font-family: 'Montserrat', sans-serif; }
+a, button, .clickable { cursor: pointer; }
+.hidden { display: none; }
+.inline { display: inline-block; }
+.secure { display: none; }
+.padded-20 { padding: 20px; }
+
+/* TEXT */
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
 .small { font-size: 12px; }
 .xsmall {
@@ -14,16 +23,13 @@ h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
 }
 a { color: #66cccc; }
 a:-webkit-any-link { color: #66cccc; }
-a, button { cursor: pointer; }
-textarea { width: 100%; }
-.page { min-width: 100%; min-height: 100%; }
-.hidden { display: none; }
-.padded-20 { padding: 20px; }
 
-.inline { display: inline-block; }
-.secure { display: none; }
+/* COLORS */
 .light-gray { background-color: #fafafa; }
 .light-blue { background-color: #66cccc; color: white; }
+
+/* INPUTS & BUTTONS */
+textarea { width: 100%; }
 .big-blue {
   background-color: #66cccc;
   background-image: url('../assets/button-shadow_blue.png');
@@ -56,6 +62,7 @@ textarea { width: 100%; }
   color: #fafafa;
 }
 
+/* NAVIGATION */
 .nav { padding: 10px 10px; height: 50px; }
 .logo { width: 70px; }
 .nav ul { list-style: none; }
@@ -73,30 +80,12 @@ textarea { width: 100%; }
   text-align: left;
 }
 
+/* PAGE TITLE AREAS */
 .title-bar {
   padding: 25px;
   text-align: center;
   margin-bottom: 10px;
 }
-
-
-.searchFilter { margin-bottom: 20px; }
-.searchFilter span { font-size: 13px; margin: 0 10px; color: #aaa; }
-.userInfo { background-color: #fafafa; padding: 20px; text-align: left; margin-bottom: 10px; }
-.faveIcon { display: inline-block; color: #66cccc; margin-right: 5px; }
-.userName { text-transform: uppercase; color: #888; display: inline-block; }
-.rating { display: inline-block; color: #ffcc00; margin-left: 5px; }
-.userFee { float: right; display: inline-block; }
-.userSkills { margin-top: 10px; }
-.userSkills span { background-color: white; padding: 5px; margin-right: 5px; font-size: 10px; text-transform: uppercase; }
-.connectButton { background-color: #66cccc; width: 100%; margin: 5px 0; border: none; box-shadow: none; color: white; padding: 10px 20px; }
-.connectButton:hover { background-color: #fbb03b; }
-
-.createRequest { background-color: white; padding: 20px; }
-#remotesVideos { display: none; }
-.confirmation { z-index: 500; position: absolute; top: 300px; padding: 30px; background-color: white; display: none; }
-
-
 
 
 

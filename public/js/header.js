@@ -1,4 +1,4 @@
-$('#header').load('/header', function(){
+$('#header').load('partials/header', function(){
 
   // Authorization & Loading Current User Info
   var authDataCallback = function(authData){

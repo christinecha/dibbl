@@ -94,23 +94,30 @@
 
         <div class="expert main-category row">
           <h5>Expert Profile</h5>
-          <div class="bio subcategory">
-            <form id="updateBio">
-              <span class="xsmall">YOUR BIO (200 CHAR. MAX)</span><br>
-              <textarea id="account--bio"></textarea>
-            </form>
-          </div>
-          <div class="topics subcategory">
-            <div class="saved-topics subcategory">
-              <span class="xsmall">TOPICS OF EXPERTISE</span><br>
-              No topics have been added yet.
+          <br>
+          <div class="col-md-4">
+            <div class="bio subcategory">
+              <form id="updateBio">
+                <span class="xsmall">YOUR BIO (200 CHAR. MAX)</span><br>
+                <textarea id="account--bio"></textarea>
+                <br>
+                <button type="submit" class="small-blue">UPDATE</button>
+              </form>
             </div>
-            <form id="addNewTopic">
-              <span class="xsmall">ADD NEW TOPIC</span><br>
-              <input type="text" size="20" data-stripe="number"/><br>
-              <br>
-              <button type="submit" class="small-blue">SUBMIT</button>
-            </form>
+          </div>
+          <div class="col-md-4">
+            <div class="topics subcategory">
+              <div class="saved-topics subcategory">
+                <span class="xsmall">TOPICS OF EXPERTISE</span><br>
+                No topics have been added yet.
+              </div>
+              <form id="addNewTopic">
+                <span class="xsmall">ADD NEW TOPIC</span><br>
+                <input type="text" size="20" data-stripe="number"/><br>
+                <br>
+                <button type="submit" class="small-blue">SUBMIT</button>
+              </form>
+            </div>
           </div>
         </div>
 

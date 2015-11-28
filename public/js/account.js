@@ -8,6 +8,7 @@ var authCheck = setInterval(function(){
       $('#account--firstname').val(user.firstname);
       $('#account--lastname').val(user.lastname);
       $('#account--email').val(user.email);
+      $('#account--bio').val(user.bio);
       if (user.photo) {
         $('.account--profilephoto').css('background-image', 'url("' + user.photo + '")')
       };
@@ -24,6 +25,14 @@ var authCheck = setInterval(function(){
         firstname: firstname,
         lastname: lastname,
         email: email,
+      });
+    });
+
+    $('#updateBio').on('submit', function() {
+      var bio = $('#account--bio').val();
+
+      usersRef.child(currentUserId).update({
+        bio: bio,
       });
     });
 

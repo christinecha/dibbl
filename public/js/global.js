@@ -8,11 +8,9 @@ var serverConnected = false;
 
 // Call Object
 
-var Call = function(callId, callerId, expertId, expertFee) {
-  this.callId = callId ? callId : '';
+var Call = function(callerId, expertId) {
   this.callerId = callerId;
   this.expertId = expertId;
-  this.expertFee = expertFee;
 };
 
 Call.prototype.expert = function() {
@@ -107,7 +105,6 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   totalfee = totalfee.toFixed(2);
   totalfee = '$' + totalfee;
 
-
   var $photo = $('<div>').addClass('userPhoto');
   if (photo) {
     $photo = $photo.css('background-image', 'url("' + photo + '")');
@@ -122,7 +119,7 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
     var $userSkill = $('<span>').html(skills[i]);
     $userSkills = $userSkills.append($userSkill);
   };
-  var $userDetails = $('<p>').text(bio);
+  var $userDetails = $('<p>').text(bio).addClass('userBio');
   var $callButton = $('<button class="connectButton small-blue">').text('CONNECT');
 
   var $section1 = $('<div>').addClass('col-md-4').append($photo);

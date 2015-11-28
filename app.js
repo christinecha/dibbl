@@ -25,8 +25,10 @@ app.get("/", function (req, res) {
   res.render("home.ejs");
 });
 
-app.get("/header", function (req, res) {
-  res.render("_header.ejs");
+app.get("/partials/:name", function (req, res) {
+  var name = req.params.name;
+  var url = "partials/_" + name + ".ejs"
+  res.render(url);
 });
 
 app.get("/search", function (req, res) {
@@ -41,10 +43,6 @@ app.get("/search", function (req, res) {
   res.render('search.ejs', {
       token:capability.generate()
   });
-});
-
-app.get("/call", function (req, res) {
-  res.render('call.ejs');
 });
 
 app.get("/account", function (req, res) {
