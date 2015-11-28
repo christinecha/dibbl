@@ -4,6 +4,7 @@ $('#header').load('/header', function(){
   var authDataCallback = function(authData){
     if (authData) {
       $('.secure').show();
+      $('.public-only').hide();
       console.log("User " + authData.uid + " is logged in with " + authData.provider);
       usersRef.child(authData.uid).on("value", function(snapshot){
         currentUser = snapshot.val();

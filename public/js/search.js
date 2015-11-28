@@ -11,6 +11,7 @@ $('#userSearchForm').on('submit', function(e){
   e.preventDefault();
   var query = $("#query").val();
   var time = $("#query-time").val();
+  $('#searchResults').empty();
   usersRef.on("child_added", function(snapshot){
     var userObj = snapshot.val();
     var skills = userObj.skills;
@@ -52,7 +53,11 @@ $('#searchResults').on('click', '.connectButton', function(){
     expertId = $(this).siblings('.userName').attr('id');
     expertFee = $(this).parent('div').attr('data-fee');
     var call = new Call(callId, callerId, expertId, expertFee);
-    $('#call-container').load('/call');
+    if ($('#call-container').children().length > 0){
+      $('#call-container').show();
+    } else {
+      $('#call-container').load('/call');
+    }
     var expert = call.expert();
 
     $('#call-container').on('click', '#makeCall', function(){
