@@ -63,7 +63,7 @@ textarea { width: 100%; }
 }
 
 /* NAVIGATION */
-.nav { padding: 10px 10px; height: 50px; }
+.nav { padding: 10px; height: 50px; }
 .logo { width: 70px; }
 .nav ul { list-style: none; }
 .nav ul li {
@@ -78,6 +78,17 @@ textarea { width: 100%; }
   background-color: #fafafa;
   font-size: 12px;
   text-align: left;
+}
+.dropdown {
+  z-index: 99;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  padding: 8px 20px;
+}
+.dropdown ul li {
+  display: block;
+  margin: 10px 0;
 }
 
 /* PAGE TITLE AREAS */

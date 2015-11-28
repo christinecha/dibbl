@@ -68,10 +68,6 @@ $('#login').on('submit', function(e){
   return false;
 });
 
-// Log out
-$('#header').on('click', '.logout', function(){
-  ref.unauth();
-});
 
 
 

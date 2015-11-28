@@ -13,7 +13,13 @@
       </li>
       <li class="secure"> | </li>
       <li><a href="/search">Find an Expert</a></li>
-      <li class="secure"><a href="/account">Account</a></li>
+      <li class="secure account clickable">Account <i class="fa fa-caret-down"></i></li>
+      <div class="dropdown dropdown-account" style="display:none;">
+        <ul>
+          <li><a href="/account">Settings</a></li>
+          <li class="logout"><a>Logout</a></li>
+        </ul>
+      </div>
       <li class="public-only"><input id="beta-password" type="text" placeholder="password (closed beta)" /></li>
     </ul>
   </div>
