@@ -21,7 +21,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", function (req, res) {
-  console.log(req.body);
   res.render("home.ejs");
 });
 
@@ -78,7 +77,10 @@ app.post("/processCall", function (req, res) {
             amount: totalFee, // amount in cents, again
             currency: "usd",
             customer: customerId,
-          })
+          });
+          ref.child('calls').child(newCall.key()).update({
+            paymentStatus: 'paid',
+          });
         });
       };
     });

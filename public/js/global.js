@@ -8,14 +8,14 @@ var serverConnected = false;
 
 // Call Object
 
-var Call = function(callerId, expertId) {
-  this.callerId = callerId;
-  this.expertId = expertId;
+var Call = function(callObj) {
+  this.call = callObj;
 };
 
 Call.prototype.expert = function() {
+  var call = this.call;
   var expert;
-  usersRef.child(this.expertId).once("value", function(snapshot){
+  usersRef.child(call.expertId).once("value", function(snapshot){
     expert = snapshot.val();
     return expert;
   });
@@ -30,22 +30,20 @@ Call.prototype.create = function() {
   });
 };
 
-Call.prototype.displayIncoming = function() {
-  console.log('displayIncoming');
-  usersRef.child(this.callerId).once("value", function(snapshot){
-    var caller = snapshot.val();
+Call.prototype.displayInfo = function() {
+  var call = this.call;
+  var startTime = new Date(call.start_time);
+      startTime = moment(startTime).format('MMM Do YYYY, h:mm:ss a');
+  var endTime = new Date(call.end_time);
+      endTime = moment(endTime).format('MMM Do YYYY, h:mm:ss a');
 
-    var $callerInfo = $('<p>').html('from ' + caller.firstname + ' ' + caller.lastname),
-        $accept = $('<button>').text('accept').attr('id', 'acceptCall'),
-        $hold = $('<button>').text('hold').attr('id', 'holdCall'),
-        $holdTime = $('<input>').attr('type', 'number').attr('id', 'holdTime'),
-        $decline = $('<button>').text('decline').attr('id', 'declineCall');
+  var $startTime = $('<span>').html('from: ' + startTime).addClass('xsmall');
+  var $endTime = $('<span>').html('to: ' + endTime).addClass('xsmall');
+  var $status = $('<span>').text(call.status).addClass('small');
+  var $paymentStatus = $('<span>').text(call.paymentStatus).addClass('small');
 
-    var $options = $('<div>').append($accept).append($hold).append($holdTime).append($decline);
-
-    var $request = $('<div>').addClass('incoming-call').attr('id', this.callId).append($callerInfo).append($options);
-
-  }.bind(this));
+  var $callInfo = $('<div>').addClass('callInfo').append($startTime).append('<br>').append($endTime).append('<br>').append($status).append('<br>').append($paymentStatus);
+  $('.call-history .subcategory').append($callInfo);
 };
 
 
@@ -129,10 +127,9 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   $('#searchResults').append($userInfo);
 };
 
-User.prototype.loadIncomingCalls = function(userId){
-  callsRef.orderByChild('expertId').equalTo(userId).on("child_added", function(snapshot){
-    var call = snapshot.val();
-    var incomingCall = new Call(snapshot.key(), call.callerId, call.expertId, call.expertFee);
-    incomingCall.displayIncoming();
+User.prototype.loadCallHistory = function(userId){
+  callsRef.orderByChild('callerId').equalTo(userId).on("child_added", function(snapshot){
+    var call = new Call(snapshot.val());
+    call.displayInfo();
   });
 };

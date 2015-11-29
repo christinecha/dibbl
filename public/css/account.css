@@ -46,3 +46,10 @@
   box-sizing: border-box;
   cursor: pointer;
 }
+
+.callInfo {
+  background-color: white;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+  text-align: left;
+}

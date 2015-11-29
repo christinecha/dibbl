@@ -38,6 +38,7 @@ Twilio.Device.disconnect(function(connection) {
     expertId: expertId,
     expertFee: expertFee,
   });
+  location.href = "/account";
 });
 
 $('#call-container').on('click', '#hangup', function() {
@@ -47,7 +48,10 @@ $('#call-container').on('click', '#hangup', function() {
 $('#searchResults').on('click', '.connectButton', function(){
     callerId = currentUserId;
     expertId = $(this).siblings('.userName').attr('id');
-    var call = new Call(callerId, expertId);
+    var call = new Call({
+        callerId: callerId,
+        expertId: expertId,
+    });
     var expert = call.expert();
     expertFee = expert.fee;
 

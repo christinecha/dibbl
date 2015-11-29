@@ -9,8 +9,6 @@ $('#header').load('partials/header', function(){
       usersRef.child(authData.uid).on("value", function(snapshot){
         currentUser = snapshot.val();
         currentUserId = snapshot.key();
-        var user = new User();
-        user.loadIncomingCalls(currentUserId);
       });
     } else {
       console.log("User is logged out");
@@ -37,6 +35,8 @@ $('#header').on('click', '.account', function(){
 $('#header').on('click', '.logout', function(){
   ref.unauth();
 });
+
+
 
 
 

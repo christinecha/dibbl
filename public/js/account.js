@@ -14,6 +14,9 @@ var authCheck = setInterval(function(){
       };
     });
 
+    var user = new User();
+    user.loadCallHistory(currentUserId);
+
     $('#updatePersonalInfo').on('submit', function() {
       var firstname = $('#account--firstname').val();
       var lastname = $('#account--lastname').val();
@@ -54,7 +57,6 @@ var authCheck = setInterval(function(){
 
       reader.readAsDataURL(file);
     });
-
 
     // PAYMENT ------------------------------------------------------------------------
     if (currentUserId) {
