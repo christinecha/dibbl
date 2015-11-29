@@ -1,19 +1,19 @@
 'use strict';
 
-var express = require("express"),
+var node_env = process.env.NODE_ENV || "development";
+var port = process.env.PORT || 8080;
+
+var fs = require('fs'),
+    config = JSON.parse(fs.readFileSync('config.json')),
+    express = require("express"),
     app = express(),
     bodyParser = require('body-parser'),
-    stripe = require("stripe")("sk_test_l30FERrHXVw4pz7LDQkVEHQI"),
+    stripe = require("stripe")(config[node_env].stripe.secret),
     Firebase = require('firebase'),
-    PeerConnection = require('rtcpeerconnection'),
-    twilioAccountSID = 'ACa9661f788bc6132577b3341523890490',
-    twilioAuthToken = "31fba9f52896b8b46064faf7884b5d4f",
     twilio = require('twilio'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
     callsRef = ref.child("calls");
-
-var port = process.env.PORT || 8080;
 
 app.set('view engine', 'ejs');
 
@@ -32,12 +32,12 @@ app.get("/partials/:name", function (req, res) {
 
 app.get("/search", function (req, res) {
   var capability = new twilio.Capability(
-      'ACa9661f788bc6132577b3341523890490',
-      "31fba9f52896b8b46064faf7884b5d4f"
+      config[node_env].twilio.accountSid,
+      config[node_env].twilio.authToken
   );
 
   capability.allowClientIncoming('browser-bot');
-  capability.allowClientOutgoing('AP1f84916b6c4873c17e559d518be948da');
+  capability.allowClientOutgoing(config[node_env].twimlAppSid);
 
   res.render('search.ejs', {
       token:capability.generate()
@@ -50,7 +50,7 @@ app.get("/account", function (req, res) {
 
 app.post("/processCall", function (req, res) {
   //require the Twilio module and create a REST client
-  var client = require('twilio')(twilioAccountSID, twilioAuthToken);
+  var client = require('twilio')(config[node_env].twilio.accountSid, config[node_env].twilio.authToken);
   var callSid = req.body.callId;
   var currentUserId = req.body.currentUserId;
   var expertId = req.body.expertId;
