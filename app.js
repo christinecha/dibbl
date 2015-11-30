@@ -3,7 +3,7 @@
 var twilio_accountSid = process.env.TWILIO_ACCOUNTSID || "AC27d6f0de5c78471dc7e9aef47a031e3e";
 var twilio_authToken = process.env.TWILIO_AUTHTOKEN || "ef503f14a56322850639e39173e80360";
 var twilio_twimlAppSid = process.env.TWILIO_TWIMLAPPSID || "AP1f84916b6c4873c17e559d518be948da";
-var stripe_secret = process.env.TWILIO_AUTHTOKEN || "sk_test_l30FERrHXVw4pz7LDQkVEHQI";
+var stripe_secret = process.env.STRIPE_SECRET || "sk_test_l30FERrHXVw4pz7LDQkVEHQI";
 var port = process.env.PORT || 8080;
 
 var express = require("express"),
