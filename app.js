@@ -20,6 +20,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.get("/", function (req, res) {
   res.render("home.ejs");

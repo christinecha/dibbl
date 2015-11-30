@@ -5,16 +5,19 @@
 .main-category {
   margin-bottom: 20px;
   text-align: center;
+  height: 600px;
 }
 
+.main-category .subcategory-wrapper { height: 100%; }
+
 .subcategory {
+  height: 100%;
   padding: 20px;
   background-color: #fafafa;
-  height: 100%;
   text-align: center;
 }
 
-.subcategory .subcategory {
+.sub-subcategory {
   margin: 10px 0;
   padding: 10px;
   background-color: white;
