@@ -14,7 +14,8 @@ var express = require("express"),
     twilio = require('twilio'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
-    callsRef = ref.child("calls");
+    callsRef = ref.child("calls"),
+    enforce = require('express-sslify');
 
 app.set('view engine', 'ejs');
 
