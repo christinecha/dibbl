@@ -45,31 +45,25 @@ $('#call-container').on('click', '#hangup', function() {
     Twilio.Device.disconnectAll();
 });
 
-$('#searchResults').on('click', '.connectButton', function(){
-    callerId = currentUserId;
-    expertId = $(this).siblings('.userName').attr('id');
-    var call = new Call({
-        callerId: callerId,
-        expertId: expertId,
-    });
-    var expert = call.expert();
-    expertFee = expert.fee;
+$('#searchResults').on('click', '.connectButton', function() {
+  usersRef.child(currentUserId).once("value", function(snapshot) {
+    var user = snapshot.val();
 
-    $('#call-container').load('partials/call', function(){
-      $('#expert--firstname').text(expert.firstname);
-      $('#expert--fee').text(expertFee.toFixed(2));
-    });
-
-    $('#call-container').on('click', '.closeCallBox', function(){
-      $('#call-container').empty();
-    });
-
-    $('#call-container').on('click', '#makeCall', function(){
-      initiateCall(expert);
-    });
+    if (user.customerId) {
+      callerId = currentUserId;
+      expertId = $(this).siblings('.userName').attr('id');
+      var call = new Call({
+          callerId: callerId,
+          expertId: expertId,
+      });
+      call.triggerCallWindow();
+    } else {
+      location.href = '/account?alert=no-cc';
+    };
+  });
 });
 
-var initiateCall = function(expert){
+var initiateCall = function(expert) {
   console.log('calling', expert.phone);
   showCallProgress();
   var connection = Twilio.Device.connect({

@@ -22,11 +22,21 @@ Call.prototype.expert = function() {
   return expert;
 };
 
-Call.prototype.create = function() {
-  usersRef.child(this.expertId).once("value", function(snapshot){
-    var expert = snapshot.val();
-    console.log(expert);
-    $.post( "/call", expert);
+Call.prototype.triggerCallWindow = function() {
+  var expert = this.expert();
+  expertFee = expert.fee;
+
+  $('#call-container').load('partials/call', function(){
+    $('#expert--firstname').text(expert.firstname);
+    $('#expert--fee').text(expertFee.toFixed(2));
+  });
+
+  $('#call-container').on('click', '.closeCallBox', function(){
+    $('#call-container').empty();
+  });
+
+  $('#call-container').on('click', '#makeCall', function(){
+    initiateCall(expert);
   });
 };
 

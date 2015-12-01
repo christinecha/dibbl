@@ -59,6 +59,11 @@ var authCheck = setInterval(function(){
     });
 
     // PAYMENT ------------------------------------------------------------------------
+    if (alert == 'no-cc') {
+      $('.payment-methods .subcategory').css('border', '6px solid #66cccc');
+      $('.payment-methods .subcategory').prepend('<p class="xsmall">please enter a payment method to continue.</p><br>');
+    };
+
     if (currentUserId) {
       usersRef.child(currentUserId).child("customerId").once("value", function(snapshot){
         if (snapshot.val()) {

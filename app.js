@@ -4,7 +4,8 @@ var twilio_accountSid = process.env.TWILIO_ACCOUNTSID || "AC27d6f0de5c78471dc7e9
 var twilio_authToken = process.env.TWILIO_AUTHTOKEN || "ef503f14a56322850639e39173e80360";
 var twilio_twimlAppSid = process.env.TWILIO_TWIMLAPPSID || "AP1f84916b6c4873c17e559d518be948da";
 var stripe_secret = process.env.STRIPE_SECRET || "sk_test_l30FERrHXVw4pz7LDQkVEHQI";
-var port = process.env.PORT || 8080;
+var node_env = process.env.NODE_ENV || "development";
+var port = process.env.PORT || 3000;
 
 var express = require("express"),
     app = express(),
@@ -14,14 +15,17 @@ var express = require("express"),
     twilio = require('twilio'),
     ref = new Firebase('https://dibbl.firebaseio.com/'),
     usersRef = ref.child("users"),
-    callsRef = ref.child("calls"),
-    enforce = require('express-sslify');
+    callsRef = ref.child("calls");
 
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
+if (node_env == "production") {
+  var enforce = require('express-sslify');
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+};
 
 app.get("/", function (req, res) {
   res.render("home.ejs");
@@ -48,7 +52,8 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/account", function (req, res) {
-  res.render('account.ejs');
+  var alert = req.query.alert;
+  res.render('account.ejs', {alert: alert});
 });
 
 app.post("/processCall", function (req, res) {
