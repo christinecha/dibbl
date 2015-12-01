@@ -68,6 +68,7 @@ var authCheck = setInterval(function(){
       usersRef.child(currentUserId).child("customerId").once("value", function(snapshot){
         if (snapshot.val()) {
           $(".saved-cards").show();
+          $(".saved-cards").append(defaultCard_brand + ' x' + defaultCard_last4);
         } else {
           $(".saved-cards").hide();
         }

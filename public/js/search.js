@@ -38,7 +38,7 @@ Twilio.Device.disconnect(function(connection) {
     expertId: expertId,
     expertFee: expertFee,
   });
-  location.href = "/account";
+  location.href = "/account?user=" + currentUserId;
 });
 
 $('#call-container').on('click', '#hangup', function() {
@@ -58,7 +58,7 @@ $('#searchResults').on('click', '.connectButton', function() {
       });
       call.triggerCallWindow();
     } else {
-      location.href = '/account?alert=no-cc';
+      location.href = '/account?alert=no-cc?user=' + currentUserId;
     };
   });
 });

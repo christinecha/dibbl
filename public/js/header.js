@@ -32,6 +32,10 @@ $('#header').on('click', '.account', function(){
   $(this).siblings('.dropdown-account').toggle();
 });
 
+$('#header').on('click', '.account-dashboard', function(){
+  location.href = "/account?user=" + currentUserId;
+});
+
 $('#header').on('click', '.logout', function(){
   ref.unauth();
 });

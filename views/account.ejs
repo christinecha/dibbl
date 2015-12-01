@@ -73,10 +73,9 @@
           </div>
           <div class="payment-methods col-sm-4 subcategory-wrapper">
             <div class="subcategory">
-              <h5>Payment Methods</h5>
+              <h5>Billing Information</h5><br>
               <div class="saved-cards sub-subcategory">
                 <span class="xsmall">DEFAULT &nbsp;&nbsp;</span>
-                Visa x0849
               </div>
               <br>
               <form action="/newPaymentMethod" method="POST" id="addPaymentMethod">
@@ -131,7 +130,8 @@
 
     <script>
       var alert = '<%= alert %>';
-      console.log(alert);
+      var defaultCard_last4 = '<%= defaultCard.last4 %>';
+      var defaultCard_brand = '<%= defaultCard.brand %>';
     </script>
     <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/account.js"></script>
