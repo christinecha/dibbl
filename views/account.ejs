@@ -112,11 +112,10 @@
             <div class="topics subcategory">
               <div class="saved-topics sub-subcategory">
                 <span class="xsmall">TOPICS OF EXPERTISE</span><br>
-                No topics have been added yet.
               </div>
               <form id="addNewTopic">
                 <span class="xsmall">ADD NEW TOPIC</span><br>
-                <input type="text" size="20" data-stripe="number"/><br>
+                <input id="newTopic" type="text" size="20" data-stripe="number"/><br>
                 <br>
                 <button type="submit" class="small-blue">SUBMIT</button>
               </form>
@@ -129,7 +128,9 @@
 
 
     <script>
-      var alert = '<%= alert %>';
+      if ('<%= alert %>') {
+        var alert = '<%= alert %>';
+      };
       var defaultCard_last4 = '<%= defaultCard.last4 %>';
       var defaultCard_brand = '<%= defaultCard.brand %>';
     </script>

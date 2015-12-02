@@ -23,6 +23,7 @@ Call.prototype.expert = function() {
 };
 
 Call.prototype.triggerCallWindow = function() {
+  console.log(this);
   var expert = this.expert();
   expertFee = expert.fee;
 

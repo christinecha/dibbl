@@ -52,6 +52,7 @@ $('#searchResults').on('click', '.connectButton', function() {
     if (user.customerId) {
       callerId = currentUserId;
       expertId = $(this).siblings('.userName').attr('id');
+      console.log(expertId);
       var call = new Call({
           callerId: callerId,
           expertId: expertId,
@@ -60,7 +61,7 @@ $('#searchResults').on('click', '.connectButton', function() {
     } else {
       location.href = '/account?alert=no-cc?user=' + currentUserId;
     };
-  });
+  }.bind(this));
 });
 
 var initiateCall = function(expert) {
