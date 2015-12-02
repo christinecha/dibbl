@@ -51,7 +51,7 @@ $('#searchResults').on('click', '.connectButton', function() {
 
     if (user.customerId) {
       callerId = currentUserId;
-      expertId = $(this).siblings('.userName').attr('id');
+      expertId = $(this).parent('.userInfo').attr('id');
       console.log(expertId);
       var call = new Call({
           callerId: callerId,

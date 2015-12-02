@@ -24,7 +24,6 @@ $('#header').load('partials/header', function(){
       };
     }
   };
-
   ref.onAuth(authDataCallback);
 });
 
@@ -39,7 +38,6 @@ $('#header').on('click', '.account-dashboard', function(){
 $('#header').on('click', '.logout', function(){
   ref.unauth();
 });
-
 
 
 

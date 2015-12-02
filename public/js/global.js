@@ -120,8 +120,8 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   };
 
   var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
-  var $userName = $('<h5>').html(firstname + ' ' + lastname).attr('id', userId).addClass('userName');
-  var $rating = $('<div>').addClass('rating').html('<i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i>');
+  var $userName = $('<h5>').html(firstname + ' ' + lastname).addClass('userName');
+  var $rating = $('<div>').addClass('rating-container');
   var $userFee = $('<h5>').text(totalfee).addClass('userFee');
   var $userSkills = $('<div>').addClass('userSkills');
   for (var i = 0; i < skills.length; i++) {
@@ -133,14 +133,37 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
 
   var $section1 = $('<div>').addClass('col-md-4').append($photo);
   var $section2 = $('<div>').addClass('col-md-8').append($faveIcon).append($userName).append($rating).append($userFee).append($userSkills).append($userDetails).append($callButton).attr('data-fee', fee);
-  var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2);
-
+  var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2).attr('id', userId);
   $('#searchResults').append($userInfo);
+
+  var ratingContainer = '#' + userId + ' .rating-container';
+  this.displayRating(userId, ratingContainer);
 };
 
-User.prototype.loadCallHistory = function(userId){
+User.prototype.loadCallHistory = function(userId) {
   callsRef.orderByChild('callerId').equalTo(userId).on("child_added", function(snapshot){
     var call = new Call(snapshot.val());
     call.displayInfo();
+  });
+};
+
+User.prototype.displayRating = function(userId, containerId) {
+  $(containerId).load('partials/rating', function() {
+    usersRef.child(userId).once("value", function(snapshot) {
+      var user = snapshot.val();
+      var starRating = Math.round(user.rating * 2) / 2;
+      var halfStars = starRating % 1;
+      var wholeStars = starRating - halfStars;
+
+      $(containerId + ' .rating .rating-star:lt(' + wholeStars + ')').each(function() {
+        console.log('triggered');
+        $(this).addClass('fa-star');
+        $(this).removeClass('fa-star-o');
+      });
+
+      $(containerId + ' .rating .rating-star:eq(' + wholeStars + ')')
+        .addClass('fa-star-half-o')
+        .removeClass('fa-star-o');
+    });
   });
 };

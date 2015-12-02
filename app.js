@@ -52,9 +52,11 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/account", function (req, res) {
+  var alert = req.query.alert;
   var user = req.query.user;
   var stripe = require("stripe")(stripe_secret);
   var customer;
+
 
   usersRef.child(user).once("value", function(snapshot){
     var user = snapshot.val();
@@ -67,7 +69,6 @@ app.get("/account", function (req, res) {
             console.log('err', err);
           } else {
             var defaultCard = customer.sources.data[0];
-            var alert = req.query.alert;
             res.render('account.ejs', {
               alert: alert,
               defaultCard: {

@@ -57,6 +57,8 @@
   text-align: left;
 }
 
+.saved-topics { margin-bottom: 15px; }
+
 .account--skill {
   background-color: #f1f1f1;
   color: #888;
@@ -64,4 +66,5 @@
   text-transform: uppercase;
   padding: 2px 5px;
   margin: 0 2px;
+  display: inline-block;
 }
