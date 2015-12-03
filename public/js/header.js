@@ -1,12 +1,12 @@
-$('#header').load('partials/header', function(){
+$('#header').load('partials/header', function() {
 
   // Authorization & Loading Current User Info
-  var authDataCallback = function(authData){
+  var authDataCallback = function(authData) {
     if (authData) {
       $('.secure').show();
       $('.public-only').hide();
       console.log("User " + authData.uid + " is logged in with " + authData.provider);
-      usersRef.child(authData.uid).on("value", function(snapshot){
+      usersRef.child(authData.uid).on("value", function(snapshot) {
         currentUser = snapshot.val();
         currentUserId = snapshot.key();
       });
@@ -25,6 +25,8 @@ $('#header').load('partials/header', function(){
     }
   };
   ref.onAuth(authDataCallback);
+
+
 });
 
 $('#header').on('click', '.account', function(){
@@ -38,6 +40,7 @@ $('#header').on('click', '.account-dashboard', function(){
 $('#header').on('click', '.logout', function(){
   ref.unauth();
 });
+
 
 
 

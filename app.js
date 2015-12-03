@@ -57,7 +57,6 @@ app.get("/account", function (req, res) {
   var stripe = require("stripe")(stripe_secret);
   var customer;
 
-
   usersRef.child(user).once("value", function(snapshot){
     var user = snapshot.val();
     if (user.customerId) {
@@ -121,7 +120,6 @@ app.post("/processCall", function (req, res) {
       };
     });
   });
-  res.render("account.ejs");
 });
 
 app.get('user/:user_id', function (req, res) {

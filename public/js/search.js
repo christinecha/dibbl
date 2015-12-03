@@ -30,15 +30,18 @@ $('#userSearchForm').on('submit', function(e){
 Twilio.Device.setup(token);
 
 Twilio.Device.disconnect(function(connection) {
-  $('.call-progress').hide();
-  $('.call-review').show();
-  $.post("/processCall", {
+  var callObj = {
     callId: connection.mediaStream.callSid,
     currentUserId: currentUserId,
     expertId: expertId,
     expertFee: expertFee,
-  });
-  location.href = "/account?user=" + currentUserId;
+  };
+  $.post("/processCall", callObj)
+    .done(function(){
+      console.log('successfully processed call');
+    });
+  var call = new Call(callObj);
+  call.triggerReview();
 });
 
 $('#call-container').on('click', '#hangup', function() {
@@ -51,7 +54,7 @@ $('#searchResults').on('click', '.connectButton', function() {
 
     if (user.customerId) {
       callerId = currentUserId;
-      expertId = $(this).parent('.userInfo').attr('id');
+      expertId = $(this).parent().parent('.userInfo').attr('id');
       console.log(expertId);
       var call = new Call({
           callerId: callerId,
@@ -64,37 +67,22 @@ $('#searchResults').on('click', '.connectButton', function() {
   }.bind(this));
 });
 
-var initiateCall = function(expert) {
-  console.log('calling', expert.phone);
-  showCallProgress();
-  var connection = Twilio.Device.connect({
-      CallerId:     '+19175887518',
-      PhoneNumber:  expert.phone,
-  });
-};
+$('#call-container').on('submit', '#callReviewForm', function(e) {
+  e.preventDefault();
+  console.log('submitting form');
+  var expertId = $(this).attr('data-expertId');
+  var wholeStars = $(this).children('.rating-container').find('.rating-star.fa-star').length;
+  var halfStars = $(this).children('.rating-container').find('.rating-star.fa-star-half-o').length;
+  var starRating = wholeStars + halfStars;
+  var comment = $(this).find('#callreview--comment').val();
 
-var showCallProgress = function() {
-  $('.call-request').hide();
-  $('.call-progress').show();
-  $('#call-progress--visualization').load('partials/blossoms', function(){
-    var blossoms = $('#blossoms g');
-    var index = 0;
+  var user = new User();
+  user.updateRating(expertId, starRating);
+  user.addComment(expertId, comment);
+  location.href = '/account?user=' + currentUserId;
 
-    var growBlossom = setInterval(function() {
-      blossoms.hide();
-      if (index <= 3) {
-        blossoms.eq(index).show();
-        index+= 1;
-      } else if ((index > 3) && (index < 8)) {
-        blossoms.eq(3).show();
-        index+= 1;
-      } else if (index >= 8) {
-        blossoms.eq(3).show();
-        index = 0;
-      };
-    }, 500);
-  });
-};
+  return false;
+});
 
 
 
