@@ -39,6 +39,7 @@ $('#header').on('click', '.account-dashboard', function(){
 
 $('#header').on('click', '.logout', function(){
   ref.unauth();
+  location.href = "/";
 });
 
 

@@ -26,7 +26,8 @@ var authCheck = setInterval(function(){
     var user = new User();
     user.loadCallHistory(currentUserId);
 
-    $('#updatePersonalInfo').on('submit', function() {
+    $('#updatePersonalInfo').on('submit', function(e) {
+      e.preventDefault();
       var firstname = $('#account--firstname').val();
       var lastname = $('#account--lastname').val();
       var email = $('#account--email').val();
@@ -38,14 +39,16 @@ var authCheck = setInterval(function(){
         lastname: lastname,
         email: email,
       });
+      location.reload();
     });
 
-    $('#updateBio').on('submit', function() {
+    $('#updateBio').on('submit', function(e) {
+      e.preventDefault();
       var bio = $('#account--bio').val();
-
       usersRef.child(currentUserId).update({
         bio: bio,
       });
+      location.reload();
     });
 
     $('.account--profilephoto').on('click', function(){
@@ -79,9 +82,8 @@ var authCheck = setInterval(function(){
         usersRef.child(currentUserId).update({
           skills: skills,
         });
-        location.reload();
       });
-      return false;
+      location.reload();
     });
 
     // PAYMENT ------------------------------------------------------------------------
