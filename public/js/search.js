@@ -1,7 +1,26 @@
-var callId = '',
+var searchQuery = [],
+    callId = '',
     callerId = currentUserId,
     expertId,
     expertFee;
+
+$('.topicList li').on('click', function(){
+  var selector = $(this).attr('data-selector');
+  var selectorId = '#' + selector;
+  $(selectorId).toggle();
+});
+
+$('.keyword').on('click', function(){
+  $(this).toggleClass('selected');
+  var keyword = $(this).attr('data-keyword');
+  var index = searchQuery.indexOf(keyword);
+  if (index < 0) {
+    searchQuery.push(keyword);
+  } else {
+    searchQuery.splice(index, 1);
+  };
+  $('#userSearchForm').submit();
+});
 
 $("#search input[type='number']").keypress(function (evt) {
     evt.preventDefault();
@@ -9,19 +28,21 @@ $("#search input[type='number']").keypress(function (evt) {
 
 $('#userSearchForm').on('submit', function(e){
   e.preventDefault();
-  var query = $("#query").val();
-  var time = $("#query-time").val();
+  console.log(searchQuery);
   $('#searchResults').empty();
   usersRef.on("child_added", function(snapshot){
     var userObj = snapshot.val();
-    var skills = userObj.skills;
-    if (skills) {
-      if (skills.indexOf(query) < 0) {
-        // do nothing;
-      } else {
-        var user = new User();
-        user.displayAsSearchResult(snapshot.key(), userObj, time);
-      }
+    var userSkills = userObj.skills;
+    var time = 1;
+    if (userSkills) {
+      for (var i=0; i < searchQuery.length; i++) {
+        if (userSkills.indexOf(searchQuery[i]) < 0) {
+          // do nothing;
+        } else {
+          var user = new User();
+          user.displayAsSearchResult(snapshot.key(), userObj, time);
+        };
+      };
     };
   });
   return false;

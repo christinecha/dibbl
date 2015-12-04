@@ -1,3 +1,33 @@
+.topicList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.topicList li {
+  color: #66cccc;
+  background-color: white;
+  padding: 5px 10px;
+  margin: 2px 0;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+.topicList li:hover {
+  opacity: .8;
+}
+
+.topicList-2, .topicList-3 {
+  display: none;
+  margin-left: 10px;
+}
+
+.keyword.selected {
+  border: 2px solid #66cccc;
+  box-sizing: border-box;
+  font-style: italic;
+}
+
+#userSearchForm { color: #aaa; }
 
 #userSearchForm label {
   font-size: 12px;
@@ -14,7 +44,7 @@
 }
 
 #searchResults {
-  margin-top: 10px;
+  min-height: 500px;
 }
 
 .searchFilter { margin: 10px 0; text-align: center; }
@@ -40,6 +70,7 @@
 
 .userInfo {
   border: 1px solid #ddd;
+  background-color: white;
   padding: 20px;
   text-align: left;
   margin-bottom: 10px;

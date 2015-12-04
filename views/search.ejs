@@ -33,13 +33,36 @@
       <h4>FIND AN EXPERT</h4>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-4">
       <div class="light-gray padded-20">
         <form id="userSearchForm">
-          <label>TOPIC</label>
-          <input id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
-          <label>EST. DURATION (MIN)</label>
-          <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box">
+          <span class="small">CHOOSE A TOPIC</span>
+          <br><br>
+          <ul class="topicList topicList-1">
+            <li data-selector="music">MUSIC</li>
+            <ul class="topicList topicList-2" id="music">
+              <li data-selector="performance">PERFORMANCE</li>
+              <ul class="topicList topicList-3" id="performance">
+                <li class="keyword" data-keyword="percussion">PERCUSSION</li>
+                <li class="keyword" data-keyword="bass">BASS</li>
+                <li class="keyword" data-keyword="guitar">GUITAR</li>
+                <li class="keyword" data-keyword="piano">PIANO</li>
+                <li class="keyword" data-keyword="vocal">VOCAL</li>
+              </ul>
+              <li>COMPOSITION</li>
+              <li>BUSINESS &amp; CAREER</li>
+              <li>SOUND ENGINEERING</li>
+            </ul>
+            <li class="inactive">VISUAL ART <span class="xsmall">(coming soon)</span></li>
+            <li class="inactive">WRITING <span class="xsmall">(coming soon)</span></li>
+            <li class="inactive">THEATRE <span class="xsmall">(coming soon)</span></li>
+            <li class="inactive">FILM <span class="xsmall">(coming soon)</span></li>
+            <li class="inactive">CULINARY ARTS <span class="xsmall">(coming soon)</span></li>
+          </ul>
+          <input type="hidden" id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
+          <!-- <label>EST. DURATION (MIN)</label> -->
+          <!-- <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box"> -->
+          <br>
           <button class="small-blue">search</button>
         </form>
       </div>
@@ -51,18 +74,11 @@
         <span>NAME</span>
       </div>
 
-      <div id="searchResults">
-      </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="light-gray padded-20">
-        <div class="newsFeed">
-          NEWS FEED
-          <div class="newsItem">
-            Amy Tse favorited expert Mark Thompson.
-          </div>
-        </div>
+    <div class="col-md-8">
+      <div id="searchResults">
+        <---- Pick a category!
       </div>
     </div>
 
