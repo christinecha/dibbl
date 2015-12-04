@@ -6,14 +6,14 @@ button, input, textarea {
   box-shadow: none;
   font-family: 'Montserrat', sans-serif;
 }
-body { font-family: 'Montserrat', sans-serif; }
+body { font-family: 'Montserrat', sans-serif; max-width: 1600px; margin-left: auto; margin-right: auto; }
 a, button, .clickable { cursor: pointer; }
 .hidden { display: none; }
 .inline { display: inline-block; }
 .secure { display: none; }
 .padded-20 { padding: 20px; }
 .scrollable { overflow: scroll; max-height: 100%; }
-.inactive { background-color: #bbbbbb !important; color: #eeeeee !important; }
+.inactive { background-color: #eee !important; color: #bbb !important; }
 
 /* TEXT */
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }

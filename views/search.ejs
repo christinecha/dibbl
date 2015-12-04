@@ -43,7 +43,7 @@
             <ul class="topicList topicList-2" id="music">
               <li data-selector="performance">PERFORMANCE</li>
               <ul class="topicList topicList-3" id="performance">
-                <li class="keyword" data-keyword="percussion">PERCUSSION</li>
+                <li class="inactive" data-keyword="percussion">PERCUSSION <span class="xsmall">(coming soon)</span></li>
                 <li class="keyword" data-keyword="bass">BASS</li>
                 <li class="keyword" data-keyword="guitar">GUITAR</li>
                 <li class="keyword" data-keyword="piano">PIANO</li>
@@ -51,9 +51,13 @@
               </ul>
               <li class="keyword" data-keyword="composition">COMPOSITION</li>
               <li class="keyword" data-keyword="business">BUSINESS &amp; CAREER</li>
-              <li class="keyword" data-keyword="sound-engineering">SOUND ENGINEERING</li>
+              <li class="keyword" data-keyword="sound engineering">SOUND ENGINEERING</li>
             </ul>
-            <li class="inactive">VISUAL ART <span class="xsmall">(coming soon)</span></li>
+            <li data-selector="visual-art">VISUAL ART</li>
+            <ul class="topicList topicList-2" id="visual-art">
+              <li class="keyword" data-keyword="fine art">FINE ART</li>
+              <li class="keyword" data-keyword="design">DESIGN</li>
+            </ul>
             <li class="inactive">WRITING <span class="xsmall">(coming soon)</span></li>
             <li class="inactive">THEATRE <span class="xsmall">(coming soon)</span></li>
             <li class="inactive">FILM <span class="xsmall">(coming soon)</span></li>
@@ -62,9 +66,9 @@
           <input type="hidden" id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
           <!-- <label>EST. DURATION (MIN)</label> -->
           <!-- <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box"> -->
-          <br>
-          <button class="small-blue">search</button>
         </form>
+        <br>
+        <button class="small-blue" id="clearSearchQuery">clear all</button>
       </div>
 
       <div class="searchFilter">
@@ -77,8 +81,8 @@
     </div>
 
     <div class="col-md-8">
+      <img id="noSearchResults" src="/assets/graphics/pickCategory_arrowleft.svg">
       <div id="searchResults">
-        <---- Pick a category!
       </div>
     </div>
 

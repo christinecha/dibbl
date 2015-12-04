@@ -1,4 +1,5 @@
 var searchQuery = [],
+    searchResults = [],
     callId = '',
     callerId = currentUserId,
     expertId,
@@ -28,9 +29,11 @@ $("#search input[type='number']").keypress(function (evt) {
 
 $('#userSearchForm').on('submit', function(e){
   e.preventDefault();
-  console.log(searchQuery);
+  $('#noSearchResults').hide();
   $('#searchResults').empty();
+  searchResults = [];
   usersRef.on("child_added", function(snapshot){
+    var userKey = snapshot.key();
     var userObj = snapshot.val();
     var userSkills = userObj.skills;
     var time = 1;
@@ -38,13 +41,26 @@ $('#userSearchForm').on('submit', function(e){
       for (var i=0; i < searchQuery.length; i++) {
         if (userSkills.indexOf(searchQuery[i]) < 0) {
           // do nothing;
+        } else if (searchResults.indexOf(userKey) >= 0) {
+          // do nothing;
         } else {
+          searchResults.push(userKey);
           var user = new User();
           user.displayAsSearchResult(snapshot.key(), userObj, time);
         };
       };
     };
   });
+  return false;
+});
+
+$('#clearSearchQuery').on('click', function(e){
+  e.preventDefault();
+  $('.keyword.selected').removeClass('selected');
+  $('#searchResults').empty();
+  searchResults = [];
+  searchQuery = [];
+  $('#noSearchResults').show();
   return false;
 });
 

@@ -209,19 +209,23 @@ User.prototype.displayRating = function(userId, containerId) {
   $(containerId).load('partials/rating', function() {
     usersRef.child(userId).once("value", function(snapshot) {
       var user = snapshot.val();
-      var starRating = Math.round(user.rating.score * 2) / 2;
-      var halfStars = starRating % 1;
-      var wholeStars = starRating - halfStars;
 
-      $(containerId + ' .rating .rating-star:lt(' + wholeStars + ')').each(function() {
-        console.log('triggered');
-        $(this).addClass('fa-star');
-        $(this).removeClass('fa-star-o');
-      });
+      if (user.rating) {
+        var starRating = Math.round(user.rating.score * 2) / 2;
+        var halfStars = starRating % 1;
+        var wholeStars = starRating - halfStars;
 
-      $(containerId + ' .rating .rating-star:eq(' + wholeStars + ')')
-        .addClass('fa-star-half-o')
-        .removeClass('fa-star-o');
+        $(containerId + ' .rating .rating-star:lt(' + wholeStars + ')').each(function() {
+          $(this).addClass('fa-star');
+          $(this).removeClass('fa-star-o');
+        });
+
+        $(containerId + ' .rating .rating-star:eq(' + wholeStars + ')')
+          .addClass('fa-star-half-o')
+          .removeClass('fa-star-o');
+      } else {
+        $(containerId + ' .rating').append('<span class="xsmall">&nbsp; &nbsp; NOT YET RATED</span>');
+      };
     });
   });
 };
