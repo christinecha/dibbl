@@ -27,7 +27,7 @@
   font-style: italic;
 }
 
-#userSearchForm { color: #aaa; }
+#userSearchForm { color: #aaa; min-height: 300px; }
 
 #userSearchForm label {
   font-size: 12px;

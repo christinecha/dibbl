@@ -1,7 +1,39 @@
 #home-section-1 {
   background-image: url('../assets/background_desk1.jpeg');
   background-size: cover;
-  height: 100vh;
+  height: 500px;
+}
+
+@media (max-width: 991px) {
+  #home-section-1 {
+    background-color: #eee;
+    background-image: none;
+    text-align: center;
+  }
+}
+
+#home-section-2a {
+  background-image: url('../assets/background_music1.jpeg');
+  background-size: cover;
+  background-position: bottom;
+  color: white;
+  height: 600px;
+  padding: 60px;
+}
+
+#home-section-2b {
+  background-image: url('../assets/background_desk2.jpg');
+  background-size: cover;
+  background-position: bottom;
+  text-align: right;
+  height: 600px;
+  padding: 60px;
+}
+
+#exampleUseCases {
+  height: 40px;
+  margin-top: 5px;
+  color: #66cccc;
 }
 
 .search-container, .mailinglist-container, .login-container {
@@ -28,10 +60,4 @@ input {
 .confirmation-container {
   height: 30px;
   color: #ff9966;
-}
-
-#home-section-2 {
-  background-color: #ff9966;
-  color: #fff;
-  height: 500px;
 }

@@ -2,11 +2,17 @@ $('.mailinglist-container').hide();
 $('.login-container').hide();
 $('.signup-only').hide();
 
-$('#search').on('submit', function(e){
-  e.preventDefault();
-  $('.search-container').hide();
-  $('.mailinglist-container').show();
-  return false;
+$("#exampleUseCases").typed({
+    strings: [
+      "a world-renowned guitarist",
+      "a celebrated chef",
+      "an award-winning poet"
+    ],
+    contentType: 'text',
+    showCursor: 'false',
+    backDelay: 2000,
+    loop: true,
+    typeSpeed: 50,
 });
 
 $('#mailinglist').on('submit', function(e){

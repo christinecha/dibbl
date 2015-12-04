@@ -82,11 +82,20 @@
                 <span class="payment-errors"></span>
                 <span class="xsmall">CREDIT CARD NUMBER</span><br>
                 <input type="text" size="20" data-stripe="number"/><br>
-                <span class="xsmall">CVC</span><br>
-                <input type="text" size="4" data-stripe="cvc"/><br>
-                <span class="xsmall">EXPIRATION</span><br>
-                <input type="text" size="2" data-stripe="exp-month"/>
-                <input type="text" size="4" data-stripe="exp-year"/>
+                <div class="row">
+                  <div class="inline">
+                    <span class="xsmall">CVC</span><br>
+                    <input type="text" size="4" data-stripe="cvc" class="short"/>
+                    &nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="inline">
+                    &nbsp;&nbsp;&nbsp;
+                    <span class="xsmall">EXPIRATION</span><br>
+                    <input type="text" size="2" data-stripe="exp-month" class="short"/>
+                    /
+                    <input type="text" size="4" data-stripe="exp-year" class="short"/>
+                  </div>
+                </div>
                 <br><br>
                 <button type="submit" class="small-blue">Add Payment Method</button>
               </form>

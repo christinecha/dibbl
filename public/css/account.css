@@ -26,8 +26,11 @@
 .account-info input, textarea {
   padding: 10px;
   font-size: 14px;
-  max-width: 500px;
+  width: 100%;
+  margin-bottom: 10px;
 }
+
+.account-info input.short { width: 60px; }
 
 .account--profilephoto {
   height: 150px;
