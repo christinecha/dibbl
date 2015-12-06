@@ -10,9 +10,10 @@ var authCheck = setInterval(function(){
 }, 20);
 
 //// SETTINGS ------------------------------------------------------
-var loadAccount_settings = function() {
+var loadAccount_dashboard = function() {
   $('#account-content').empty();
-  $('#account-content').load('/partials/account-settings', function() {
+  $('.account .view-title').text('ACCOUNT DASHBOARD');
+  $('#account-content').load('/partials/account-dashboard', function() {
 
     usersRef.child(currentUserId).once("value", function(snapshot) {
       var user = snapshot.val();
@@ -110,6 +111,7 @@ var loadAccount_settings = function() {
 
 var loadAccount_inbox = function() {
   $('#account-content').empty();
+  $('.account .view-title').text('INBOX');
   $('#account-content').load('/partials/account-inbox', function() {
     var user = new User();
     user.loadMessages(currentUserId);
@@ -118,6 +120,7 @@ var loadAccount_inbox = function() {
 
 var loadAccount_expert = function() {
   $('#account-content').empty();
+  $('.account .view-title').text('MY EXPERT PROFILE');
   $('#account-content').load('/partials/account-expert', function() {
 
     usersRef.child(currentUserId).once("value", function(snapshot) {
@@ -153,7 +156,7 @@ var loadAccount_expert = function() {
 };
 
 
-$('.account-content-toggle button').on('click', function() {
+$('button.account-view-toggle').on('click', function() {
   var file = $(this).attr('data');
   location.href = "/account?user=" + currentUserId + "&view=" + file;
 });

@@ -84,7 +84,7 @@ $('#searchResults').on('click', '.connectButton', function() {
       });
       call.triggerCallWindow();
     } else {
-      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=settings';
+      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
     };
   }.bind(this));
 });
@@ -102,7 +102,7 @@ $('#searchResults').on('click', '.bookLaterButton', function() {
       });
       call.triggerBookingWindow();
     } else {
-      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=settings';
+      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
     };
   }.bind(this));
 });

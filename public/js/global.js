@@ -75,16 +75,36 @@ Call.prototype.triggerBookingWindow = function() {
   });
 
   $('#call-container').on('click', '#makeBookingRequest', function(){
-    this.makeBookingRequest(this.call.expertId, currentUserId);
+    var memo = $('#booking-request--memo').val();
+    var date1 = $('#booking-request--date1').val();
+    var date2 = $('#booking-request--date2').val();
+    var date3 = $('#booking-request--date3').val();
+    var time1 = $('#booking-request--time1').val();
+    var time2 = $('#booking-request--time2').val();
+    var time3 = $('#booking-request--time3').val();
+    var times = [
+      { date: $('#booking-request--date1').val(),
+        time: $('#booking-request--time1').val(),
+      },
+      { date: $('#booking-request--date2').val(),
+        time: $('#booking-request--time2').val(),
+      },
+      { date: $('#booking-request--date3').val(),
+        time: $('#booking-request--time3').val(),
+      }
+    ];
+    this.makeBookingRequest(this.call.expertId, currentUserId, memo, times);
   }.bind(this));
 };
 
-Call.prototype.makeBookingRequest = function(expertId, callerId) {
+Call.prototype.makeBookingRequest = function(expertId, callerId, memo, times) {
   ref.child('messages').push({
     from: callerId,
     to: expertId,
-    message: 'booking request',
-  })
+    subject: 'booking request',
+    memo: memo,
+    times: times,
+  });
 };
 
 Call.prototype.initiateCall = function(expert) {
@@ -326,13 +346,21 @@ var Message = function(obj, key) {
   this.id = key;
   this.to = obj.to;
   this.from = obj.from;
-  this.message = obj.message;
+  this.memo = obj.memo;
+  this.times = obj.times;
 };
 
 Message.prototype.displayIncoming = function() {
   var $messageFrom = $('<p>').html(this.from);
-  var $messageBody = $('<p>').html(this.message);
-  var $message = $('<div>').append($messageFrom).append($messageBody);
+  var $messageMemo = $('<p>').html(this.memo);
+  var $messageTimes = $('<div>');
+  for (var i = 0; i < this.times.length; i++) {
+    var $messageDate = $('<p>').html(this.times[i].date);
+    var $messageTime = $('<p>').html(this.times[i].time);
+    var $messageDateTime = $('<div>').append($messageDate).append($messageTime);
+    $messageTimes = $messageTimes.append($messageDateTime);
+  };
+  var $message = $('<div>').append($messageFrom).append($messageMemo).append($messageTimes);
 
   $('#inbox--messages-list').append($message);
 };

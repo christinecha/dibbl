@@ -1,3 +1,9 @@
+.title-bar.account {
+  height: 150px;
+  background-image: url('../assets/background_desk3_1500x300.png');
+  background-size: cover;
+}
+
 .account-info {
   padding: 25px;
 }

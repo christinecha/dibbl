@@ -42,7 +42,7 @@ $('#header').on('click', '.account', function(){
 });
 
 $('#header').on('click', '.account-dashboard', function(){
-  location.href = "/account?user=" + currentUserId + "&view=settings";
+  location.href = "/account?user=" + currentUserId + "&view=dashboard";
 });
 
 $('#header').on('click', '.account-inbox', function(){

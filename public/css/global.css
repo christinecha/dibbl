@@ -63,6 +63,12 @@ button.small {
 
 button.blue { background-color: #66cccc; }
 button.green { background-color: #7bc288; }
+button.white-outline {
+  background-color: transparent;
+  border: 1px solid #fff;
+  background-image: none;
+  margin: 0 5px;
+}
 
 button:hover { opacity: .8; }
 
@@ -73,8 +79,8 @@ button:hover { opacity: .8; }
 
 /* NAVIGATION */
 .nav { padding: 10px; height: 50px; }
-.logo { width: 70px; }
-.nav ul { list-style: none; }
+.logo { width: 70px; margin-top: 5px; }
+.nav ul { list-style: none; margin-top: 5px; }
 .nav ul li {
   text-transform: uppercase;
   display: inline-block;
@@ -87,9 +93,10 @@ button:hover { opacity: .8; }
 .nav ul li a:hover { text-decoration: none; color: #66cccc; }
 .nav input {
   padding: 5px 10px;
-  background-color: #fafafa;
+  border-bottom: 2px solid #eee;
   font-size: 12px;
   text-align: left;
+  margin: 0; 
 }
 .dropdown {
   z-index: 99;
