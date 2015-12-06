@@ -1,22 +1,24 @@
 var authCheck = setInterval(function(){
   if (currentUserId) {
     clearInterval(authCheck);
+    var fnString = 'loadAccount_' + view;
+    var fn = window[fnString];
+    if (typeof fn === "function") {
+      fn();
+    };
+  }
+}, 20);
 
-    //// PROFILE ------------------------------------------------------
+//// SETTINGS ------------------------------------------------------
+var loadAccount_settings = function() {
+  $('#account-content').empty();
+  $('#account-content').load('/partials/account-settings', function() {
+
     usersRef.child(currentUserId).once("value", function(snapshot) {
       var user = snapshot.val();
       $('#account--firstname').val(user.firstname);
       $('#account--lastname').val(user.lastname);
       $('#account--email').val(user.email);
-      $('#account--bio').val(user.bio);
-      if (user.skills) {
-        for (var i=0; i<user.skills.length; i++) {
-          var $skill = $('<span>').text(user.skills[i]).addClass('account--skill');
-          $('.saved-topics').append($skill);
-        };
-      } else {
-        $('.saved-topics').append('No topics have been added yet.');
-      };
 
       if (user.photo) {
         $('.account--profilephoto').css('background-image', 'url("' + user.photo + '")')
@@ -42,15 +44,6 @@ var authCheck = setInterval(function(){
       location.reload();
     });
 
-    $('#updateBio').on('submit', function(e) {
-      e.preventDefault();
-      var bio = $('#account--bio').val();
-      usersRef.child(currentUserId).update({
-        bio: bio,
-      });
-      location.reload();
-    });
-
     $('.account--profilephoto').on('click', function(){
       $('#profilePhotoUpload').click();
     });
@@ -68,22 +61,6 @@ var authCheck = setInterval(function(){
       };
 
       reader.readAsDataURL(file);
-    });
-
-    $('#addNewTopic').on('submit', function(e) {
-      e.preventDefault();
-      var currentURL = window.location.pathname;
-      var newTopic = $('#newTopic').val();
-      usersRef.child(currentUserId).once("value", function(snapshot) {
-        var user = snapshot.val();
-        var skills = user.skills;
-        skills.push(newTopic);
-        console.log(skills);
-        usersRef.child(currentUserId).update({
-          skills: skills,
-        });
-      });
-      location.reload();
     });
 
     // PAYMENT ------------------------------------------------------------------------
@@ -128,7 +105,54 @@ var authCheck = setInterval(function(){
       });
     });
 
+  });
+};
+
+var loadAccount_inbox = function() {
+  $('#account-content').empty();
+  $('#account-content').load('/partials/account-inbox', function() {
+    
+  });
+};
+
+var loadAccount_expert = function() {
+  $('#account-content').empty();
+  $('#account-content').load('/partials/account-expert', function() {
+
+    usersRef.child(currentUserId).once("value", function(snapshot) {
+      var user = snapshot.val();
+      $('#account--bio').val(user.bio);
+      if (user.skills) {
+        for (var i=0; i<user.skills.length; i++) {
+          var $skill = $('<span>').text(user.skills[i]).addClass('account--skill');
+          $('.saved-topics').append($skill);
+        };
+      } else {
+        $('.saved-topics').append('No topics have been added yet.');
+      };
+    });
+
+    $('#addNewTopic').on('submit', function(e) {
+      e.preventDefault();
+      var currentURL = window.location.pathname;
+      var newTopic = $('#newTopic').val();
+      usersRef.child(currentUserId).once("value", function(snapshot) {
+        var user = snapshot.val();
+        var skills = user.skills;
+        skills.push(newTopic);
+        console.log(skills);
+        usersRef.child(currentUserId).update({
+          skills: skills,
+        });
+      });
+      location.reload();
+    });
+
+  });
+};
 
 
-  };
-}, 1000);
+$('.account-content-toggle button').on('click', function() {
+  var file = $(this).attr('data');
+  location.href = "/account?user=" + currentUserId + "&view=" + file;
+});

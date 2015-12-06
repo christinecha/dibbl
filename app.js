@@ -52,36 +52,39 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/account", function (req, res) {
+  var view = req.query.view;
   var alert = req.query.alert;
-  var user = req.query.user;
+  var userId = req.query.user;
   var stripe = require("stripe")(stripe_secret);
-  var customer;
 
-  usersRef.child(user).once("value", function(snapshot){
+  usersRef.child(userId).once("value", function(snapshot){
     var user = snapshot.val();
     if (user.customerId) {
-      stripe.customers.retrieve(
-        user.customerId,
-        function(err, customer) {
-          // asynchronously called
-          if (err) {
-            console.log('err', err);
-          } else {
-            var defaultCard = customer.sources.data[0];
-            res.render('account.ejs', {
-              alert: alert,
-              defaultCard: {
-                last4: defaultCard.last4,
-                brand: defaultCard.brand,
-              },
-            });
-          };
-        });
+      stripe.customers.retrieve(user.customerId, function(err, customer) {
+        if (err) {
+          console.log('err', err);
+        } else {
+          var defaultCard = customer.sources.data[0];
+          res.render('account.ejs', {
+            view: view,
+            alert: alert,
+            defaultCard: {
+              last4: defaultCard.last4,
+              brand: defaultCard.brand,
+            },
+          });
+        };
+      });
     } else {
-      res.render('account.ejs', {alert: alert, defaultCard: ''});
-    }
+      res.render('account.ejs', {
+        view: view,
+        alert: alert,
+        defaultCard: '',
+      });
+    };
   });
 });
+
 
 app.post("/processCall", function (req, res) {
   //require the Twilio module and create a REST client

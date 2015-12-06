@@ -4,9 +4,7 @@
   "description": "",
   "main": "global.js",
   "scripts": {
-    "start": "node app.js",
-    "lint": "jshint .",
-    "validate": "npm ls"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -45,10 +43,5 @@
     "typedjs": "^0.2.2",
     "underscore": "^1.8.3",
     "yetify": "^0.1.0"
-  },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  }
 }

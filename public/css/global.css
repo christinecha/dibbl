@@ -75,8 +75,11 @@ button:hover { opacity: .8; }
   display: inline-block;
   margin-left: 20px;
   font-size: 12px;
+  color: #888;
 }
 .nav ul li i { margin-right: 5px; }
+.nav ul li a { color: #888; }
+.nav ul li a:hover { text-decoration: none; color: #66cccc; }
 .nav input {
   padding: 5px 10px;
   background-color: #fafafa;
@@ -95,13 +98,14 @@ button:hover { opacity: .8; }
   margin: 10px 0;
 }
 
-.availability {
+.availability.online {
   color: #77cc00;
   cursor: pointer;
 }
 
 .availability.offline {
   color: #ccc;
+  cursor: pointer;
 }
 
 
@@ -112,11 +116,14 @@ button:hover { opacity: .8; }
   margin-bottom: 20px;
 }
 
+
+/* FOOTER */
 #footer {
   background-color: #ccc;
   color: white;
   padding: 80px 0;
   text-align: center;
+  margin-top: 100px;
 }
 
 /*//*/
