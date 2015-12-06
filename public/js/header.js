@@ -16,7 +16,6 @@ $('#header').load('partials/header', function() {
       console.log("User is logged out");
       currentUser = null;
       currentUserId = null;
-      $('.secure').hide();
       var path = window.location.pathname;
       console.log(path);
       if ( path.length > 1 ) {

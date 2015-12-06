@@ -1,48 +1,10 @@
 #home-section-1 {
-  /*background-image: url('../assets/background_desk1.jpeg');*/
-  background-size: cover;
   background-color: #eee;
+  text-align: center;
   height: 500px;
 }
 
-@media (max-width: 991px) {
-  #home-section-1 {
-    background-color: #eee;
-    background-image: none;
-    text-align: center;
-  }
-}
-
-#home-section-2 {
-  padding: 50px;
-}
-
-#home-section-2a {
-  background-image: url('../assets/background_music1.jpeg');
-  background-size: cover;
-  background-position: bottom;
-  color: white;
-  height: 600px;
-  padding: 60px;
-  border: 10px solid white;
-}
-
-#home-section-2b {
-  background-image: url('../assets/background_desk2.jpg');
-  background-size: cover;
-  background-position: bottom;
-  height: 600px;
-  padding: 60px;
-  border: 10px solid white;
-}
-
-#home-section-3 {
-  background-image: url('../assets/desk_dibbl.png');
-  background-size: cover;
-  background-position: left;
-  padding: 100px 50px 200px 50px;
-  color: #888;
-}
+#home-section-1 img { width: 250px; }
 
 #exampleUseCases {
   height: 40px;
@@ -55,18 +17,63 @@
   text-align: center;
 }
 
-.mailinglist input, #login input { max-width: 550px; text-align: center; }
-
 input {
+  max-width: 550px;
+  text-align: center;
   padding: 10px;
   background-color: #fff;
   font-size: 18px;
   width: 100%;
 }
 
-#search input[type="number"] { padding: 10px; width: 80px; }
+#home-section-2a {
+  background-image: url('../assets/background_music1.jpeg');
+  background-size: cover;
+  background-position: bottom;
+  color: white;
+  padding: 60px;
+  border: 10px solid white;
+}
 
-.confirmation-container {
-  height: 30px;
-  color: #ff9966;
+#home-section-2b {
+  background-image: url('../assets/background_desk2.jpg');
+  background-size: cover;
+  background-position: bottom;
+  padding: 60px;
+  border: 10px solid white;
+}
+
+#home-section-3 {
+  background-color: #fafafa;
+  padding: 50px 30px;
+  color: #888;
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+
+  #home-section-2 {
+    padding: 50px;
+  }
+
+  #home-section-2a, #home-section-2b {
+    height: 600px;
+    padding-top: 200px;
+  }
+
+  #home-section-3 {
+    background-image: url('../assets/desk_dibbl.png');
+    background-size: cover;
+    background-position: left;
+    padding: 100px 50px 200px 50px;
+    color: #888;
+  }
+
+  .confirmation-container {
+    height: 30px;
+    color: #ff9966;
+  }
 }

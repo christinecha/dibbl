@@ -13,6 +13,7 @@ a, button, .clickable { cursor: pointer; }
 .padded-20 { padding: 20px; }
 .scrollable { overflow: scroll; max-height: 100%; }
 .inactive { opacity: .6; }
+.desktop-only { display: none !important; }
 
 /* TEXT */
 h1, h2, h3, h4, h5, h6 { margin: 0 0 0 0; }
@@ -86,13 +87,17 @@ button:hover { opacity: .8; }
 }
 
 /* NAVIGATION */
-.nav { padding: 10px; height: 50px; }
+.nav {
+  padding: 10px;
+  /*height: 50px; */
+}
+.logo-container { text-align: center; }
 .logo { width: 70px; margin-top: 5px; }
-.nav ul { list-style: none; margin-top: 5px; }
+.nav ul { list-style: none; margin-top: 5px; margin-bottom: 0; text-align: center;  padding: 0; }
 .nav ul li {
   text-transform: uppercase;
   display: inline-block;
-  margin-left: 20px;
+  margin: 0 10px;
   font-size: 12px;
   color: #888;
 }
@@ -146,4 +151,15 @@ button:hover { opacity: .8; }
   margin-top: 100px;
 }
 
+
+@media (min-width: 768px) {
+  .mobile-only { display: none; }
+  .desktop-only { display: inline-block !important; }
+  .logo-container { text-align: left; }
+  .nav ul { text-align: right; }
+}
+
+@media (min-width: 992px) {
+
+}
 /*//*/
