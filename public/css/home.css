@@ -31,10 +31,17 @@
   background-image: url('../assets/background_desk2.jpg');
   background-size: cover;
   background-position: bottom;
-  text-align: right;
   height: 600px;
   padding: 60px;
   border: 10px solid white;
+}
+
+#home-section-3 {
+  background-image: url('../assets/desk_dibbl.png');
+  background-size: cover;
+  background-position: left;
+  padding: 100px 50px 200px 50px;
+  color: #888;
 }
 
 #exampleUseCases {
@@ -48,12 +55,7 @@
   text-align: center;
 }
 
-#search, #mailinglist, #login { max-width: 550px; }
-#search h4 { color: #999; }
-#search h4, input {
-  margin: 5px;
-  text-align: center;
-}
+.mailinglist input, #login input { max-width: 550px; text-align: center; }
 
 input {
   padding: 10px;

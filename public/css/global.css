@@ -36,6 +36,7 @@ h5 {
 }
 a { color: #66cccc; }
 a:-webkit-any-link { color: #66cccc; }
+strong { font-weight: 500; }
 
 /* COLORS */
 .light-gray { background-color: #ebf0eb; }
