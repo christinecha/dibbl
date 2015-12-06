@@ -26,17 +26,18 @@
   </head>
 
   <body>
-    <div id="header">
-    </div>
+    <div class="container-fluid">
+      <div id="header" class="row">
+      </div>
 
-    <div class="light-blue title-bar">
-      <h4>FIND AN EXPERT</h4>
-    </div>
+      <div class="light-blue title-bar search row">
+        <h3>Find the perfect mentor.</h3>
+      </div>
 
-    <div class="col-md-4">
-      <div class="light-gray padded-20">
-        <form id="userSearchForm">
-          <span class="small">CHOOSE A TOPIC</span>
+      <div class="row search--container">
+        <form id="userSearchForm" class="col-md-4 light-gray padded-20">
+          <h5 class="inline">Topics of expertise</h5>
+          <button class="small blue" id="clearSearchQuery">reset</button>
           <br><br>
           <ul class="topicList topicList-1">
             <li data-selector="music">MUSIC</li>
@@ -63,31 +64,22 @@
             <li class="inactive">FILM <span class="xsmall">(coming soon)</span></li>
             <li class="inactive">CULINARY ARTS <span class="xsmall">(coming soon)</span></li>
           </ul>
-          <input type="hidden" id="query" placeholder="fill in the blank" width="100%" class="medium-gray">
-          <!-- <label>EST. DURATION (MIN)</label> -->
-          <!-- <input id="query-time" type="number" step="5" min="5" max="20" value="10" width="30px" class="gray-box"> -->
+          <input type="hidden" id="query">
+          <br><br>
         </form>
-        <br>
-        <button class="small blue" id="clearSearchQuery">clear all</button>
+
+        <div class="col-md-8">
+          <div id="searchResults" class="text-center">
+            <img id="noSearchResults" src="../assets/searchresults_default-01.svg" height="600">
+          </div>
+        </div>
       </div>
-      <br><br>
 
-      <!-- <div class="searchFilter">
-        <span>SORT BY:</span>
-        <span>RATING</span>
-        <span>PRICE</span>
-        <span>NAME</span>
-      </div> -->
-
-    </div>
-
-    <div class="col-md-8">
-      <img id="noSearchResults" src="/assets/graphics/pickCategory_arrowleft.svg">
-      <div id="searchResults">
+      <div id="call-container" class="row">
       </div>
-    </div>
 
-    <div id="call-container">
+      <div id="footer" class="row">
+      </div>
     </div>
 
     <script>

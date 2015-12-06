@@ -251,7 +251,7 @@ User.prototype.displayAsSearchResult = function(userId, user, time){
   };
   var $userDetails = $('<p>').html(user.bio).addClass('userBio');
   var $callButton = $('<button class="connectButton small blue">').html('CONNECT NOW');
-  var $bookLaterButton = $('<button class="bookLaterButton small green">').html('schedule a call');
+  var $bookLaterButton = $('<button class="bookLaterButton small dark-blue">').html('schedule a call');
 
   var $section1 = $('<div>')
     .addClass('col-md-4')

@@ -1,3 +1,11 @@
+.title-bar.search {
+  height: 90px;
+  background-image: url('../assets/background_call1_1500x300.png');
+  background-size: cover;
+  background-position: center;
+  color: #888;
+}
+
 .topicList {
   list-style: none;
   padding-left: 0;
@@ -13,7 +21,8 @@
 }
 
 .topicList li:hover {
-  opacity: .8;
+  background-color: #66cccc;
+  color: white;
 }
 
 .topicList-2, .topicList-3 {
@@ -22,29 +31,28 @@
 }
 
 .keyword.selected {
-  border: 2px solid #66cccc;
-  box-sizing: border-box;
+  background-color: #66cccc;
+  color: white;
   font-style: italic;
 }
 
-#userSearchForm { color: #aaa; min-height: 300px; }
+.search--container {
+  padding: 0 20px;
+}
 
-#userSearchForm label {
-  font-size: 12px;
-  text-transform: uppercase;
+#userSearchForm {
   color: #aaa;
-  margin-right: 5px;
+  min-height: 600px;
 }
 
-#userSearchForm input {
-  padding: 10px;
-  font-size: 14px;
-  max-width: 500px;
-  margin-right: 15px;
-}
+button#clearSearchQuery {
+  float: right;
+};
 
 #searchResults {
-  min-height: 500px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  min-height: 600px;
 }
 
 .searchFilter { margin: 10px 0; text-align: center; }

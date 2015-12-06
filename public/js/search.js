@@ -33,7 +33,7 @@ $("#search input[type='number']").keypress(function (evt) {
 $('#userSearchForm').on('submit', function(e){
   e.preventDefault();
   $('#noSearchResults').hide();
-  $('#searchResults').empty();
+  $('#searchResults .userInfo').remove();
   searchResults = [];
   usersRef.on("child_added", function(snapshot){
     var userKey = snapshot.key();
@@ -50,17 +50,21 @@ $('#userSearchForm').on('submit', function(e){
           searchResults.push(userKey);
           var user = new User();
           user.displayAsSearchResult(snapshot.key(), userObj, time);
+          $('#noSearchResults').hide();
         };
       };
     };
   });
+  if ($('#searchResults').children('.userInfo').length <= 0) {
+    $('#noSearchResults').show();
+  };
   return false;
 });
 
 $('#clearSearchQuery').on('click', function(e){
   e.preventDefault();
   $('.keyword.selected').removeClass('selected');
-  $('#searchResults').empty();
+  $('#searchResults .userInfo').remove();
   searchResults = [];
   searchQuery = [];
   $('#noSearchResults').show();
