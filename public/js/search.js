@@ -5,6 +5,9 @@ var searchQuery = [],
     expertId,
     expertFee;
 
+Twilio.Device.setup(token);
+
+// SET UP THE SEARCH QUERY ----------------------------------------------------------
 $('.topicList li').on('click', function(){
   var selector = $(this).attr('data-selector');
   var selectorId = '#' + selector;
@@ -64,26 +67,8 @@ $('#clearSearchQuery').on('click', function(e){
   return false;
 });
 
-Twilio.Device.setup(token);
 
-Twilio.Device.disconnect(function(connection) {
-  var callObj = {
-    callId: connection.mediaStream.callSid,
-    currentUserId: currentUserId,
-    expertId: expertId,
-    expertFee: expertFee,
-  };
-  $.post("/processCall", callObj)
-    .done(function(){
-      console.log('successfully processed call');
-    });
-  var call = new Call(callObj);
-  call.triggerReview();
-});
-
-$('#call-container').on('click', '#hangup', function() {
-    Twilio.Device.disconnectAll();
-});
+// INITIATE THE CALL ----------------------------------------------------------
 
 $('#searchResults').on('click', '.connectButton', function() {
   usersRef.child(currentUserId).once("value", function(snapshot) {
@@ -99,7 +84,25 @@ $('#searchResults').on('click', '.connectButton', function() {
       });
       call.triggerCallWindow();
     } else {
-      location.href = '/account?alert=no-cc?user=' + currentUserId;
+      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=settings';
+    };
+  }.bind(this));
+});
+
+$('#searchResults').on('click', '.bookLaterButton', function() {
+  usersRef.child(currentUserId).once("value", function(snapshot) {
+    var user = snapshot.val();
+    if (user.customerId) {
+      callerId = currentUserId;
+      expertId = $(this).parent().parent('.userInfo').attr('id');
+      console.log(expertId);
+      var call = new Call({
+          callerId: callerId,
+          expertId: expertId,
+      });
+      call.triggerBookingWindow();
+    } else {
+      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=settings';
     };
   }.bind(this));
 });
@@ -120,6 +123,27 @@ $('#call-container').on('submit', '#callReviewForm', function(e) {
 
   return false;
 });
+
+
+Twilio.Device.disconnect(function(connection) {
+  var callObj = {
+    callId: connection.mediaStream.callSid,
+    currentUserId: currentUserId,
+    expertId: expertId,
+    expertFee: expertFee,
+  };
+  $.post("/processCall", callObj)
+    .done(function(){
+      console.log('successfully processed call');
+    });
+  var call = new Call(callObj);
+  call.triggerReview();
+});
+
+$('#call-container').on('click', '#hangup', function() {
+    Twilio.Device.disconnectAll();
+});
+
 
 
 

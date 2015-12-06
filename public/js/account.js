@@ -111,7 +111,8 @@ var loadAccount_settings = function() {
 var loadAccount_inbox = function() {
   $('#account-content').empty();
   $('#account-content').load('/partials/account-inbox', function() {
-    
+    var user = new User();
+    user.loadMessages(currentUserId);
   });
 };
 

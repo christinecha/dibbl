@@ -115,6 +115,14 @@
 .callBox textarea {
   background-color: #fafafa;
   padding: 10px;
+  max-width: 80%;
+}
+
+.callBox input[type="date"], .callBox input[type="time"] {
+  font-size: 12px;
+  background-color: #fafafa;
+  padding: 5px;
+  margin: 5px;
 }
 
 .call-request, .call-progress, .call-review { padding: 100px 50px; }

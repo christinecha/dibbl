@@ -39,7 +39,6 @@ Call.prototype.displayInfo = function() {
 };
 
 Call.prototype.triggerCallWindow = function() {
-  console.log(this);
   var expert = this.expert();
   expertFee = expert.fee;
 
@@ -55,6 +54,37 @@ Call.prototype.triggerCallWindow = function() {
   $('#call-container').on('click', '#makeCall', function(){
     this.initiateCall(expert);
   }.bind(this));
+};
+
+Call.prototype.triggerBookingWindow = function() {
+  var expert = this.expert();
+  expertFee = expert.fee;
+
+  $('#call-container').load('partials/call-booking', function(){
+    $('#expert--firstname').text(expert.firstname);
+    $('#expert--fee').text(expertFee.toFixed(2));
+  });
+
+  $('#call-container').on('click', '.booking-request .toggle', function(){
+    $('.booking-request.memo').toggle();
+    $('.booking-request.times').toggle();
+  });
+
+  $('#call-container').on('click', '.closeCallBox', function(){
+    $('#call-container').empty();
+  });
+
+  $('#call-container').on('click', '#makeBookingRequest', function(){
+    this.makeBookingRequest(this.call.expertId, currentUserId);
+  }.bind(this));
+};
+
+Call.prototype.makeBookingRequest = function(expertId, callerId) {
+  ref.child('messages').push({
+    from: callerId,
+    to: expertId,
+    message: 'booking request',
+  })
 };
 
 Call.prototype.initiateCall = function(expert) {
@@ -233,6 +263,13 @@ User.prototype.loadCallHistory = function(userId) {
   });
 };
 
+User.prototype.loadMessages = function(userId) {
+  ref.child('messages').orderByChild('to').equalTo(userId).on("child_added", function(snapshot) {
+    var message = new Message(snapshot.val(), snapshot.key());
+    message.displayIncoming();
+  });
+};
+
 User.prototype.displayRating = function(userId, containerId) {
   $(containerId).load('partials/rating', function() {
     usersRef.child(userId).once("value", function(snapshot) {
@@ -282,4 +319,20 @@ User.prototype.addComment = function(userId, comment) {
     comment: comment,
     from: currentUserId,
   });
+};
+
+// Message Object
+var Message = function(obj, key) {
+  this.id = key;
+  this.to = obj.to;
+  this.from = obj.from;
+  this.message = obj.message;
+};
+
+Message.prototype.displayIncoming = function() {
+  var $messageFrom = $('<p>').html(this.from);
+  var $messageBody = $('<p>').html(this.message);
+  var $message = $('<div>').append($messageFrom).append($messageBody);
+
+  $('#inbox--messages-list').append($message);
 };
