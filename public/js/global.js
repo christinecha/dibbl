@@ -155,42 +155,70 @@ User.prototype.loginWithEmail = function(email, password){
   });
 };
 
-User.prototype.addToFirebase = function(userId){
-  ref.child("users").child(userId).update({
+User.prototype.checkAvailability = function(userId){
+  ref.child("users").child(userId).once("value", function(snapshot) {
+    var user = snapshot.val();
+    $('#header .availability')
+      .removeClass('offline')
+      .removeClass('online')
+      .addClass(user.availability);
+    $('#header .availability span')
+      .text(user.availability);
   });
 };
 
+User.prototype.changeAvailability = function(userId){
+  ref.child("users").child(userId).once("value", function(snapshot) {
+    var user = snapshot.val();
+    var newAvailability;
+    if (user.availability == 'offline') {
+      newAvailability = 'online';
+    } else {
+      newAvailability = 'offline';
+    };
+    ref.child("users").child(userId).update({
+      availability: newAvailability,
+    });
+    this.checkAvailability(userId);
+  }.bind(this));
+};
+
 User.prototype.displayAsSearchResult = function(userId, user, time){
-  var photo = user.photo,
-      firstname = user.firstname,
-      lastname = user.lastname,
-      bio = user.bio,
-      fee = user.fee,
-      skills = user.skills;
-
-  var totalfee = fee * time;
-  totalfee = totalfee.toFixed(2);
-  totalfee = '$' + totalfee;
-
+  var totalfee = '$' + (user.fee * time).toFixed(2);
   var $photo = $('<div>').addClass('userPhoto');
-  if (photo) {
-    $photo = $photo.css('background-image', 'url("' + photo + '")');
+  if (user.photo) {
+    $photo = $photo.css('background-image', 'url("' + user.photo + '")');
   };
 
   var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
-  var $userName = $('<h5>').html(firstname + ' ' + lastname).addClass('userName');
-  var $userFee = $('<h5>').text(totalfee).addClass('userFee');
+  var $userName = $('<h5>').html(user.firstname + ' ' + user.lastname).addClass('userName');
+  var $userFee = $('<h5>').html(totalfee).addClass('userFee');
   var $rating = $('<div>').addClass('rating-container');
   var $userSkills = $('<div>').addClass('userSkills');
-  for (var i = 0; i < skills.length; i++) {
-    var $userSkill = $('<span>').html(skills[i]);
+  for (var i = 0; i < user.skills.length; i++) {
+    var $userSkill = $('<span>').html(user.skills[i]);
     $userSkills = $userSkills.append($userSkill);
   };
-  var $userDetails = $('<p>').text(bio).addClass('userBio');
-  var $callButton = $('<button class="connectButton small-blue">').text('CONNECT');
+  var $userDetails = $('<p>').html(user.bio).addClass('userBio');
+  var $callButton = $('<button class="connectButton small blue">').html('CONNECT NOW');
+  var $bookLaterButton = $('<button class="bookLaterButton small green">').html('schedule a call');
 
-  var $section1 = $('<div>').addClass('col-md-4').append($photo);
-  var $section2 = $('<div>').addClass('col-md-8').append($faveIcon).append($userName).append($userFee).append($rating).append($userSkills).append($userDetails).append($callButton).attr('data-fee', fee);
+  var $section1 = $('<div>')
+    .addClass('col-md-4')
+    .append($photo);
+  var $section2 = $('<div>')
+    .addClass('col-md-8')
+    .append($faveIcon)
+    .append($userName)
+    .append($userFee)
+    .append($rating)
+    .append($userSkills)
+    .append($userDetails)
+    .attr('data-fee', user.fee);
+  if (user.availability == "online") {
+    $section2 = $section2.append($callButton);
+  };
+  $section2 = $section2.append($bookLaterButton);
   var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2).attr('id', userId);
   $('#searchResults').append($userInfo);
 

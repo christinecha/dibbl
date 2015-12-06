@@ -1,6 +1,5 @@
 /* ALL */
 *:-webkit-any-link, *:focus { outline: none; }
-.row { margin-left: 0; margin-right: 0; }
 button, input, textarea {
   border: none;
   box-shadow: none;
@@ -38,7 +37,7 @@ a:-webkit-any-link { color: #66cccc; }
 
 /* INPUTS & BUTTONS */
 textarea { width: 100%; }
-.big-blue {
+button {
   background-color: #66cccc;
   background-image: url('../assets/button-shadow_blue.png');
   background-repeat: no-repeat;
@@ -51,19 +50,16 @@ textarea { width: 100%; }
   padding: 10px 60px;
   border-radius: 30px;
 }
-.small-blue {
-  background-color: #66cccc;
-  background-image: url('../assets/button-shadow_blue.png');
-  background-repeat: no-repeat;
-  background-position-x: 50px;
-  background-size: 100%;
-  color: white;
+button.small {
   font-size: 14px;
-  text-transform: uppercase;
-  font-weight: bold;
   padding: 5px 20px;
   border-radius: 20px;
 }
+
+button.blue { background-color: #66cccc; }
+button.green { background-color: #7bc288; }
+
+button:hover { opacity: .8; }
 
 .inactive {
   background-color: #ddd;
@@ -99,13 +95,28 @@ textarea { width: 100%; }
   margin: 10px 0;
 }
 
+.availability {
+  color: #77cc00;
+  cursor: pointer;
+}
+
+.availability.offline {
+  color: #ccc;
+}
+
+
 /* PAGE TITLE AREAS */
 .title-bar {
   padding: 25px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-
+#footer {
+  background-color: #ccc;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+}
 
 /*//*/

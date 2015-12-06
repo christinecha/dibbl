@@ -12,6 +12,10 @@
   }
 }
 
+#home-section-2 {
+  padding: 50px;
+}
+
 #home-section-2a {
   background-image: url('../assets/background_music1.jpeg');
   background-size: cover;
@@ -19,6 +23,7 @@
   color: white;
   height: 600px;
   padding: 60px;
+  border: 10px solid white;
 }
 
 #home-section-2b {
@@ -28,6 +33,7 @@
   text-align: right;
   height: 600px;
   padding: 60px;
+  border: 10px solid white;
 }
 
 #exampleUseCases {

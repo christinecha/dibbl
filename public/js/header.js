@@ -10,6 +10,8 @@ $('#header').load('partials/header', function() {
         currentUser = snapshot.val();
         currentUserId = snapshot.key();
       });
+      var user = new User();
+      user.checkAvailability(authData.uid);
     } else {
       console.log("User is logged out");
       currentUser = null;
@@ -25,8 +27,14 @@ $('#header').load('partials/header', function() {
     }
   };
   ref.onAuth(authDataCallback);
+});
 
+$('#footer').load('partials/footer', function() {
+});
 
+$('#header').on('click', '.availability', function(){
+  var user = new User();
+  user.changeAvailability(currentUserId);
 });
 
 $('#header').on('click', '.account', function(){
@@ -41,6 +49,8 @@ $('#header').on('click', '.logout', function(){
   ref.unauth();
   location.href = "/";
 });
+
+
 
 
 

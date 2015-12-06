@@ -78,9 +78,9 @@
   margin-left: 0;
 }
 
-.userBio {
-  margin: 15px 0 20px 0;
-}
+.connectButton { margin-right: 10px; }
+
+.userBio { margin: 15px 0 20px 0; }
 
 .callBox-layer {
   width: 100%;
@@ -117,10 +117,6 @@
   padding: 10px;
 }
 
-.call-request, .call-progress, .call-review {
-  padding: 100px 50px;
-}
-
-
+.call-request, .call-progress, .call-review { padding: 100px 50px; }
 #call-progress--visualization { height: 120px; }
 #blossoms { margin-left: auto; margin-right: auto; height: 120px; }
