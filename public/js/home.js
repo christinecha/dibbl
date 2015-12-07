@@ -15,16 +15,17 @@ $("#exampleUseCases").typed({
     typeSpeed: 50,
 });
 
-$('.mailinglist').on('submit', function(e){
+$('#mailinglist').on('submit', function(e){
   e.preventDefault();
-  var email = $(this).first('.email').val();
+  var email = $('#mailinglist-email').val();
+  console.log(email);
   ref.child('mailinglist').push({
     email:  email,
     addedAt: Firebase.ServerValue.TIMESTAMP,
     for: 'closed beta',
   });
-  $(this).first('.confirmation-container').html('<h4>Yay! You\'ve been added to the list.</h4>');
-  $(this).first('.email').val('');
+  $('.confirmation-container').html('<h4>Yay! You\'ve been added to the list.</h4>');
+  $('#mailinglist-email').val('');
   return false;
 });
 

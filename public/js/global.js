@@ -352,14 +352,18 @@ var Message = function(obj, key) {
 
 Message.prototype.displayIncoming = function() {
   var $messageFrom = $('<p>').html(this.from);
-  var $messageMemo = $('<p>').html(this.memo);
-  var $messageTimes = $('<div>');
-  for (var i = 0; i < this.times.length; i++) {
-    var $messageDate = $('<p>').html(this.times[i].date);
-    var $messageTime = $('<p>').html(this.times[i].time);
-    var $messageDateTime = $('<div>').append($messageDate).append($messageTime);
-    $messageTimes = $messageTimes.append($messageDateTime);
+
+  if (message.type == "booking request") {
+    var $messageMemo = $('<p>').html(this.memo);
+    var $messageTimes = $('<div>');
+    for (var i = 0; i < this.times.length; i++) {
+      var $messageDate = $('<p>').html(this.times[i].date);
+      var $messageTime = $('<p>').html(this.times[i].time);
+      var $messageDateTime = $('<div>').append($messageDate).append($messageTime);
+      $messageTimes = $messageTimes.append($messageDateTime);
+    };
   };
+
   var $message = $('<div>').append($messageFrom).append($messageMemo).append($messageTimes);
 
   $('#inbox--messages-list').append($message);
