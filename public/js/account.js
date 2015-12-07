@@ -115,6 +115,45 @@ var loadAccount_inbox = function() {
   $('#account-content').load('/partials/account-inbox', function() {
     var user = new User();
     user.loadMessages(currentUserId);
+
+    $('#inbox--messages-list').on('click', '.messagePreview', function(){
+      var messageId = $(this).attr('id');
+      ref.child('messages').child(messageId).once("value", function(snapshot) {
+        var message = new Message (snapshot.val(), messageId);
+        message.displaySingle();
+      });
+    });
+
+    $('#inbox--message-preview').on('click', '.confirmBooking', function() {
+      var messageId = $(this).parent().parent('.message').attr('id');
+      var messageTimes = $(this).parent('.messageTimes');
+      var chosenIndex = messageTimes.find('input[type=radio]:checked').val();
+      if (chosenIndex) {
+        ref.child('messages').child(messageId).once("value", function(snapshot) {
+          var message = snapshot.val();
+          var confirmedDate = message.suggestedTimes[chosenIndex].date;
+          var confirmedTime = message.suggestedTimes[chosenIndex].time;
+          ref.child('messages').child(messageId).update({
+            confirmedDate: confirmedDate,
+            confirmedTime: confirmedTime,
+            status: 'confirmed',
+          });
+          console.log('confirmed');
+          ref.child('messages').push({
+            childMsg: messageId,
+            from: currentUserId,
+            to: message.from,
+            status: 'confirmed',
+            type: 'booking request',
+            confirmedDate: confirmedDate,
+            confirmedTime: confirmedTime,
+          });
+          location.reload();
+        });
+      } else {
+        console.log('please pick a date!!!!');
+      };
+    });
   });
 };
 

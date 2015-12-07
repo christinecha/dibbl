@@ -79,3 +79,40 @@
   margin: 0 2px;
   display: inline-block;
 }
+
+/* INBOX ------------------------------------------------------------------------ */
+
+.messagePreview {
+  background-color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#inbox--messages-list { min-height: 500px; padding: 20px; }
+#inbox--message-preview {
+  border: 1px solid #eee;
+  padding: 20px;
+  min-height: 500px;
+}
+
+.messageFrom, .messageSubject { display: block; }
+
+.messageFrom {
+  font-size: 14px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.messageMemo {
+  margin: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+/* */
