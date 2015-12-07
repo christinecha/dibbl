@@ -4,6 +4,8 @@
   background-size: cover;
 }
 
+#account-content { padding: 0 20px; }
+
 .account-info {
   padding: 25px;
 }

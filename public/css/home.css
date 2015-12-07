@@ -13,7 +13,7 @@
 }
 
 .search-container, .mailinglist-container, .login-container {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -24,6 +24,7 @@ input {
   background-color: #fff;
   font-size: 18px;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 #home-section-2a {
