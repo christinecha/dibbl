@@ -145,8 +145,6 @@ app.post("/newPaymentMethod", function (req, res) {
     }
   }).then(function(customer) {
     usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
-  }).then(function(){
-    res.render('account.ejs');
   });
 });
 

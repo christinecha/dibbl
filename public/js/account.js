@@ -93,6 +93,7 @@ var loadAccount_dashboard = function() {
         $form.append($('<input type="hidden" name="stripeToken" />').val(token));
         $form.append($('<input type="hidden" name="userId" />').val(currentUserId));
         $form.get(0).submit();
+        location.href = '/account?user=' + currentUserId + '&view=dashboard';
       }
     };
 
@@ -144,7 +145,7 @@ var loadAccount_inbox = function() {
             from: currentUserId,
             to: message.from,
             status: 'confirmed',
-            type: 'booking request',
+            msgType: 'booking request',
             confirmedDate: confirmedDate,
             confirmedTime: confirmedTime,
           });

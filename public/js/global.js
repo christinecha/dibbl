@@ -354,6 +354,7 @@ var Message = function(obj, key) {
   this.status = obj.status;
   this.confirmedDate = obj.confirmedDate;
   this.confirmedTime = obj.confirmedTime;
+  this.childMsg = obj.childMsg;
 };
 
 Message.prototype.displayInMessageList = function() {
