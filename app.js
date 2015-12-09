@@ -4,6 +4,7 @@ var twilio_accountSid = process.env.TWILIO_ACCOUNTSID || "AC27d6f0de5c78471dc7e9
 var twilio_authToken = process.env.TWILIO_AUTHTOKEN || "ef503f14a56322850639e39173e80360";
 var twilio_twimlAppSid = process.env.TWILIO_TWIMLAPPSID || "AP1f84916b6c4873c17e559d518be948da";
 var stripe_secret = process.env.STRIPE_SECRET || "sk_test_l30FERrHXVw4pz7LDQkVEHQI";
+var stripe_publishable = process.env.STRIPE_PUBLISHABLE || "pk_test_aggmgLA6W1bMgAD9bVfscNyL";
 var node_env = process.env.NODE_ENV || "development";
 var port = process.env.PORT || 3000;
 
@@ -28,7 +29,7 @@ if (node_env == "production") {
 };
 
 app.get("/", function (req, res) {
-  res.render("home.ejs");
+  res.render("home.ejs", {stripe_publishable: stripe_publishable});
 });
 
 app.get("/partials/:name", function (req, res) {
@@ -47,7 +48,8 @@ app.get("/search", function (req, res) {
   capability.allowClientOutgoing(twilio_twimlAppSid);
 
   res.render('search.ejs', {
-      token:capability.generate()
+      token:              capability.generate(),
+      stripe_publishable: stripe_publishable
   });
 });
 
@@ -59,7 +61,7 @@ app.get("/account", function (req, res) {
 
   usersRef.child(userId).once("value", function(snapshot){
     var user = snapshot.val();
-    if (user.customerId) {
+    if ((user.customerId) && (node_env == 'production')){
       stripe.customers.retrieve(user.customerId, function(err, customer) {
         if (err) {
           console.log('err', err);
@@ -72,6 +74,7 @@ app.get("/account", function (req, res) {
               last4: defaultCard.last4,
               brand: defaultCard.brand,
             },
+            stripe_publishable: stripe_publishable,
           });
         };
       });
@@ -80,11 +83,11 @@ app.get("/account", function (req, res) {
         view: view,
         alert: alert,
         defaultCard: '',
+        stripe_publishable: stripe_publishable,
       });
     };
   });
 });
-
 
 app.post("/processCall", function (req, res) {
   //require the Twilio module and create a REST client
@@ -125,6 +128,31 @@ app.post("/processCall", function (req, res) {
   });
 });
 
+app.post('/processAdvancePayment', function(req, res) {
+  var callerId = req.body.callerId;
+  var expertId = req.body.expertId;
+  var expertFee = req.body.expertFee;
+  var expirationTime = req.body.confirmedTime;
+  var minutes = req.body.minutes;
+  var totalFee = minutes * expertFee * 100;
+
+  usersRef.child(callerId).once("value", function(snapshot) {
+    var customerId = snapshot.val().customerId;
+    stripe.charges.create({
+      amount: totalFee, // amount in cents, again
+      currency: "usd",
+      customer: customerId,
+    });
+    ref.child('users').child(callerId).child('credits').push({
+      credit: totalFee,
+      restrictions: {
+        expires: expirationTime,
+        expert: expertId,
+      }
+    });
+  });
+});
+
 app.get('user/:user_id', function (req, res) {
   var user_id = req.params.user_id;
   usersRef.child(user_id).once("value", function(snapshot){
@@ -143,8 +171,12 @@ app.post("/newPaymentMethod", function (req, res) {
     metadata: {
       userId: userId,
     }
-  }).then(function(customer) {
-    usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
+  }).then(function(err, customer) {
+    if (err) {
+      console.log('noooooope', err);
+    } else {
+      usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
+    };
   });
 });
 

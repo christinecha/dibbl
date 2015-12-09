@@ -147,6 +147,6 @@ button#clearSearchQuery {
 }
 #addTimeOption:hover { background-color: #66cccc; color: white; }
 
-.call-request, .call-progress, .call-review { padding: 100px 50px; }
+.call-request, .call-progress, .call-review { padding-top: 80px; }
 #call-progress--visualization { height: 120px; }
 #blossoms { margin-left: auto; margin-right: auto; height: 120px; }
