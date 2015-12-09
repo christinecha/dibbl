@@ -12,6 +12,7 @@ $('#header').load('partials/header', function() {
       });
       var user = new User();
       user.checkAvailability(authData.uid);
+      user.loadMessages(authData.uid);
     } else {
       $('.secure').hide();
       console.log("User is logged out");

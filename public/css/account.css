@@ -88,24 +88,36 @@
   cursor: pointer;
 }
 
-#inbox--messages-list { min-height: 500px; padding: 20px; }
+#inbox--messages-list,
 #inbox--message-preview {
-  border: 1px solid #eee;
-  padding: 20px;
   min-height: 500px;
 }
 
 .messageFrom, .messageSubject { display: block; }
 
-.messageFrom {
+#inbox--messages-list .messagePreview { margin-bottom: 5px; }
+#inbox--message-preview .message { border: 1px solid #ddd; }
+
+#inbox--message-preview .messageFrom,
+#inbox--message-preview .messageSubject,
+#inbox--message-preview .messageMemo,
+#inbox--message-preview .messageTimes {
   font-size: 14px;
   font-family: 'Work Sans', sans-serif;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
 }
 
-.messageMemo {
-  margin: 20px;
+#inbox--message-preview .messageMemo,
+#inbox--message-preview .messageTimes {
+  border: none;
+  padding: 20px 20px;
 }
 
+#inbox--message-preview .messageTimes {
+  background-color: #fafafa;
+  padding: 20px;
+}
 
 
 

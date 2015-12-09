@@ -6,36 +6,29 @@
   </div>
 
   <div class="callBox">
-    <div class="booking-request memo">
-      <br><br><br><br><br><br>
-      <span class="small">What would you like to ask or talk about?</span><br>
-      <span class="xsmall">(140 characters max)</span><br><br>
-      <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
-      <br><br>
-      <button class="small blue toggle">NEXT</button>
-    </div>
+    <form id="newBookingRequest">
+      <div class="booking-request memo">
+        <br><br><br><br><br><br>
+        <span class="small">What would you like to ask or talk about?</span><br>
+        <span class="xsmall">(140 characters max)</span><br><br>
+        <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
+        <br><br>
+        <button type="button" class="small blue toggle">NEXT</button>
+      </div>
 
-    <div class="booking-request times" style="display: none;">
-      <br><br><br><br><br>
-      <span class="small">Choose (up to) three potential call times.</span><br>
-      <br>
-      <span class="xsmall">ON</span>
-      <input type="datetime" value="2016-12-12" id="booking-request--date1">
-      <span class="xsmall">AT</span>
-      <input type="time" value="15:00" id="booking-request--time1">
-      <br>
-      <span class="xsmall">ON</span>
-      <input type="date" value="2016-12-12" id="booking-request--date2">
-      <span class="xsmall">AT</span>
-      <input type="time" value="15:00" id="booking-request--time2">
-      <br>
-      <span class="xsmall">ON</span>
-      <input type="date" value="2016-12-12" id="booking-request--date3">
-      <span class="xsmall">AT</span>
-      <input type="time" value="15:00" id="booking-request--time3">
-      <br><br>
-      <button class="small green toggle">PREV</button>
-      <button id="makeBookingRequest" class="small blue">SUBMIT</button>
+      <div class="booking-request times" style="display: none;">
+        <br><br><br><br><br>
+        <span class="small">Choose (up to) three potential call times.</span><br>
+        <br>
+        <input type="datetime-local" value="2016-12-12" id="booking-request--option1" required>
+        <br>
+        <input type="datetime-local" value="2016-12-12" id="booking-request--option2">
+        <br>
+        <input type="datetime-local" value="2016-12-12" id="booking-request--option3">
+        <br><br>
+        <button type="button" class="small green toggle">PREV</button>
+        <button type="submit" id="makeBookingRequest" class="small blue">SUBMIT</button>
+      </form>
     </div>
   </div>
 
