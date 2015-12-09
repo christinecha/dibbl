@@ -118,6 +118,7 @@ button#clearSearchQuery {
   margin-right: auto;
   margin-left: auto;
   text-align: center;
+  padding: 20px;
 }
 
 .callBox textarea {
@@ -126,12 +127,25 @@ button#clearSearchQuery {
   max-width: 80%;
 }
 
-.callBox input[type="date"], .callBox input[type="time"] {
+.callBox input[type="datetime-local"] {
   font-size: 12px;
   background-color: #fafafa;
   padding: 5px;
   margin: 5px;
 }
+
+#addTimeOption {
+  background-color: white;
+  background-image: none;
+  border: 2px solid #66cccc;
+  color: #66cccc;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  padding: 0;
+  margin: 10px;
+}
+#addTimeOption:hover { background-color: #66cccc; color: white; }
 
 .call-request, .call-progress, .call-review { padding: 100px 50px; }
 #call-progress--visualization { height: 120px; }

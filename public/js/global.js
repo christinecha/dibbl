@@ -70,6 +70,15 @@ Call.prototype.triggerBookingWindow = function() {
     $('.booking-request.times').toggle();
   });
 
+  $('#call-container').on('click', '#addTimeOption', function() {
+    console.log('ddd');
+    var $timeOption = $('<input>').attr('type', 'datetime-local').attr('value', '2016-01-02T15:00').addClass('booking-request--option');
+    $('.booking-request.times .timeOption--container').append($timeOption);
+    if ($('.booking-request--option').length >= 3) {
+      $(this).hide();
+    };
+  });
+
   $('#call-container').on('click', '.closeCallBox', function(){
     $('#call-container').empty();
   });
@@ -77,12 +86,15 @@ Call.prototype.triggerBookingWindow = function() {
   $('#call-container').on('submit', '#newBookingRequest', function(e){
     e.preventDefault();
     var memo = $('#booking-request--memo').val();
-    var option1 = $('#booking-request--option1').val();
-    var option2 = $('#booking-request--option2').val();
-    var option3 = $('#booking-request--option3').val();
-    var suggestedTimes = [option1, option2, option3];
-    console.log(this);
+    var suggestedTimes = [];
+    $('.booking-request--option').each(function(){
+      var option = $(this).val();
+      suggestedTimes.push(option);
+    });
+    console.log(suggestedTimes);
     this.makeBookingRequest(this.call.expertId, currentUserId, memo, suggestedTimes, 'unconfirmed');
+    $('.booking-request.times').hide();
+    $('.booking-request.confirmation').show();
     return false;
   }.bind(this));
 };
@@ -94,8 +106,9 @@ Call.prototype.makeBookingRequest = function(expertId, callerId, memo, suggested
     from: callerId,
     fromFormatted: expertFullName,
     to: expertId,
-    subject: 'booking request',
+    subject: 'Booking Request',
     memo: memo,
+    status: 'unconfirmed',
     suggestedTimes: suggestedTimes,
     msgType: "booking request",
   });
@@ -282,6 +295,9 @@ User.prototype.loadMessages = function(userId) {
   ref.child('messages').orderByChild('to').equalTo(userId).on("child_added", function(snapshot) {
     var message = new Message(snapshot.val(), snapshot.key());
     message.displayInMessageList();
+    if (inboxCount == 0) {
+      message.displaySingle();
+    };
     inboxCount+= 1;
     $('#header .unread-count').html(inboxCount);
   });
@@ -375,6 +391,8 @@ Message.prototype.displayInMessageList = function() {
 
 Message.prototype.displaySingle = function(){
   $('#inbox--message-preview').empty();
+  $('#inbox--messages-list .messagePreview').removeClass('selected');
+  $('#inbox--messages-list #' + this.id).addClass('selected');
 
   var $messageFrom = $('<div>')
     .addClass('messageFrom')
@@ -383,43 +401,59 @@ Message.prototype.displaySingle = function(){
 
   var $messageSubject = $('<div>')
     .addClass('messageSubject')
-    .html('subject: ' + this.subject);
+    .html(this.subject);
 
-  if (this.msgType == "booking request") {
-
-    var $messageMemo = $('<div>')
-      .addClass('messageMemo')
-      .html(this.memo);
-
-    var $messageTimes = $('<div>').addClass('messageTimes');
-
-    if (this.status == "confirmed") {
-      var $messageDate = $('<div>').html(this.confirmedDate);
-      var $messageTime = $('<div>').html(this.confirmedTime);
-      var $cancelBooking = $('<button>').html('cancel booking').addClass('cancelBooking small orange');
-      $messageTimes = $messageTimes.append($messageDate).append($messageTime).append($cancelBooking);
-    } else {
-      for (var i = 0; i < this.suggestedTimes.length; i++) {
-        var $messageTimeOption = $('<div>').html(this.suggestedTimes[i]);
-        var $radioButton = $('<input>')
-          .attr('type', 'radio')
-          .attr('name', 'booking-time')
-          .attr('value', i);
-        $messageTimes = $messageTimes.append($messageTimeOption).append($radioButton);
-      };
-      var $confirmBooking = $('<button>').html('confirm booking').addClass('confirmBooking small blue');
-      var $declineBooking = $('<button>').html('decline booking').addClass('declineBooking small orange');
-      $messageTimes = $messageTimes.append($confirmBooking).append($declineBooking);
-    };
-  };
+  var $messageMemo = $('<div>')
+    .addClass('messageMemo')
+    .html(this.memo);
 
   var $message = $('<div>')
     .addClass('message')
     .attr('id', this.id)
     .append($messageFrom)
     .append($messageSubject)
-    .append($messageMemo)
-    .append($messageTimes);
+    .append($messageMemo);
+
+  if (this.msgType == "booking request") {
+    var $messageTimes = $('<div>').addClass('messageTimes');
+    if (this.status == "confirmed") {
+      var date = new Date(this.confirmedTime);
+      date = moment(date).format('MMMM Do, YYYY [at] h:mm A [ ]');
+      var $messageTime = $('<div>').html(date);
+      var $cancelBooking = $('<button>')
+        .html('cancel booking')
+        .addClass('cancelBooking small orange');
+      $messageTimes = $messageTimes
+        .append($messageTime)
+        .append($cancelBooking)
+        .append('<p class="xsmall">We do not refund bookings within 24 hours of the reservation.</p>');
+      $message = $message.append($messageTimes);
+    } else if (this.status == "unconfirmed") {
+      var $instruction1 = $('<p>').html('Select a time that works for you').addClass('xsmall');
+      var $instruction2 = $('<p>').html('OR').css('font-style', 'italic').css('margin-bottom', '20px');
+      var $declineReason = $('<textarea>').addClass('declineReason').html('I cannot accept this request because...');
+      var $confirmBooking = $('<button>').html('confirm booking').addClass('confirmBooking small blue');
+      var $declineBooking = $('<button>').html('decline booking').addClass('declineBooking small orange');
+
+      $messageTimes = $messageTimes.append($instruction1);
+
+      for (var i = 0; i < this.suggestedTimes.length; i++) {
+        var date = new Date(this.suggestedTimes[i]);
+        date = moment(date).format('MMMM Do, YYYY [at] h:mm A [ ]');
+        var $messageTimeOption = $('<span>').html(date).addClass('bookingTime');
+        var $radioButton = $('<input>')
+          .attr('type', 'radio')
+          .attr('name', 'booking-time')
+          .attr('value', i);
+        $messageTimes = $messageTimes.append($messageTimeOption).append($radioButton).append('<br>');
+        $message = $message.append($messageTimes);
+      };
+
+      $messageTimes = $messageTimes.append($confirmBooking).append($instruction2).append($declineReason).append($declineBooking);
+    } else if (this.status == "declined") {
+      // meow
+    };
+  };
 
   $('#inbox--message-preview').append($message);
 };

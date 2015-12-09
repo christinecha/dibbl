@@ -91,19 +91,22 @@
 #inbox--messages-list,
 #inbox--message-preview {
   min-height: 500px;
+  font-size: 14px;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .messageFrom, .messageSubject { display: block; }
+.messageSubject { text-transform: uppercase; font-weight: bold; }
 
 #inbox--messages-list .messagePreview { margin-bottom: 5px; }
+#inbox--messages-list .messagePreview:hover,
+#inbox--messages-list .messagePreview.selected { background-color: #66cccc; color: white; }
 #inbox--message-preview .message { border: 1px solid #ddd; }
 
 #inbox--message-preview .messageFrom,
 #inbox--message-preview .messageSubject,
 #inbox--message-preview .messageMemo,
 #inbox--message-preview .messageTimes {
-  font-size: 14px;
-  font-family: 'Work Sans', sans-serif;
   padding: 10px 20px;
   border-bottom: 1px solid #ddd;
 }
@@ -115,10 +118,26 @@
 }
 
 #inbox--message-preview .messageTimes {
+  text-align: center;
+  font-size: 18px;
   background-color: #fafafa;
-  padding: 20px;
+  padding: 30px 20px;
 }
 
+#inbox--message-preview .declineReason {
+  font-size: 14px;
+  font-family: 'Work Sans';
+  padding: 10px 20px;
+  max-width: 350px;
+  display: block;
+  margin: 0 auto;
+}
+
+#inbox--message-preview .confirmBooking,
+#inbox--message-preview .declineBooking,
+#inbox--message-preview .cancelBooking {
+  margin: 20px 5px;
+}
 
 
 

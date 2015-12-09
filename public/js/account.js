@@ -114,8 +114,6 @@ var loadAccount_inbox = function() {
   $('#account-content').empty();
   $('.account .view-title').text('INBOX');
   $('#account-content').load('/partials/account-inbox', function() {
-    var user = new User();
-    user.loadMessages(currentUserId);
 
     $('#inbox--messages-list').on('click', '.messagePreview', function(){
       var messageId = $(this).attr('id');
@@ -132,10 +130,8 @@ var loadAccount_inbox = function() {
       if (chosenIndex) {
         ref.child('messages').child(messageId).once("value", function(snapshot) {
           var message = snapshot.val();
-          var confirmedDate = message.suggestedTimes[chosenIndex].date;
-          var confirmedTime = message.suggestedTimes[chosenIndex].time;
+          var confirmedTime = message.suggestedTimes[chosenIndex];
           ref.child('messages').child(messageId).update({
-            confirmedDate: confirmedDate,
             confirmedTime: confirmedTime,
             status: 'confirmed',
           });
@@ -143,17 +139,42 @@ var loadAccount_inbox = function() {
           ref.child('messages').push({
             childMsg: messageId,
             from: currentUserId,
+            fromFormatted: currentUser.firstname + ' ' + currentUser.lastname,
             to: message.from,
             status: 'confirmed',
             msgType: 'booking request',
-            confirmedDate: confirmedDate,
             confirmedTime: confirmedTime,
+            subject: 'Confirmed Booking'
           });
           location.reload();
         });
       } else {
         console.log('please pick a date!!!!');
       };
+    });
+
+    $('#inbox--message-preview').on('click', '.declineBooking', function() {
+      var messageId = $(this).parent().parent('.message').attr('id');
+      ref.child('messages').child(messageId).once("value", function(snapshot) {
+        var message = snapshot.val();
+        ref.child('messages').child(messageId).update({
+          memo: 'reason reason reason',
+          status: 'declined',
+          subject: 'Declined Booking'
+        });
+        console.log('confirmed');
+        ref.child('messages').push({
+          childMsg: messageId,
+          from: currentUserId,
+          fromFormatted: currentUser.firstname + ' ' + currentUser.lastname,
+          to: message.from,
+          memo: 'memo memo memo',
+          status: 'declined',
+          msgType: 'booking request',
+          subject: 'Declined Booking'
+        });
+        location.reload();
+      });
     });
   });
 };

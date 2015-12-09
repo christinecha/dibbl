@@ -34,6 +34,7 @@ h5 {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: .05em;
+  font-family: 'Montserrat', sans-serif;
 }
 a { color: #66cccc; }
 a:-webkit-any-link { color: #66cccc; }

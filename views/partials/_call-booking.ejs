@@ -8,7 +8,7 @@
   <div class="callBox">
     <form id="newBookingRequest">
       <div class="booking-request memo">
-        <br><br><br><br><br><br>
+        <br><br><br><br><br>
         <span class="small">What would you like to ask or talk about?</span><br>
         <span class="xsmall">(140 characters max)</span><br><br>
         <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
@@ -17,18 +17,24 @@
       </div>
 
       <div class="booking-request times" style="display: none;">
-        <br><br><br><br><br>
+        <br><br><br><br>
         <span class="small">Choose (up to) three potential call times.</span><br>
         <br>
-        <input type="datetime-local" value="2016-12-12" id="booking-request--option1" required>
+        <div class="timeOption--container">
+          <input type="datetime-local" value="2016-01-02T15:00" class="booking-request--option" required>
+        </div>
+        <button type="button" id="addTimeOption">+</button>
         <br>
-        <input type="datetime-local" value="2016-12-12" id="booking-request--option2">
-        <br>
-        <input type="datetime-local" value="2016-12-12" id="booking-request--option3">
-        <br><br>
         <button type="button" class="small green toggle">PREV</button>
         <button type="submit" id="makeBookingRequest" class="small blue">SUBMIT</button>
-      </form>
+      </div>
+    </form>
+
+    <div class="booking-request confirmation" style="display: none;">
+      <br><br><br><br><br><br>
+      <h2>Yay! Request sent.</h2>
+      <br>
+      <h5>You'll be receiving a confirmation message both via email and your Dibbl inbox soon.</h5>
     </div>
   </div>
 
