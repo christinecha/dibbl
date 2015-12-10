@@ -9,6 +9,11 @@ $('#header').load('partials/header', function() {
       currentUserId = authData.uid;
       usersRef.child(authData.uid).on("value", function(snapshot) {
         currentUser = snapshot.val();
+        if (currentUser.expert == true) {
+          $('.expert-only').show();
+        } else {
+          $('.expert-only').hide();
+        };
       });
       var user = new User();
       user.checkAvailability(authData.uid);

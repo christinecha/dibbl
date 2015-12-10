@@ -74,7 +74,7 @@ button.small {
 }
 
 button.blue { background-color: #66cccc; }
-button.orange { background-color: #ff9f28; }
+button.orange { background-color: #ff9f28; background-image: url('../assets/button-shadow_orange.png'); }
 button.dark-blue { background-color: #0083c0; background-image: url('../assets/button-shadow_dark-blue.png'); }
 button.green { background-color: #7bc288; }
 button.white-outline {

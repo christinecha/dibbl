@@ -101,14 +101,14 @@
 #inbox--messages-list .messagePreview { margin-bottom: 5px; }
 #inbox--messages-list .messagePreview:hover,
 #inbox--messages-list .messagePreview.selected { background-color: #66cccc; color: white; }
-#inbox--message-preview .message { border: 1px solid #ddd; }
+#inbox--message-preview .message { border: 2px solid #ebf0eb; }
 
 #inbox--message-preview .messageFrom,
 #inbox--message-preview .messageSubject,
 #inbox--message-preview .messageMemo,
 #inbox--message-preview .messageTimes {
   padding: 10px 20px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ebf0eb;
 }
 
 #inbox--message-preview .messageMemo,
