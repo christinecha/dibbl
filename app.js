@@ -141,13 +141,18 @@ app.post('/processAdvancePayment', function(req, res) {
     stripe.charges.create({
       amount: totalFee, // amount in cents, again
       currency: "usd",
-      customer: customerId,
-    });
-    ref.child('users').child(callerId).child('credits').push({
-      credit: totalFee,
-      restrictions: {
-        expires: expirationTime,
-        expert: expertId,
+      customer: "cus_7R4RRyEigp6Gch",
+    }, function(err, charge) {
+      if (err) {
+        console.log(err);
+      } else {
+        ref.child('users').child(callerId).child('credits').push({
+          credit: totalFee,
+          restrictions: {
+            expires: expirationTime,
+            expert: expertId,
+          }
+        });
       }
     });
   });

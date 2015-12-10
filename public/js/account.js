@@ -133,6 +133,7 @@ var loadAccount_inbox = function() {
           var confirmedTime = message.suggestedTimes[chosenIndex];
           ref.child('messages').child(messageId).update({
             confirmedTime: confirmedTime,
+            subject: 'Booking (confirmed)',
             status: 'confirmed',
           });
           console.log('confirmed');
@@ -144,7 +145,14 @@ var loadAccount_inbox = function() {
             status: 'confirmed',
             msgType: 'booking request',
             confirmedTime: confirmedTime,
-            subject: 'Confirmed Booking'
+            subject: 'Booking (confirmed)'
+          });
+          $.post('/processAdvancePayment', {
+            callerId: message.from,
+            expertId: currentUserId,
+            expertFee: currentUser.fee,
+            confirmedTime: confirmedTime,
+            minutes: 200,
           });
           location.reload();
         });
@@ -203,9 +211,13 @@ var loadAccount_expert = function() {
       var newTopic = $('#newTopic').val();
       usersRef.child(currentUserId).once("value", function(snapshot) {
         var user = snapshot.val();
-        var skills = user.skills;
-        skills.push(newTopic);
-        console.log(skills);
+        var skills;
+        if (user.skills) {
+          skills = user.skills;
+          skills.push(newTopic);
+        } else {
+          skills = [newTopic];
+        }
         usersRef.child(currentUserId).update({
           skills: skills,
         });

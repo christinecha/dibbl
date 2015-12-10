@@ -100,11 +100,10 @@ Call.prototype.triggerBookingWindow = function() {
 };
 
 Call.prototype.makeBookingRequest = function(expertId, callerId, memo, suggestedTimes, status) {
-  var expert = this.expert();
-  var expertFullName = expert.firstname + ' ' + expert.lastname;
+  var currentUserFullName = currentUser.firstname + ' ' + currentUser.lastname;
   ref.child('messages').push({
     from: callerId,
-    fromFormatted: expertFullName,
+    fromFormatted: currentUserFullName,
     to: expertId,
     subject: 'Booking Request',
     memo: memo,
