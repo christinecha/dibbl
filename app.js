@@ -38,6 +38,10 @@ app.get("/partials/:name", function (req, res) {
   res.render(url);
 });
 
+app.get("/about", function (req, res) {
+  res.render('about.ejs');
+});
+
 app.get("/search", function (req, res) {
   var capability = new twilio.Capability(
       twilio_accountSid,
@@ -141,7 +145,7 @@ app.post('/processAdvancePayment', function(req, res) {
     stripe.charges.create({
       amount: totalFee, // amount in cents, again
       currency: "usd",
-      customer: "cus_7R4RRyEigp6Gch",
+      customer: customerId,
     }, function(err, charge) {
       if (err) {
         console.log(err);

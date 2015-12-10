@@ -1,0 +1,7 @@
+.title-bar.about {
+  background-image: url('../assets/background_desk3.png');
+  background-size: cover;
+  background-position: 100% 100%;
+  padding: 80px 0;
+  color: white;
+}

@@ -39,6 +39,7 @@ h5 {
 a { color: #66cccc; }
 a:-webkit-any-link { color: #66cccc; }
 strong { font-weight: 500; }
+ul { list-style: none; padding: 0; }
 
 /* COLORS */
 .light-gray { background-color: #ebf0eb; }
@@ -148,11 +149,15 @@ button.white-outline:hover { background-color: white; color: #888; }
 
 /* FOOTER */
 #footer {
-  background-color: #ccc;
-  color: white;
-  padding: 80px 0;
+  background-color: #ebf0eb;
+  color: #888;
+  padding: 80px 30px;
   text-align: center;
   margin-top: 100px;
+}
+
+#footer ul li a {
+  text-transform: uppercase;
 }
 
 
