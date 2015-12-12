@@ -8,10 +8,13 @@
   <div class="callBox">
     <form id="newBookingRequest">
       <div class="booking-request memo">
-        <br><br><br><br><br>
+        <br><br><br><br>
         <span class="small">What would you like to ask or talk about?</span><br>
         <span class="xsmall">(140 characters max)</span><br><br>
         <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
+        <br>
+        <span class="xsmall">Call Duration (minutes)</span><br>
+        <input type="number" id="booking-request--duration" step="5" min="5" value="5"/>
         <br><br>
         <button type="button" class="small blue toggle">NEXT</button>
       </div>

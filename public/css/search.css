@@ -121,10 +121,17 @@ button#clearSearchQuery {
   padding: 20px;
 }
 
-.callBox textarea {
+.callBox textarea{
   background-color: #fafafa;
   padding: 10px;
   max-width: 80%;
+}
+
+.callBox input[type="number"] {
+  background-color: #fafafa;
+  padding: 10px;
+  max-width: 100px;
+  text-align: center;
 }
 
 .callBox input[type="datetime-local"] {

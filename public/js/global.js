@@ -86,20 +86,21 @@ Call.prototype.triggerBookingWindow = function() {
   $('#call-container').on('submit', '#newBookingRequest', function(e){
     e.preventDefault();
     var memo = $('#booking-request--memo').val();
+    var duration = $('#booking-request--duration').val();
     var suggestedTimes = [];
     $('.booking-request--option').each(function(){
       var option = $(this).val();
       suggestedTimes.push(option);
     });
     console.log(suggestedTimes);
-    this.makeBookingRequest(this.call.expertId, currentUserId, memo, suggestedTimes, 'unconfirmed');
+    this.makeBookingRequest(this.call.expertId, currentUserId, memo, suggestedTimes, duration, 'unconfirmed');
     $('.booking-request.times').hide();
     $('.booking-request.confirmation').show();
     return false;
   }.bind(this));
 };
 
-Call.prototype.makeBookingRequest = function(expertId, callerId, memo, suggestedTimes, status) {
+Call.prototype.makeBookingRequest = function(expertId, callerId, memo, suggestedTimes, duration, status) {
   var currentUserFullName = currentUser.firstname + ' ' + currentUser.lastname;
   ref.child('messages').push({
     from: callerId,
@@ -110,6 +111,7 @@ Call.prototype.makeBookingRequest = function(expertId, callerId, memo, suggested
     status: 'unconfirmed',
     suggestedTimes: suggestedTimes,
     msgType: "booking request",
+    duration: duration,
   });
 };
 
@@ -239,47 +241,50 @@ User.prototype.changeAvailability = function(userId){
   }.bind(this));
 };
 
-User.prototype.displayAsSearchResult = function(userId, user, time){
-  var totalfee = '$' + (user.fee * time).toFixed(2);
-  var $photo = $('<div>').addClass('userPhoto');
-  if (user.photo) {
-    $photo = $photo.css('background-image', 'url("' + user.photo + '")');
-  };
+User.prototype.displayAsSearchResult = function(userId){
+  ref.child('users').child(userId).on("value", function(snapshot) {
+    var user = snapshot.val();
+    var totalfee = '$' + (user.fee).toFixed(2);
+    var $photo = $('<div>').addClass('userPhoto');
+    if (user.photo) {
+      $photo = $photo.css('background-image', 'url("' + user.photo + '")');
+    };
 
-  var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
-  var $userName = $('<h5>').html(user.firstname + ' ' + user.lastname).addClass('userName');
-  var $userFee = $('<h5>').html(totalfee).addClass('userFee');
-  var $rating = $('<div>').addClass('rating-container');
-  var $userSkills = $('<div>').addClass('userSkills');
-  for (var i = 0; i < user.skills.length; i++) {
-    var $userSkill = $('<span>').html(user.skills[i]);
-    $userSkills = $userSkills.append($userSkill);
-  };
-  var $userDetails = $('<p>').html(user.bio).addClass('userBio');
-  var $callButton = $('<button class="connectButton small blue">').html('CONNECT NOW');
-  var $bookLaterButton = $('<button class="bookLaterButton small dark-blue">').html('schedule a call');
+    var $faveIcon = $('<i>').addClass('fa fa-heart faveIcon');
+    var $userName = $('<h5>').html(user.firstname + ' ' + user.lastname).addClass('userName');
+    var $userFee = $('<h5>').html(totalfee).addClass('userFee');
+    var $rating = $('<div>').addClass('rating-container');
+    var $userSkills = $('<div>').addClass('userSkills');
+    for (var i = 0; i < user.skills.length; i++) {
+      var $userSkill = $('<span>').html(user.skills[i]);
+      $userSkills = $userSkills.append($userSkill);
+    };
+    var $userDetails = $('<p>').html(user.bio).addClass('userBio');
+    var $callButton = $('<button class="connectButton small blue">').html('CONNECT NOW');
+    var $bookLaterButton = $('<button class="bookLaterButton small dark-blue">').html('schedule a call');
 
-  var $section1 = $('<div>')
-    .addClass('col-md-4')
-    .append($photo);
-  var $section2 = $('<div>')
-    .addClass('col-md-8')
-    .append($faveIcon)
-    .append($userName)
-    .append($userFee)
-    .append($rating)
-    .append($userSkills)
-    .append($userDetails)
-    .attr('data-fee', user.fee);
-  if (user.availability == "online") {
-    $section2 = $section2.append($callButton);
-  };
-  $section2 = $section2.append($bookLaterButton);
-  var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2).attr('id', userId);
-  $('#searchResults').append($userInfo);
+    var $section1 = $('<div>')
+      .addClass('col-md-4')
+      .append($photo);
+    var $section2 = $('<div>')
+      .addClass('col-md-8')
+      .append($faveIcon)
+      .append($userName)
+      .append($userFee)
+      .append($rating)
+      .append($userSkills)
+      .append($userDetails)
+      .attr('data-fee', user.fee);
+    if (user.availability == "online") {
+      $section2 = $section2.append($callButton);
+    };
+    $section2 = $section2.append($bookLaterButton);
+    var $userInfo = $('<div>').addClass('userInfo row').append($section1).append($section2).attr('id', userId);
+    $('#searchResults').append($userInfo);
 
-  var ratingContainer = '#' + userId + ' .rating-container';
-  this.displayRating(userId, ratingContainer);
+    var ratingContainer = '#' + userId + ' .rating-container';
+    this.displayRating(userId, ratingContainer);
+  }.bind(this));
 };
 
 User.prototype.loadCallHistory = function(userId) {
@@ -367,6 +372,7 @@ var Message = function(obj, key) {
   this.confirmedDate = obj.confirmedDate;
   this.confirmedTime = obj.confirmedTime;
   this.childMsg = obj.childMsg;
+  this.duration = obj.duration;
 };
 
 Message.prototype.displayInMessageList = function() {
@@ -417,7 +423,7 @@ Message.prototype.displaySingle = function(){
     var $messageTimes = $('<div>').addClass('messageTimes');
     if (this.status == "confirmed") {
       var date = new Date(this.confirmedTime);
-      date = moment(date).format('MMMM Do, YYYY [at] h:mm A [ ]');
+        date = moment(date).format('MMMM Do, YYYY [at] h:mm A [ ]');
       var $messageTime = $('<div>').html(date);
       var $cancelBooking = $('<button>')
         .html('cancel booking')
@@ -429,12 +435,13 @@ Message.prototype.displaySingle = function(){
       $message = $message.append($messageTimes);
     } else if (this.status == "unconfirmed") {
       var $instruction1 = $('<p>').html('Select a time that works for you').addClass('xsmall');
+      var $duration = $('<h3>').html(this.duration + ' minute session').css('font-style', 'bold');
       var $instruction2 = $('<p>').html('OR').css('font-style', 'italic').css('margin-bottom', '20px');
       var $declineReason = $('<textarea>').addClass('declineReason').html('I cannot accept this request because...');
       var $confirmBooking = $('<button>').html('confirm booking').addClass('confirmBooking small blue');
       var $declineBooking = $('<button>').html('decline booking').addClass('declineBooking small orange');
 
-      $messageTimes = $messageTimes.append($instruction1);
+      $messageTimes = $messageTimes.append($instruction1).append($duration);
 
       for (var i = 0; i < this.suggestedTimes.length; i++) {
         var date = new Date(this.suggestedTimes[i]);

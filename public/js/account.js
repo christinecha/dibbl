@@ -152,7 +152,7 @@ var loadAccount_inbox = function() {
             expertId: currentUserId,
             expertFee: currentUser.fee,
             confirmedTime: confirmedTime,
-            minutes: 200,
+            minutes: message.duration,
           });
           location.reload();
         });
