@@ -43,7 +43,6 @@ $('#header').on('keyup', function(){
   }
 });
 
-
 $('.alreadyUser').on('click', function(){
   $('#login').attr('data-function', 'login');
   $('.login-only').show();

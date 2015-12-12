@@ -1,45 +1,41 @@
-<div class="callBox-layer">
-
+<div class="callBox--connect-now">
   <div class="closeCallBox">
     <h1>X</h1>
     <h4>CLOSE</h4>
   </div>
 
-  <div class="callBox">
-    <div class="call-request">
-      <span class="small">What would you like to ask or talk about?</span><br>
-      <span class="xsmall">(140 characters max)</span><br><br>
-      <textarea id="memo" rows="3" maxlength="140" class="small"></textarea>
-      <br><br>
-      <span class="small">You will be charged $<span id="expert--fee">0.00</span> per minute.</span>
-      <br><br>
-      <button id="makeCall" class="small blue">Call <span id="expert--firstname"></span></button>
-    </div>
-
-    <div class="call-progress" style="display:none;">
-      <h4>Call in Progress</h4>
-      <span class="xsmall">Closing this window will end your call</span>
-      <br>
-      <div id="call-progress--visualization"></div>
-      <h2 class="call-progress--duration">00:00</h2>
-      <br>
-      <button id="hangup" class="small blue">Hang Up</button><br>
-      <span class="small call-progress--cost">$0.00</span>
-    </div>
-
-    <div class="call-review" style="display:none;">
-      <h4>How was your call?</h4><br>
-      <span class="xsmall">Total Charge: <span class="small call-review--cost"><strong>$0.00</strong></span></span><br>
-      <span class="xsmall">Total Duration: <span class="small call-review--duration"><strong>00:00</strong></span></span><br>
-      <br>
-      <form id="callReviewForm">
-        <div class="rating-container"></div>
-        <textarea id="callreview--comment"></textarea>
-        <br><br>
-        <button class="small blue">Submit</button>
-        <br>
-      </form>
-    </div>
+  <div class="call-request">
+    <span class="small">What would you like to ask or talk about?</span><br>
+    <span class="xsmall">(140 characters max)</span><br><br>
+    <textarea id="memo" rows="3" maxlength="140" class="small"></textarea>
+    <br><br>
+    <span class="small">You will be charged $<span id="expert--fee">0.00</span> per minute.</span>
+    <br><br>
+    <button id="makeCall" class="small blue">Call <span id="expert--firstname"></span></button>
   </div>
 
+  <div class="call-progress" style="display:none;">
+    <h4>Call in Progress</h4>
+    <span class="xsmall">Closing this window will end your call</span>
+    <br>
+    <div id="call-progress--visualization"></div>
+    <h2 class="call-progress--duration">00:00</h2>
+    <br>
+    <button id="hangup" class="small blue">Hang Up</button><br>
+    <span class="small call-progress--cost">$0.00</span>
+  </div>
+
+  <div class="call-review" style="display:none;">
+    <h4>How was your call?</h4><br>
+    <span class="xsmall">Total Charge: <span class="small call-review--cost"><strong>$0.00</strong></span></span><br>
+    <span class="xsmall">Total Duration: <span class="small call-review--duration"><strong>00:00</strong></span></span><br>
+    <br>
+    <form id="callReviewForm">
+      <div class="rating-container"></div>
+      <textarea id="callreview--comment"></textarea>
+      <br><br>
+      <button class="small blue">Submit</button>
+      <br>
+    </form>
+  </div>
 </div>

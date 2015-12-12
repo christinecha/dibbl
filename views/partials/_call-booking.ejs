@@ -1,44 +1,40 @@
-<div class="callBox-layer">
-
+<div class="callBox--booking">
   <div class="closeCallBox">
     <h1>X</h1>
     <h4>CLOSE</h4>
   </div>
 
-  <div class="callBox">
-    <form id="newBookingRequest">
-      <div class="booking-request memo">
-        <br><br><br><br>
-        <span class="small">What would you like to ask or talk about?</span><br>
-        <span class="xsmall">(140 characters max)</span><br><br>
-        <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
-        <br>
-        <span class="xsmall">Call Duration (minutes)</span><br>
-        <input type="number" id="booking-request--duration" step="5" min="5" value="5"/>
-        <br><br>
-        <button type="button" class="small blue toggle">NEXT</button>
-      </div>
-
-      <div class="booking-request times" style="display: none;">
-        <br><br><br><br>
-        <span class="small">Choose (up to) three potential call times.</span><br>
-        <br>
-        <div class="timeOption--container">
-          <input type="datetime-local" value="2016-01-02T15:00" class="booking-request--option" required>
-        </div>
-        <button type="button" id="addTimeOption">+</button>
-        <br>
-        <button type="button" class="small green toggle">PREV</button>
-        <button type="submit" id="makeBookingRequest" class="small blue">SUBMIT</button>
-      </div>
-    </form>
-
-    <div class="booking-request confirmation" style="display: none;">
-      <br><br><br><br><br><br>
-      <h2>Yay! Request sent.</h2>
+  <form id="newBookingRequest">
+    <div class="booking-request memo">
+      <br><br><br><br>
+      <span class="small">What would you like to ask or talk about?</span><br>
+      <span class="xsmall">(140 characters max)</span><br><br>
+      <textarea id="booking-request--memo" rows="3" maxlength="140" class="small"></textarea>
       <br>
-      <h5>You'll be receiving a confirmation message both via email and your Dibbl inbox soon.</h5>
+      <span class="xsmall">Call Duration (minutes)</span><br>
+      <input type="number" id="booking-request--duration" step="5" min="5" value="5"/>
+      <br><br>
+      <button type="button" class="small blue toggle">NEXT</button>
     </div>
-  </div>
 
+    <div class="booking-request times" style="display: none;">
+      <br><br><br><br>
+      <span class="small">Choose (up to) three potential call times.</span><br>
+      <br>
+      <div class="timeOption--container">
+        <input type="datetime-local" value="2016-01-02T15:00" class="booking-request--option" required>
+      </div>
+      <button type="button" id="addTimeOption">+</button>
+      <br>
+      <button type="button" class="small green toggle">PREV</button>
+      <button type="submit" id="makeBookingRequest" class="small blue">SUBMIT</button>
+    </div>
+  </form>
+
+  <div class="booking-request confirmation" style="display: none;">
+    <br><br><br><br><br><br>
+    <h2>Yay! Request sent.</h2>
+    <br>
+    <h5>You'll be receiving a confirmation message both via email and your Dibbl inbox soon.</h5>
+  </div>
 </div>

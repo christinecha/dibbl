@@ -1,5 +1,6 @@
 'use strict';
 
+// environment variables -----------------------------------------------------------------
 var twilio_accountSid = process.env.TWILIO_ACCOUNTSID || "AC27d6f0de5c78471dc7e9aef47a031e3e";
 var twilio_authToken = process.env.TWILIO_AUTHTOKEN || "ef503f14a56322850639e39173e80360";
 var twilio_twimlAppSid = process.env.TWILIO_TWIMLAPPSID || "AP1f84916b6c4873c17e559d518be948da";
@@ -8,18 +9,20 @@ var stripe_publishable = process.env.STRIPE_PUBLISHABLE || "pk_test_aggmgLA6W1bM
 var node_env = process.env.NODE_ENV || "development";
 var port = process.env.PORT || 3000;
 
+// node modules --------------------------------------------------------------------------------
 var express = require("express"),
-    app = express(),
     bodyParser = require('body-parser'),
     stripe = require("stripe")(stripe_secret),
     Firebase = require('firebase'),
-    twilio = require('twilio'),
-    ref = new Firebase('https://dibbl.firebaseio.com/'),
-    usersRef = ref.child("users"),
-    callsRef = ref.child("calls");
+    twilio = require('twilio');
 
+// other variables --------------------------------------------------------------------------------
+var app = express();
+var ref = new Firebase('https://dibbl.firebaseio.com/');
+var currentUserId;
+
+// express setup --------------------------------------------------------------------------------
 app.set('view engine', 'ejs');
-
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -28,13 +31,16 @@ if (node_env == "production") {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
 };
 
+
 app.get("/", function (req, res) {
-  res.render("home.ejs", {stripe_publishable: stripe_publishable});
+  res.render("home.ejs", {
+    stripe_publishable: stripe_publishable
+  });
 });
 
-app.get("/partials/:name", function (req, res) {
-  var name = req.params.name;
-  var url = "partials/_" + name + ".ejs"
+app.get("/partials/:filename", function (req, res) {
+  var filename = req.params.filename;
+  var url = 'partials/_' + filename + '.ejs';
   res.render(url);
 });
 
@@ -44,26 +50,25 @@ app.get("/about", function (req, res) {
 
 app.get("/search", function (req, res) {
   var capability = new twilio.Capability(
-      twilio_accountSid,
-      twilio_authToken
+    twilio_accountSid,
+    twilio_authToken
   );
 
   capability.allowClientIncoming('browser-bot');
   capability.allowClientOutgoing(twilio_twimlAppSid);
 
   res.render('search.ejs', {
-      token:              capability.generate(),
-      stripe_publishable: stripe_publishable
+    token:              capability.generate(),
+    stripe_publishable: stripe_publishable
   });
 });
 
 app.get("/account", function (req, res) {
+  var currentUserId = req.query.user;
   var view = req.query.view;
   var alert = req.query.alert;
-  var userId = req.query.user;
-  var stripe = require("stripe")(stripe_secret);
 
-  usersRef.child(userId).once("value", function(snapshot){
+  ref.child("users").child(currentUserId).once("value", function(snapshot){
     var user = snapshot.val();
     if ((user.customerId) && (node_env == 'production')){
       stripe.customers.retrieve(user.customerId, function(err, customer) {
@@ -185,7 +190,7 @@ app.post("/newPaymentMethod", function (req, res) {
       console.log('noooooope', err);
     } else {
       usersRef.child(customer.metadata.userId).child('customerId').set(customer.id);
-    };
+    }
   });
 });
 

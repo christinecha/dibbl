@@ -1,32 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="" />
-    <!-- FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat|Work+Sans:100,200,400' rel='stylesheet' type='text/css'>
-    <!-- STYLES -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" type="text/css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="/css/global.css" rel="stylesheet" type="text/css">
-    <link href="/css/account.css" rel="stylesheet" type="text/css">
-    <!-- JS-->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="js/global.js"></script>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('<%= stripe_publishable %>');
-    </script>
-    <title>dibbl</title>
+    <% include partials/_head.ejs %>
   </head>
 
   <body>
     <div class="container-fluid">
       <div id="header" class="row">
+        <% include partials/_header.ejs %>
       </div>
 
       <div class="light-blue title-bar row account">
@@ -38,21 +19,26 @@
       </div>
 
       <div id="account-content" class="row text-center">
+        <% if (view == 'expert') { %>
+          <% include partials/account/_expert.ejs %>
+        <% } else if (view == 'inbox') { %>
+          <% include partials/account/_inbox.ejs %>
+        <% } else { %>
+          <% include partials/account/_dashboard.ejs %>
+        <% }%>
       </div>
 
       <div id="footer" class="row">
       </div>
     </div>
 
-
+    <script type="text/javascript" src="js/account.js"></script>
     <script>
       var view = '<%= view %>';
       var alert = '<%= alert %>';
       var defaultCard_last4 = '<%= defaultCard.last4 %>';
       var defaultCard_brand = '<%= defaultCard.brand %>';
     </script>
-    <script type="text/javascript" src="js/header.js"></script>
-    <script type="text/javascript" src="js/account.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

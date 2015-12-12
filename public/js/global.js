@@ -6,7 +6,41 @@ var currentUserId;
 var currentCall;
 var serverConnected = false;
 
-// Call Object
+$(function() {
+  ref.onAuth(function(authData) {
+    if (authData) {
+      $('.secure').show();
+      $('.public-only').hide();
+      console.log("User " + authData.uid + " is logged in with " + authData.provider);
+      currentUserId = authData.uid;
+      usersRef.child(authData.uid).on("value", function(snapshot) {
+        currentUser = snapshot.val();
+        if (currentUser.expert == true) {
+          $('.expert-only').show();
+        } else {
+          $('.expert-only').hide();
+        };
+      });
+      // var user = new User();
+      // user.checkAvailability(authData.uid);
+      // user.loadMessages(authData.uid);
+    } else {
+      $('.secure').hide();
+      console.log("User is logged out");
+      currentUser = null;
+      currentUserId = null;
+      var path = window.location.pathname;
+      console.log(path);
+      if ( path.length > 1 ) {
+        location.href = "/";
+      } else {
+        console.log('already home');
+      };
+    }
+  });
+});
+
+  // Call Object
 
 var Call = function(callObj) {
   this.call = callObj;
@@ -42,13 +76,14 @@ Call.prototype.triggerCallWindow = function() {
   var expert = this.expert();
   expertFee = expert.fee;
 
-  $('#call-container').load('partials/call', function(){
-    $('#expert--firstname').text(expert.firstname);
-    $('#expert--fee').text(expertFee.toFixed(2));
-  });
+  $('.page-mask').show();
+  $('.callBox--connect-now').show();
+  $('#expert--firstname').text(expert.firstname);
+  $('#expert--fee').text(expertFee.toFixed(2));
 
   $('#call-container').on('click', '.closeCallBox', function(){
-    $('#call-container').empty();
+    $('.callBox--connect-now').hide();
+    $('.page-mask').hide();
   });
 
   $('#call-container').on('click', '#makeCall', function(){
@@ -60,9 +95,14 @@ Call.prototype.triggerBookingWindow = function() {
   var expert = this.expert();
   expertFee = expert.fee;
 
-  $('#call-container').load('partials/call-booking', function(){
-    $('#expert--firstname').text(expert.firstname);
-    $('#expert--fee').text(expertFee.toFixed(2));
+  $('.page-mask').show();
+  $('.callBox--booking').show();
+  $('#expert--firstname').text(expert.firstname);
+  $('#expert--fee').text(expertFee.toFixed(2));
+
+  $('#call-container').on('click', '.closeCallBox', function(){
+    $('.callBox--booking').hide();
+    $('.page-mask').hide();
   });
 
   $('#call-container').on('click', '.booking-request .toggle', function(){
@@ -77,10 +117,6 @@ Call.prototype.triggerBookingWindow = function() {
     if ($('.booking-request--option').length >= 3) {
       $(this).hide();
     };
-  });
-
-  $('#call-container').on('click', '.closeCallBox', function(){
-    $('#call-container').empty();
   });
 
   $('#call-container').on('submit', '#newBookingRequest', function(e){
@@ -199,7 +235,6 @@ User.prototype.signupWithEmail = function(firstname, lastname, email, password){
 };
 
 User.prototype.loginWithEmail = function(email, password){
-  console.log('trying to login');
   ref.authWithPassword({
     "email"    : email,
     "password" : password
@@ -207,7 +242,6 @@ User.prototype.loginWithEmail = function(email, password){
     if (error) {
       console.log(error);
     } else {
-      console.log("Authenticated successfully with payload:", authData);
       location.href = "/search";
     }
   });

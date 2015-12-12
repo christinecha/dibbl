@@ -90,35 +90,27 @@ button#clearSearchQuery {
 
 .userBio { margin: 15px 0 20px 0; }
 
-.callBox-layer {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  background-color: rgba(0,0,0,.5);
-  text-align: center;
-}
-
 .closeCallBox {
-  margin-top: 80px;
-  margin-bottom: 20px;
+  margin: 50px auto;
   border-radius: 100%;
-  color: white;
+  color: #66cccc;
   cursor: pointer;
 }
 
 .closeCallBox:hover { opacity: .6; }
 
-.callBox {
-  width: 400px;
-  height: 400px;
+.callBox--connect-now, .callBox--booking {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 350px;
+  max-width: 100%;
+  height: 100%;
   background-color: white;
-  border-radius: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
   padding: 20px;
+  z-index: 500;
+  text-align: center;
 }
 
 .callBox textarea{

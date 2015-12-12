@@ -1,33 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="google-site-verification" content="bzqEoT6WUpsJU7L8leP5Fk9svIFFcDHRIL3XKsju-r0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="" />
-    <!-- FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat|Work+Sans:100,200,400' rel='stylesheet' type='text/css'>
-    <!-- STYLES -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" type="text/css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="/css/global.css" rel="stylesheet" type="text/scss">
-    <link href="/css/home.css" rel="stylesheet" type="text/scss">
-    <!-- JS-->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="js/typedjs/js/typed.js"></script>
-    <script type="text/javascript" src="js/global.js"></script>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('<%= stripe_publishable %>');
-    </script>
-    <title>dibbl</title>
+    <% include partials/_head.ejs %>
   </head>
 
   <body>
     <div class="container-fluid">
       <div id="header" class="row">
+        <% include partials/_header.ejs %>
       </div>
 
       <div id="home-section-1" class="row text-center">
@@ -95,12 +75,10 @@
       </div>
 
       <div id="footer" class="row">
+        <% include partials/_footer.ejs %>
       </div>
     </div>
 
-    <script>
-    </script>
-    <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/home.js"></script>
 
     <script>
