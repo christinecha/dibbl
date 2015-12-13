@@ -40,7 +40,7 @@ $(function() {
   });
 });
 
-  // Call Object
+// Call Object
 
 var Call = function(callObj) {
   this.call = callObj;
@@ -49,11 +49,11 @@ var Call = function(callObj) {
 Call.prototype.expert = function() {
   var call = this.call;
   var expert;
-  usersRef.child(call.expertId).once("value", function(snapshot){
+  ref.child('users').child(call.expertId).once("value", function(snapshot){
     expert = snapshot.val();
+    console.log(expert);
     return expert;
   });
-  return expert;
 };
 
 Call.prototype.displayInfo = function() {
@@ -73,13 +73,14 @@ Call.prototype.displayInfo = function() {
 };
 
 Call.prototype.triggerCallWindow = function() {
-  var expert = this.expert();
-  expertFee = expert.fee;
+  ref.child('users').child(this.call.expertId).once("value", function(snapshot){
+    expert = snapshot.val();
 
-  $('.page-mask').show();
-  $('.callBox--connect-now').show();
-  $('#expert--firstname').text(expert.firstname);
-  $('#expert--fee').text(expertFee.toFixed(2));
+    $('.page-mask').show();
+    $('.callBox--connect-now').show();
+    $('#expert--firstname').text(expert.firstname);
+    $('#expert--fee').text(expert.fee.toFixed(2));
+  });
 
   $('#call-container').on('click', '.closeCallBox', function(){
     $('.callBox--connect-now').hide();
@@ -92,13 +93,14 @@ Call.prototype.triggerCallWindow = function() {
 };
 
 Call.prototype.triggerBookingWindow = function() {
-  var expert = this.expert();
-  expertFee = expert.fee;
+  ref.child('users').child(this.call.expertId).once("value", function(snapshot){
+    expert = snapshot.val();
 
-  $('.page-mask').show();
-  $('.callBox--booking').show();
-  $('#expert--firstname').text(expert.firstname);
-  $('#expert--fee').text(expertFee.toFixed(2));
+    $('.page-mask').show();
+    $('.callBox--booking').show();
+    $('#expert--firstname').text(expert.firstname);
+    $('#expert--fee').text(expert.fee.toFixed(2));
+  });
 
   $('#call-container').on('click', '.closeCallBox', function(){
     $('.callBox--booking').hide();

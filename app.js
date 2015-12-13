@@ -168,13 +168,22 @@ app.post('/processAdvancePayment', function(req, res) {
 });
 
 app.get('/:customURL', function (req, res) {
+  var capability = new twilio.Capability(
+    twilio_accountSid,
+    twilio_authToken
+  );
+
+  capability.allowClientIncoming('browser-bot');
+  capability.allowClientOutgoing(twilio_twimlAppSid);
+
   var customURL = req.params.customURL;
   ref.child('users').orderByChild('customURL').equalTo(customURL).once("value", function(snapshot){
     snapshot.forEach(function(childSnapshot) {
       var user = childSnapshot.val();
       res.render("profile.ejs", {
-        user: user,
-        userId: childSnapshot.key(),
+        user:               user,
+        userId:             childSnapshot.key(),
+        token:              capability.generate(),
         stripe_publishable: stripe_publishable,
       });
     });

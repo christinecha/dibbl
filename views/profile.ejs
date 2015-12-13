@@ -37,13 +37,19 @@
         </div>
       </div>
 
-
+      <div id="call-container" class="row">
+        <% include partials/_call.ejs %>
+        <% include partials/_call-booking.ejs %>
+      </div>
 
       <div id="footer" class="row">
         <% include partials/_footer.ejs %>
       </div>
     </div>
 
+    <script>
+      var token = '<%= token %>';
+    </script>
     <script type="text/javascript" src="js/profile.js"></script>
 
     <script>
