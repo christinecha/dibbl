@@ -45,7 +45,9 @@ app.get("/partials/:filename", function (req, res) {
 });
 
 app.get("/about", function (req, res) {
-  res.render('about.ejs');
+  res.render('about.ejs', {
+    stripe_publishable: stripe_publishable
+  });
 });
 
 app.get("/search", function (req, res) {
