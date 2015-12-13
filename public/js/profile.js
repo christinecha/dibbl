@@ -3,40 +3,48 @@ Twilio.Device.setup(token);
 // TRIGGER THE CALL WINDOW ----------------------------------------------------------
 
 $('.profile').on('click', '.connectButton', function() {
-  ref.child('users').child(currentUserId).once("value", function(snapshot) {
-    var user = snapshot.val();
+  if (currentUserId) {
+    ref.child('users').child(currentUserId).once("value", function(snapshot) {
+      var user = snapshot.val();
 
-    if (user.customerId) {
-      callerId = currentUserId;
-      expertId = $(this).parent().parent('.userInfo').attr('id');
-      console.log(expertId);
-      var call = new Call({
-          callerId: callerId,
-          expertId: expertId,
-      });
-      call.triggerCallWindow();
-    } else {
-      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
-    };
-  }.bind(this));
+      if (user.customerId) {
+        callerId = currentUserId;
+        expertId = $(this).parent().parent('.userInfo').attr('id');
+        console.log(expertId);
+        var call = new Call({
+            callerId: callerId,
+            expertId: expertId,
+        });
+        call.triggerCallWindow();
+      } else {
+        location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
+      };
+    }.bind(this));
+  } else {
+    location.href = "/";
+  }
 });
 
 $('.profile').on('click', '.bookLaterButton', function() {
-  ref.child('users').child(currentUserId).once("value", function(snapshot) {
-    var user = snapshot.val();
-    if (user.customerId) {
-      callerId = currentUserId;
-      expertId = $(this).parent().parent('.userInfo').attr('id');
-      console.log(expertId);
-      var call = new Call({
-          callerId: callerId,
-          expertId: expertId,
-      });
-      call.triggerBookingWindow();
-    } else {
-      location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
-    };
-  }.bind(this));
+  if (currentUserId) {
+    ref.child('users').child(currentUserId).once("value", function(snapshot) {
+      var user = snapshot.val();
+      if (user.customerId) {
+        callerId = currentUserId;
+        expertId = $(this).parent().parent('.userInfo').attr('id');
+        console.log(expertId);
+        var call = new Call({
+            callerId: callerId,
+            expertId: expertId,
+        });
+        call.triggerBookingWindow();
+      } else {
+        location.href = '/account?alert=no-cc&user=' + currentUserId + '&view=dashboard';
+      };
+    }.bind(this));
+  } else {
+    location.href = "/";
+  }
 });
 
 

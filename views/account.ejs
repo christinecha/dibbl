@@ -11,7 +11,15 @@
       </div>
 
       <div class="light-blue title-bar row account">
-        <h3><span class="view-title"></span></h3>
+        <h3>
+          <span class="view-title">
+            <% if (view) { %>
+            <%= view %>
+            <% } else { %>
+              <%= 'Dashboard' %>
+            <% }%>
+          </span>
+        </h3>
         <br>
         <button class="small white-outline account-view-toggle" data="dashboard"><i class="fa fa-cog"></i> <span class="desktop-only"> DASHBOARD</span></button>
         <button class="small white-outline account-view-toggle" data="inbox"><i class="fa fa-inbox"></i> <span class="desktop-only"> INBOX</span></button>
@@ -35,6 +43,7 @@
 
     <script type="text/javascript" src="js/account.js"></script>
     <script>
+      var secure = '<%= secure %>';
       var view = '<%= view %>';
       var alert = '<%= alert %>';
       var defaultCard_last4 = '<%= defaultCard.last4 %>';

@@ -31,7 +31,7 @@ $(function() {
       currentUserId = null;
       var path = window.location.pathname;
       console.log(path);
-      if ( path.length > 1 ) {
+      if (( path.length > 1 ) && (secure)) {
         location.href = "/";
       } else {
         console.log('already home');

@@ -101,7 +101,7 @@ button#clearSearchQuery {
 
 .callBox--connect-now, .callBox--booking {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 350px;
@@ -111,6 +111,7 @@ button#clearSearchQuery {
   padding: 20px;
   z-index: 500;
   text-align: center;
+  overflow: scroll;
 }
 
 .callBox textarea{

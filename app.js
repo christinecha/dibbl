@@ -60,7 +60,8 @@ app.get("/search", function (req, res) {
   capability.allowClientOutgoing(twilio_twimlAppSid);
 
   res.render('search.ejs', {
-    token:              capability.generate(),
+    secure: true,
+    token: capability.generate(),
     stripe_publishable: stripe_publishable
   });
 });
@@ -81,6 +82,7 @@ app.get("/account", function (req, res) {
           res.render('account.ejs', {
             view: view,
             alert: alert,
+            secure: true,
             defaultCard: {
               last4: defaultCard.last4,
               brand: defaultCard.brand,
@@ -93,6 +95,7 @@ app.get("/account", function (req, res) {
       res.render('account.ejs', {
         view: view,
         alert: alert,
+        secure: true,
         defaultCard: '',
         stripe_publishable: stripe_publishable,
       });
