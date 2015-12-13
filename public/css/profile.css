@@ -1,0 +1,5 @@
+.title-bar.profile {
+  height: 150px;
+  background-image: url('../assets/background_desk3_1500x300.png');
+  background-size: cover;
+}

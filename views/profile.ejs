@@ -1,51 +1,60 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- FONTS -->
-    <link href='https://fonts.googleapis.com/css?family=Montserrat|Work+Sans:100,200,400' rel='stylesheet' type='text/css'>
-    <!-- STYLES -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" rel="stylesheet" type="text/css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="/css/global.scss" rel="stylesheet" type="text/css">
-    <!-- JS-->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <script src="//simplewebrtc.com/latest.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-      Stripe.setPublishableKey('<%= stripe_publishable %>');
-    </script>
-
-    <title>dibbl</title>
+    <% include partials/_head.ejs %>
   </head>
 
   <body>
-    <div id="header" class="row">
-      <div class="text-left col-xs-6">
-        <img src="/assets/dibbl-logo-02.png" class="logo" />
+    <div class="container-fluid">
+      <div id="header" class="row">
+        <% include partials/_header.ejs %>
       </div>
-      <div class="text-right col-xs-6">
-        <i class="fa fa-bell notifications-icon"></i>
-        <i class="fa fa-bars menu-icon"></i>
-        <div class="notifications dropdown">
-          <h5>NOTIFICATIONS:</h5>
-          <div id="requests">
+
+      <div class="title-bar row profile">
+        <div class="userInfo row" id="<%= userId %>">
+          <div class="col-md-4">
+            <div class="userPhoto" style="background-image: url('<%= user.photo %>');">
+            </div>
+          </div>
+          <div class="col-md-8" data-fee="<%= user.fee %>">
+            <i class="fa fa-heart faveIcon"></i>
+            <h5 class="userName"><%= user.firstname %> <%= user.lastname %></h5>
+            <h5 class="userFee">$<%= user.fee.toFixed(2) %></h5>
+            <div class="rating-container">
+              <% include partials/_rating.ejs %>
+            </div>
+            <div class="userSkills">
+              <% user.skills.forEach(function(skill){ %>
+                <span><%= skill %></span>
+              <% }); %>
+            </div>
+            <p class="userBio">
+              <%= user.bio %>
+            </p>
+            <button class="connectButton small blue">CONNECT NOW</button>
+            <button class="bookLaterButton small dark-blue">schedule a call</button>
           </div>
         </div>
-        <div class="menu dropdown">
-          <a class="page-nav" data-page="search">find an expert</a><br>
-          <a class="page-nav" data-page="profile">my profile</a><br>
-          <a class="logout">logout</a>
-        </div>
+      </div>
+
+
+
+      <div id="footer" class="row">
+        <% include partials/_footer.ejs %>
       </div>
     </div>
 
-    <h3><%= user.firstname %> <%= user.lastname %></h3>
-    <p><%= user.email %></p>
-    <p><%= user.skills %></p>
+    <script type="text/javascript" src="js/profile.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-68991189-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
   </body>
 </html>

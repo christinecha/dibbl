@@ -167,11 +167,17 @@ app.post('/processAdvancePayment', function(req, res) {
   });
 });
 
-app.get('user/:user_id', function (req, res) {
-  var user_id = req.params.user_id;
-  usersRef.child(user_id).once("value", function(snapshot){
-    var user = snapshot.val();
-    res.render("profile.ejs", { user: user });
+app.get('/:customURL', function (req, res) {
+  var customURL = req.params.customURL;
+  ref.child('users').orderByChild('customURL').equalTo(customURL).once("value", function(snapshot){
+    snapshot.forEach(function(childSnapshot) {
+      var user = childSnapshot.val();
+      res.render("profile.ejs", {
+        user: user,
+        userId: childSnapshot.key(),
+        stripe_publishable: stripe_publishable,
+      });
+    });
   });
 });
 
