@@ -21,9 +21,9 @@ $(function() {
           $('.expert-only').hide();
         };
       });
-      // var user = new User();
-      // user.checkAvailability(authData.uid);
-      // user.loadMessages(authData.uid);
+      var user = new User();
+      user.checkAvailability(authData.uid);
+      user.loadMessages(authData.uid);
     } else {
       $('.secure').hide();
       console.log("User is logged out");
